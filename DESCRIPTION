@@ -6,6 +6,9 @@ Imports:
     revdepcheck,
     future.apply,
     utils
+Remotes:
+    r-lib/crancache,
+    r-lib/revdepcheck
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
 Description: Additional utility functions for performing packages checks on reverse dependencies.
