@@ -1,0 +1,17 @@
+Package: revdepcheck.extras
+Version: 0.0.1-9000
+Title: Unified Parallel and Distributed Processing in R for Everyone
+Imports:
+    crancache,
+    revdepcheck,
+    future.apply,
+    utils
+Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
+                                          email = "henrikb@braju.com"))
+Description: Additional utility functions for performing packages checks on reverse dependencies.
+License: LGPL (>= 3.0)
+LazyLoad: TRUE
+ByteCompile: TRUE
+URL: https://github.com/HenrikBengtsson/revdepcheck.extras
+BugReports: https://github.com/HenrikBengtsson/revdepcheck.extras/issues
+RoxygenNote: 6.1.1
