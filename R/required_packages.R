@@ -1,5 +1,12 @@
 #' Find all packages required by a specific package
+#'
+#' @param packages (character vector) Names of packages
+#'
+#' @param \ldots Not used.
+#'
 #' @importFrom crancache available_packages
+#'
+#' @export
 required_packages <- function(packages, ...) {
   avail <- available_packages()
   stopifnot(all(packages %in% avail[, "Package"]))
@@ -16,3 +23,4 @@ required_packages <- function(packages, ...) {
 
   pkgs
 }
+

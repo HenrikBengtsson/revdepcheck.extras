@@ -1,6 +1,17 @@
+#' Precache package installs required for reverse-dependencies package checks
+#'
+#' @param package (character string) Name of package
+#'
+#' @param temp_lib_path ...
+#'
+#' @param \ldots Not used.
+#'
+#' @param dryrun (logical) If TRUE, then no packages are cached.
+#'
 #' @importFrom future.apply future_lapply
 #' @importFrom crancache crancache_list install_packages
 #' @importFrom utils file_test
+#'
 #' @export
 revdep_precache <- function(package, temp_lib_path = tempfile(pattern = "dir"), ..., dryrun=FALSE) {
   pkgs <- revdep_required_packages(package, ...)

@@ -18,3 +18,4 @@ ByteCompile: TRUE
 URL: https://github.com/HenrikBengtsson/revdepcheck.extras
 BugReports: https://github.com/HenrikBengtsson/revdepcheck.extras/issues
 RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
