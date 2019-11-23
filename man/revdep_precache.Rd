@@ -4,8 +4,12 @@
 \alias{revdep_precache}
 \title{Precache package installs required for reverse-dependencies package checks}
 \usage{
-revdep_precache(package, temp_lib_path = tempfile(pattern = "dir"), ...,
-  dryrun = FALSE)
+revdep_precache(
+  package,
+  temp_lib_path = tempfile(pattern = "dir"),
+  ...,
+  dryrun = FALSE
+)
 }
 \arguments{
 \item{package}{(character string) Name of package}

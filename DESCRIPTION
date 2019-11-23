@@ -3,6 +3,8 @@ Version: 0.0.1-9000
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Imports:
     crancache,
+    desc,
+    DBI,
     revdepcheck,
     future.apply,
     utils
@@ -17,5 +19,5 @@ LazyLoad: TRUE
 ByteCompile: TRUE
 URL: https://github.com/HenrikBengtsson/revdepcheck.extras
 BugReports: https://github.com/HenrikBengtsson/revdepcheck.extras/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 Roxygen: list(markdown = TRUE)
