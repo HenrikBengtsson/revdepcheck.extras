@@ -25,7 +25,7 @@ remotes::install_github("HenrikBengtsson/revdepcheck.extras")
 
 I have no intention of submitting this to CRAN or providing end-user support
 for it.  I use it for revdepcheck:ing my own packages on a HPC system where
-I for instance need to pre-populate the [crancheck] cache before running
+I for instance need to pre-populate the [crancache] cache before running
 revdep checks as a job on compute nodes without internet access.
 
 
