@@ -1,6 +1,6 @@
 Package: revdepcheck.extras
 Version: 0.0.1-9000
-Title: Unified Parallel and Distributed Processing in R for Everyone
+Title: Reverse-Dependency Checks from the Command Line (CLI)
 Imports:
     crancache,
     desc,
@@ -14,7 +14,7 @@ Remotes:
     r-lib/revdepcheck
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
-Description: Additional utility functions for performing packages checks on reverse dependencies.
+Description: Utility functions for the 'revdepcheck' package. Helps running reverse-dependency package checks from the command-line interface (CLI) and more.
 License: LGPL (>= 3.0)
 LazyLoad: TRUE
 ByteCompile: TRUE
