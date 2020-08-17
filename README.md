@@ -3,7 +3,7 @@
 This package provides additional functions to be used with the [revdepcheck] package.  It also provide a command-line interface (CLI) for running reverse-dependency package checks directly from the command line.
 
 
-## Example
+## Examples
 
 ```sh
 $ Rscript -e revdepcheck.extras::run
