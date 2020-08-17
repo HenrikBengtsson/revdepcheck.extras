@@ -10,8 +10,10 @@
 #' ```sh
 #' Rscript -e revdepcheck.extras::run
 #' Rscript -e revdepcheck.extras::run --reset
-#' Rscript -e revdepcheck.extras::run --preinstall-children
+#' Rscript -e revdepcheck.extras::run --add some, pkg, another
 #' Rscript -e revdepcheck.extras::run --todo
+#' Rscript -e revdepcheck.extras::run --preinstall-children
+#' Rscript -e revdepcheck.extras::run --preinstall-todo
 #' ```
 #' 
 #' @importFrom utils file_test str

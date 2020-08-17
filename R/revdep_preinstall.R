@@ -9,6 +9,7 @@
 #' library folders with suffix \file{-revdepcheck} that lives next
 #' to your default library folders.
 #'
+#' @importFrom future.apply future_lapply
 #' @importFrom crancache install_packages
 #' @export
 revdep_preinstall <- function(pkgs) {
@@ -25,12 +26,13 @@ revdep_preinstall <- function(pkgs) {
   message(".libPaths():")
   message(paste(paste0(" - ", .libPaths()), collapse = "\n"))
   ## Install one-by-one to update cache sooner
-  for (kk in seq_along(pkgs)) {
+  void <- future_lapply(seq_along(pkgs), FUN = function(kk) {
     pkg <- pkgs[kk]
     message(sprintf("Pre-installing package %d of %d: %s (Ncpus = %d)",
                     kk, length(pkgs), pkg, getOption("Ncpus", 1L)))
     install_packages(pkg, dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
-  }
+  })
+  invisible(void)  
 }
 
 #' @rdname revdep_preinstall

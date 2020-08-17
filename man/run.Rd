@@ -19,8 +19,10 @@ Run reverse-package dependency checks from the command line (CLI)
 
 Here are some examples how to call this function from the command-line:\if{html}{\out{<div class="sh">}}\preformatted{Rscript -e revdepcheck.extras::run
 Rscript -e revdepcheck.extras::run --reset
-Rscript -e revdepcheck.extras::run --preinstall-children
+Rscript -e revdepcheck.extras::run --add some, pkg, another
 Rscript -e revdepcheck.extras::run --todo
+Rscript -e revdepcheck.extras::run --preinstall-children
+Rscript -e revdepcheck.extras::run --preinstall-todo
 }\if{html}{\out{</div>}}
 }
 
