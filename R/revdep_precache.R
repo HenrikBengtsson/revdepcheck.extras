@@ -1,19 +1,32 @@
 #' Precache package installs required for reverse-dependencies package checks
 #'
-#' @param package (character string) Name of package
+#' @param package (character string) Name of package.
 #'
-#' @param temp_lib_path ...
+#' @param temp_lib_path (character string) The folder where to
+#' install packages during the pre-cache installation.  This
+#' defaults to a temporary folder.
 #'
 #' @param \ldots Not used.
 #'
 #' @param dryrun (logical) If TRUE, then no packages are cached.
+#'
+#' @return (character vector) The packages that _failed_ to install.
+#'
+#' @details
+#' This function populates the \pkg{crancache} package cache
+#' that holds package source tarballs as well as package binaries.
+#' This is done by calling [crancache::install_packages()] on
+#' all reverse package dependencies as given by
+#' [revdep_required_packages()].
+#' These packages are installed to a temporary folder to avoid
+#' adding them to your default package library folders.
 #'
 #' @importFrom future.apply future_lapply
 #' @importFrom crancache crancache_list install_packages
 #' @importFrom utils file_test
 #'
 #' @export
-revdep_precache <- function(package, temp_lib_path = tempfile(pattern = "dir"), ..., dryrun=FALSE) {
+revdep_precache <- function(package, temp_lib_path = tempfile(pattern = "dir"), ..., dryrun = FALSE) {
   pkgs <- revdep_required_packages(package, ...)
 
   if (!file_test("-d", temp_lib_path)) {
@@ -37,5 +50,7 @@ revdep_precache <- function(package, temp_lib_path = tempfile(pattern = "dir"), 
   future_lapply(missing, FUN = install_packages, lib = temp_lib_path, future.chunk.size = 1L)
 
   cached <- unique(crancache_list()$Package)
-  setdiff(pkgs, cached)
+  missing <- setdiff(pkgs, cached)
+  
+  missing
 }

@@ -1,8 +1,10 @@
 #' Find all packages required by a specific package
 #'
-#' @param packages (character vector) Names of packages
+#' @param packages (character vector) Names of packages.
 #'
 #' @param \ldots Not used.
+#'
+#' @return (character vector) Zero or more package names.
 #'
 #' @importFrom crancache available_packages
 #'

@@ -4,6 +4,8 @@
 #'
 #' @param \ldots Not used.
 #'
+#' @return (character vector) Zero or more package names.
+#'
 #' @export
 revdep_required_packages <- function(package, ...) {
   cran_revdeps <- import_from("revdepcheck", "cran_revdeps")

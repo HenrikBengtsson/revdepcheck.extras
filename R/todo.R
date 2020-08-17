@@ -1,10 +1,15 @@
+#' List the Reverse-Dependency Packages to be Checked
+#'
+#' @return (character vector; invisible) The name of the
+#' packages to be tested.
+#'
 #' @importFrom revdepcheck revdep_todo
 #' @export
 todo <- function() {
   pkgs <- tryCatch(revdep_todo(), error = function(ex) NA)
   if (identical(pkgs, NA)) {
     cat("Revdepcheck has not been initiated\n")
-    return()
+    return(invisible(character(0L)))
   }
 
   status <- NULL  ## To please R CMD check
@@ -15,4 +20,6 @@ todo <- function() {
   } else {
     cat(sprintf("%d. %s\n", seq_len(nrow(pkgs)), pkgs$package))
   }
+
+  invisible(pkgs)
 }

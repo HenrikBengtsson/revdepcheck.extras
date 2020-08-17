@@ -1,3 +1,12 @@
+#' Extract packages names from messy strings
+#'
+#' @param pkgs (character vector) Extract package names
+#' from one or more strings with our without commas, spaces,
+#' quotation marks, etc.
+#'
+#' @return (character vector) A sorted set of unique package
+#' names.
+#'
 #' @export
 parse_pkgs <- function(pkgs) {
   pkgs <- unlist(strsplit(pkgs, split = ",", fixed = TRUE))

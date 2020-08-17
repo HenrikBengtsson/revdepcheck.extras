@@ -7,9 +7,12 @@
 required_packages(packages, ...)
 }
 \arguments{
-\item{packages}{(character vector) Names of packages}
+\item{packages}{(character vector) Names of packages.}
 
 \item{\ldots}{Not used.}
+}
+\value{
+(character vector) Zero or more package names.
 }
 \description{
 Find all packages required by a specific package

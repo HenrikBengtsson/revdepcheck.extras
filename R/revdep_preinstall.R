@@ -1,20 +1,61 @@
+#' Pre-install and updated reverse-dependency packages
+#'
+#' @param pkgs (character vector) Packages to be pre-installed.
+#'
+#' @return Nothing.
+#'
+#' @details
+#' Reverse-dependency packages are pre-installed to custom package
+#' library folders with suffix \file{-revdepcheck} that lives next
+#' to your default library folders.
+#'
 #' @importFrom crancache install_packages
 #' @export
 revdep_preinstall <- function(pkgs) {
+  oopts <- options(Ncpus = available_cores())
+  lib_paths_org <- .libPaths()
+  on.exit({
+    .libPaths(lib_paths_org)
+    options(oopts)
+  })
+  .libPaths(revdep_preinstall_libs())
+  
   pkgs <- unique(pkgs)
-  lib_paths_org <- lib_paths <- .libPaths()
-  on.exit(.libPaths(lib_paths_org))
-  lib_paths[1] <- sprintf("%s-revdepcheck", lib_paths[1])
-  dir.create(lib_paths[1], recursive = TRUE, showWarnings = FALSE)
-  .libPaths(lib_paths)
   message(sprintf("Triggering crancache builds by pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
   message(".libPaths():")
   message(paste(paste0(" - ", .libPaths()), collapse = "\n"))
   ## Install one-by-one to update cache sooner
   for (kk in seq_along(pkgs)) {
     pkg <- pkgs[kk]
-    message(sprintf("Pre-installing package %d of %d: %s",
-                    kk, length(pkgs), pkg))
-    install_packages(pkg)
+    message(sprintf("Pre-installing package %d of %d: %s (Ncpus = %d)",
+                    kk, length(pkgs), pkg, getOption("Ncpus", 1L)))
+    install_packages(pkg, dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
   }
 }
+
+#' @rdname revdep_preinstall
+#' @importFrom crancache update_packages
+#' @export
+revdep_preinstall_update <- function() {
+  oopts <- options(Ncpus = available_cores())
+  lib_paths_org <- .libPaths()
+  on.exit({
+    .libPaths(lib_paths_org)
+    options(oopts)
+  })
+  .libPaths(revdep_preinstall_libs())
+  
+  message("Update crancache for all pre-installing packages:")
+  message(".libPaths():")
+  message(paste(paste0(" - ", .libPaths()), collapse = "\n"))
+  message(sprintf("Ncpus=%d", getOption("Ncpus", 1L)))
+  update_packages(ask = FALSE)
+}
+
+revdep_preinstall_libs <- function() {
+  lib_paths <- .libPaths()
+  lib_paths[1] <- sprintf("%s-revdepcheck", lib_paths[1])
+  dir.create(lib_paths[1], recursive = TRUE, showWarnings = FALSE)
+  lib_paths
+}
+

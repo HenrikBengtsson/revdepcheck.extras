@@ -1,3 +1,7 @@
+#' Get The Number of Parallel Cores
+#'
+#' @return The number of cores allowed on the current machine.
+#'
 #' @export
 available_cores <- function() {
   getenv <- function(name) {
