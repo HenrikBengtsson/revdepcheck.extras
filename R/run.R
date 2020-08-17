@@ -55,7 +55,7 @@ run <- function(warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
   } else if ("--add-all" %in% args) {
     revdep_init()
     pkgs <- revdep_children()
-    cran_revdeps <- import_from("revdepcheck", cran_revdeps)
+    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
     for (pkg in pkgs) {
       pkgs <- c(pkgs, cran_revdeps(pkg))
     }
@@ -65,7 +65,7 @@ run <- function(warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
   } else if ("--add-grandchildren" %in% args) {
     revdep_init()
     pkgs <- NULL
-    cran_revdeps <- import_from("revdepcheck", cran_revdeps)
+    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
     for (pkg in revdep_children()) {
       pkgs <- c(pkgs, cran_revdeps(pkg))
     }
@@ -91,7 +91,7 @@ run <- function(warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     }
   } else if ("--list-children" %in% args) {
     pkg <- revdep_this_package()
-    cran_revdeps <- import_from("revdepcheck", cran_revdeps)
+    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
     pkgs <- cran_revdeps(pkg)
     cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-error" %in% args) {
@@ -106,7 +106,7 @@ run <- function(warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     revdep_preinstall_update()
   } else if ("--preinstall-children" %in% args) {
     pkg <- revdep_this_package()
-    cran_revdeps <- import_from("revdepcheck", cran_revdeps)
+    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
     pkgs <- cran_revdeps(pkg)
     revdep_preinstall(pkgs)
   } else if ("--preinstall-error" %in% args) {
