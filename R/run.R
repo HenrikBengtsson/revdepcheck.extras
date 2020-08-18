@@ -1,30 +1,74 @@
 #' Run reverse-package dependency checks from the command line (CLI)
 #'
+#' @param \dots Not used.
+#'
 #' @param warn (integer) The warn level of \R option `warn` while running
 #' checks.
 #'
 #' @param args (character string) The command-line arguments.
 #'
+#' @section Usage:
+#' ```
+#' Rscript -e revdepcheck.extras::run --args <options>
+#'
+#' --help                Display this help page
+#' --version             Display version
+#'
+#' List packages:
+#' --list-children       List all reverse package dependencies
+#' --list-grandchildren  List all second-generation reverse package dependencies
+#'
+#' Populate the 'crancache' database with installable package binaries:
+#' --preinstall-update   Populate crancache database ...
+#' --preinstall-children Populate crancache database ...
+#' --preinstall-error    Populate crancache database ...
+#' --preinstall-failure  Populate crancache database ...
+#' --preinstall-todo     Populate crancache database ...
+#' --preinstall <pkgs>   Populate crancache database ...
+#'
+#' Add and remove packages to be checked:
+#' --reset               Full reset to restart checks from scratch
+#' --todo-reset          Empty set of packages to be checked
+#' --todo                List packages to be checked
+#' --add <pkgs>          Add one or more packages to be checked
+#' --add-broken          Add "broken" packages to be rechecked
+#' --add-error           Add "errored" packages to be rechecked
+#' --add-failure         Add "failed" packages to be rechecked
+#' --add-all             Add ...?      
+#' --add-grandchildren   Add all second-generation reverse package dependencies
+#' --rm <pkgs>           Remove one or more packages to be checked
+#'
+#' Show results:
+#' --show-check <pkg>    Display 'old' and 'new' check results during checks
+#' --list-error          List all packages that "errored"
+#' --list-failure        List all packages that "failed"
+#' ```
+#'
 #' @section Examples:
 #' Here are some examples how to call this function from the command-line:
 #' ```sh
-#' Rscript -e revdepcheck.extras::run
-#' Rscript -e revdepcheck.extras::run --reset
-#' Rscript -e revdepcheck.extras::run --add some, pkg, another
-#' Rscript -e revdepcheck.extras::run --todo
-#' Rscript -e revdepcheck.extras::run --preinstall-children
-#' Rscript -e revdepcheck.extras::run --preinstall-todo
+#' Rscript -e revdepcheck.extras::run --args --help
+#' Rscript -e revdepcheck.extras::run --args --version
+#' Rscript -e revdepcheck.extras::run --args --reset
+#' Rscript -e revdepcheck.extras::run --args --add some, pkg, another
+#' Rscript -e revdepcheck.extras::run --args --todo
+#' Rscript -e revdepcheck.extras::run --args --preinstall-children
+#' Rscript -e revdepcheck.extras::run --args --preinstall-todo
 #' ```
 #' 
-#' @importFrom utils file_test str
+#' @importFrom utils help file_test packageVersion str
 #' @importFrom revdepcheck revdep_check
 #' @export
-run <- function(warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
+run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
   stopifnot(length(warn) == 1L, is.numeric(warn), !is.na(warn), warn >= 0L)
   oopts <- options(warn = warn)
   on.exit(options(oopts))
-  
-  if ("--reset" %in% args) {
+
+  if ("--help" %in% args) {
+    help("run", package = "revdepcheck.extras", help_type = "text")
+  } else if ("--version" %in% args) {
+    cat(as.character(packageVersion(.packageName)), "\n", sep = "")
+  } else if ("--reset" %in% args) {
     revdepcheck::revdep_reset()
   } else if ("--todo-reset" %in% args) {
     revdep_todo_reset()
@@ -47,11 +91,12 @@ run <- function(warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     revdepcheck::revdep_add_broken()
     todo()
   } else if ("--add-error" %in% args) {
-  #  res <- revepcheck::revdep_summary()
     pkgs <- revdep_pkgs_with_status("error")
-    str(pkgs)
     revdepcheck::revdep_add(packages = pkgs)
     todo()
+  } else if ("--add-failure" %in% args) {
+    pkgs <- revdep_pkgs_with_status("failure")
+    revdepcheck::revdep_add(packages = pkgs)
   } else if ("--add-all" %in% args) {
     revdep_init()
     pkgs <- revdep_children()
@@ -94,14 +139,18 @@ run <- function(warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
     pkgs <- cran_revdeps(pkg)
     cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
+  } else if ("--list-grandchildren" %in% args) {
+    pkgs <- NULL
+    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
+    for (pkg in revdep_children()) {
+      pkgs <- c(pkgs, cran_revdeps(pkg))
+    }
+    pkgs <- unique(pkgs)
+    cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-error" %in% args) {
     cat(paste(revdep_pkgs_with_status("error"), collapse = " "), "\n", sep="")
   } else if ("--list-failure" %in% args) {
     cat(paste(revdep_pkgs_with_status("failure"), collapse = " "), "\n", sep="")
-  } else if ("--add-error" %in% args) {
-    revdepcheck::revdep_add(packages = revdep_pkgs_with_status("error"))
-  } else if ("--add-failure" %in% args) {
-    revdepcheck::revdep_add(packages = revdep_pkgs_with_status("failure"))
   } else if ("--preinstall-update" %in% args) {
     revdep_preinstall_update()
   } else if ("--preinstall-children" %in% args) {
