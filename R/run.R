@@ -174,7 +174,11 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     pkgs <- parse_pkgs(args[seq(from = pos + 1L, to = length(args))])
     revdep_preinstall(pkgs)
   } else {
-    stopifnot(length(args) == 0L)
+    if (length(args) > 0L) {
+      stop("Unknown command-line arguments: ",
+           paste(sQuote(args), collapse = " "))
+    }
+
     check()
     revdepcheck::revdep_report(all = TRUE)
   }
