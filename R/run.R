@@ -15,16 +15,16 @@
 #' --version             Display version
 #'
 #' List packages:
-#' --list-children       List all reverse package dependencies
-#' --list-grandchildren  List all second-generation reverse package dependencies
+#' --list-children       List reverse package dependencies
+#' --list-grandchildren  List second-generation reverse package dependencies
 #'
 #' Populate the 'crancache' database with installable package binaries:
+#' --preinstall-todo     Pre-install all packages to be checked
+#' --preinstall <pkgs>   Pre-install specified packages
 #' --preinstall-update   Populate crancache database ...
 #' --preinstall-children Populate crancache database ...
 #' --preinstall-error    Populate crancache database ...
 #' --preinstall-failure  Populate crancache database ...
-#' --preinstall-todo     Populate crancache database ...
-#' --preinstall <pkgs>   Populate crancache database ...
 #'
 #' Add and remove packages to be checked:
 #' --reset               Full reset to restart checks from scratch
@@ -34,8 +34,9 @@
 #' --add-broken          Add "broken" packages to be rechecked
 #' --add-error           Add "errored" packages to be rechecked
 #' --add-failure         Add "failed" packages to be rechecked
-#' --add-all             Add ...?      
-#' --add-grandchildren   Add all second-generation reverse package dependencies
+#' --add-children        Add first-generation reverse package dependencies
+#' --add-grandchildren   Add second-generation reverse package dependencies
+#' --add-all             Add first and second-generation dependencies
 #' --rm <pkgs>           Remove one or more packages to be checked
 #'
 #' Show results:
@@ -97,13 +98,9 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
   } else if ("--add-failure" %in% args) {
     pkgs <- revdep_pkgs_with_status("failure")
     revdepcheck::revdep_add(packages = pkgs)
-  } else if ("--add-all" %in% args) {
+  } else if ("--add-children" %in% args) {
     revdep_init()
     pkgs <- revdep_children()
-    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-    for (pkg in pkgs) {
-      pkgs <- c(pkgs, cran_revdeps(pkg))
-    }
     pkgs <- unique(pkgs)
     revdepcheck::revdep_add(packages = pkgs)
     todo()
@@ -112,6 +109,16 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     pkgs <- NULL
     cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
     for (pkg in revdep_children()) {
+      pkgs <- c(pkgs, cran_revdeps(pkg))
+    }
+    pkgs <- unique(pkgs)
+    revdepcheck::revdep_add(packages = pkgs)
+    todo()
+  } else if ("--add-all" %in% args) {
+    revdep_init()
+    pkgs <- revdep_children()
+    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
+    for (pkg in pkgs) {
       pkgs <- c(pkgs, cran_revdeps(pkg))
     }
     pkgs <- unique(pkgs)
