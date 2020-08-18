@@ -173,7 +173,7 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     res <- revdepcheck::revdep_summary()
     revdep_preinstall(revdep_pkgs_with_status("failure"))
   } else if ("--preinstall-todo" %in% args) {
-    todo <- revdep_todo()
+    todo <- subset(revdep_todo(), status == "todo")
     revdep_preinstall(todo$package)
   } else if ("--preinstall" %in% args) {
     pos <- which("--preinstall" == args)
