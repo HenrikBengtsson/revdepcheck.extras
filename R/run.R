@@ -128,9 +128,10 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
         pathname <- file.path(path, "00check.log")
         cat("-----------------------------------------------\n")
         cat(sprintf("%s (%s):\n", pkg, dir))
+        cat(sprintf("Pathname: %s\n", pathname))
         cat("-----------------------------------------------\n")
         bfr <- readLines(pathname, warn = FALSE)
-        tail <- tail(bfr, n = 20L)
+        tail <- tail(bfr, n = 50L)
         writeLines(tail)
       }
     }
