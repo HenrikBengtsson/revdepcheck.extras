@@ -73,28 +73,28 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     revdepcheck::revdep_reset()
   } else if ("--todo-reset" %in% args) {
     revdep_todo_reset()
-    todo()
+    todo(print = TRUE)
   } else if ("--todo" %in% args) {
-    todo()
+    todo(print = TRUE)
   } else if ("--add" %in% args) {
     pos <- which("--add" == args)
     if (pos == length(args)) stop("Missing value for option '--add'")
     pkgs <- parse_pkgs(args[seq(from = pos + 1L, to = length(args))])
     revdepcheck::revdep_add(packages = pkgs)
-    todo()
+    todo(print = TRUE)
   } else if ("--rm" %in% args) {
     pos <- which("--rm" == args)
     if (pos == length(args)) stop("Missing value for option '--rm'")
     pkgs <- parse_pkgs(args[seq(from = pos + 1L, to = length(args))])
     revdepcheck::revdep_rm(packages = pkgs)
-    todo()
+    todo(print = TRUE)
   } else if ("--add-broken" %in% args) {
     revdepcheck::revdep_add_broken()
-    todo()
+    todo(print = TRUE)
   } else if ("--add-error" %in% args) {
     pkgs <- revdep_pkgs_with_status("error")
     revdepcheck::revdep_add(packages = pkgs)
-    todo()
+    todo(print = TRUE)
   } else if ("--add-failure" %in% args) {
     pkgs <- revdep_pkgs_with_status("failure")
     revdepcheck::revdep_add(packages = pkgs)
@@ -103,7 +103,7 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     pkgs <- revdep_children()
     pkgs <- unique(pkgs)
     revdepcheck::revdep_add(packages = pkgs)
-    todo()
+    todo(print = TRUE)
   } else if ("--add-grandchildren" %in% args) {
     revdep_init()
     pkgs <- NULL
@@ -113,7 +113,7 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     }
     pkgs <- unique(pkgs)
     revdepcheck::revdep_add(packages = pkgs)
-    todo()
+    todo(print = TRUE)
   } else if ("--add-all" %in% args) {
     revdep_init()
     pkgs <- revdep_children()
@@ -123,7 +123,7 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     }
     pkgs <- unique(pkgs)
     revdepcheck::revdep_add(packages = pkgs)
-    todo()
+    todo(print = TRUE)
   } else if ("--show-check" %in% args) {
     pos <- which("--show-check" == args)
     if (pos == length(args)) stop("Missing value for option '--show-check")
@@ -173,8 +173,8 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     res <- revdepcheck::revdep_summary()
     revdep_preinstall(revdep_pkgs_with_status("failure"))
   } else if ("--preinstall-todo" %in% args) {
-    todo <- subset(revdep_todo(), status == "todo")
-    revdep_preinstall(todo$package)
+    pkgs <- todo(print = FALSE)
+    revdep_preinstall(pkgs)
   } else if ("--preinstall" %in% args) {
     pos <- which("--preinstall" == args)
     if (pos == length(args)) stop("Missing value for option '--preinstall'")

@@ -2,14 +2,17 @@
 % Please edit documentation in R/todo.R
 \name{todo}
 \alias{todo}
-\title{List the Reverse-Dependency Packages to be Checked}
+\title{Get all the reverse-dependency packages to be checked}
 \usage{
-todo()
+todo(print = TRUE)
+}
+\arguments{
+\item{print}{If TRUE, the list is printed, otherwise not.}
 }
 \value{
 (character vector; invisible) The name of the
 packages to be tested.
 }
 \description{
-List the Reverse-Dependency Packages to be Checked
+Get all the reverse-dependency packages to be checked
 }
