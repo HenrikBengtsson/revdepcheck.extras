@@ -5,12 +5,15 @@
 \alias{revdep_preinstall_update}
 \title{Pre-install and updated reverse-dependency packages}
 \usage{
-revdep_preinstall(pkgs)
+revdep_preinstall(pkgs, skip = TRUE)
 
 revdep_preinstall_update()
 }
 \arguments{
 \item{pkgs}{(character vector) Packages to be pre-installed.}
+
+\item{skip}{If TRUE, packages already in the binary crancache cache will
+be skipped.  If FALSE, all packages will be pre-installed.}
 }
 \value{
 Nothing.

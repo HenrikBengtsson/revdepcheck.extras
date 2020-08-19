@@ -2,6 +2,7 @@
 
 export(available_cores)
 export(check)
+export(is_in_crancache)
 export(parse_pkgs)
 export(required_packages)
 export(revdep_children)

@@ -2,6 +2,9 @@
 #'
 #' @param pkgs (character vector) Packages to be pre-installed.
 #'
+#' @param skip If TRUE, packages already in the binary crancache cache will
+#' be skipped.  If FALSE, all packages will be pre-installed.
+#'
 #' @return Nothing.
 #'
 #' @details
@@ -12,7 +15,7 @@
 #' @importFrom future.apply future_lapply
 #' @importFrom crancache install_packages
 #' @export
-revdep_preinstall <- function(pkgs) {
+revdep_preinstall <- function(pkgs, skip = TRUE) {
   oopts <- options(Ncpus = available_cores())
   lib_paths_org <- .libPaths()
   on.exit({
@@ -25,6 +28,12 @@ revdep_preinstall <- function(pkgs) {
   message(sprintf("Triggering crancache builds by pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
   message(".libPaths():")
   message(paste(paste0(" - ", .libPaths()), collapse = "\n"))
+
+  if (skip) {
+    pkgs <- pkgs[!is_in_crancache(pkgs)]
+    message(sprintf("After skipping already cached package, pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
+  }
+
   ## Install one-by-one to update cache sooner
   void <- future_lapply(seq_along(pkgs), FUN = function(kk) {
     pkg <- pkgs[kk]
