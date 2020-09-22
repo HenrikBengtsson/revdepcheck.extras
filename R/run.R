@@ -187,7 +187,8 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     }
 
     ## Check vignettes by default
-    ## Requires https://github.com/HenrikBengtsson/revdepcheck
+    ## Requires:
+    ## https://github.com/HenrikBengtsson/revdepcheck/tree/feature/check_args
     if (!nzchar(Sys.getenv("R_REVDEPCHECK_CHECK_ARGS"))) {
       Sys.setenv(R_REVDEPCHECK_CHECK_ARGS = "--no-manual")
     }
