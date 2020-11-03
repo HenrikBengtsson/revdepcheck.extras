@@ -42,7 +42,7 @@ check <- function(bioc = TRUE, timeout = 60) {
     precheck()
   }
   
-  revdep_check(bioc = bioc, num_workers = available_cores(),
+  revdep_check(bioc = bioc, num_workers = num_workers(),
                timeout = timeout, quiet = FALSE)
 }
 

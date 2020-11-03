@@ -6,6 +6,7 @@ Imports:
     desc,
     DBI,
     revdepcheck,
+    parallelly,
     future.apply,
     R.utils,
     utils

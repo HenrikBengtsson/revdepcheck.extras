@@ -12,11 +12,12 @@
 #' library folders with suffix \file{-revdepcheck} that lives next
 #' to your default library folders.
 #'
+#' @importFrom parallelly availableCores
 #' @importFrom future.apply future_lapply
 #' @importFrom crancache install_packages
 #' @export
 revdep_preinstall <- function(pkgs, skip = TRUE) {
-  oopts <- options(Ncpus = available_cores())
+  oopts <- options(Ncpus = availableCores())
   lib_paths_org <- .libPaths()
   on.exit({
     .libPaths(lib_paths_org)
@@ -45,10 +46,11 @@ revdep_preinstall <- function(pkgs, skip = TRUE) {
 }
 
 #' @rdname revdep_preinstall
+#' @importFrom parallelly availableCores
 #' @importFrom crancache update_packages
 #' @export
 revdep_preinstall_update <- function() {
-  oopts <- options(Ncpus = available_cores())
+  oopts <- options(Ncpus = availableCores())
   lib_paths_org <- .libPaths()
   on.exit({
     .libPaths(lib_paths_org)
