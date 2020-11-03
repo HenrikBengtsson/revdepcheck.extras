@@ -47,7 +47,7 @@ revdep_precache <- function(package, temp_lib_path = tempfile(pattern = "dir"), 
 
   if (dryrun) return(missing)
 
-  future_lapply(missing, FUN = install_packages, lib = temp_lib_path, future.chunk.size = 1L)
+  future_lapply(missing, FUN = install_packages, lib = temp_lib_path, future.chunk.size = 1L, future.seed = TRUE)
 
   cached <- unique(crancache_list()$Package)
   missing <- setdiff(pkgs, cached)
