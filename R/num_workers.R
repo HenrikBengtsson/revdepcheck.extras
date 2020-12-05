@@ -22,7 +22,7 @@ num_workers <- function() {
 
   max <- availableCores()
   if (max < n) {
-    warning(sprintf("Be careful. You requested %d workers (via R_REVDEPCHECK_NUM_WORKERS/revdepcheck) but parallelly::availableCores() reports %s=%d so you will be running more concurrent 'R CMD check' processes than then number of cores alloted to you", n, names(max), max), immediate. = TRUE)
+    warning(sprintf("Be careful. You requested %d workers (via R_REVDEPCHECK_NUM_WORKERS/revdepcheck) but parallelly::availableCores() reports %s=%d so you will be running more concurrent 'R CMD check' processes than the number of cores alloted to you", n, names(max), max), immediate. = TRUE)
   }
 
   n
