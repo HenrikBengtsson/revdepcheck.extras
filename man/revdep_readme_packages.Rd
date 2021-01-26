@@ -25,3 +25,15 @@ The \code{repo_version} column is not included if \code{available} is NULL.
 \description{
 Get Information of Packages Previously Checked
 }
+\examples{
+\dontrun{\donttest{
+## Packages previously checked
+pkgs <- revdep_readme_packages()
+print(head(pkgs))
+
+## Checked packages that have since been updated
+old <- subset(pkgs, version < repo_version)
+print(old)
+}}
+
+}

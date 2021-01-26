@@ -46,12 +46,14 @@ Add and remove packages to be checked:
 --add-children        Add first-generation reverse package dependencies
 --add-grandchildren   Add second-generation reverse package dependencies
 --add-all             Add first and second-generation dependencies
+--add-updated         Add packages that have been updated since last run
 --rm <pkgs>           Remove one or more packages to be checked
 
 Show results:
 --show-check <pkg>    Display 'old' and 'new' check results during checks
 --list-error          List all packages that "errored"
 --list-failure        List all packages that "failed"
+--list-updated        List packages that have been updated since last run
 }
 }
 

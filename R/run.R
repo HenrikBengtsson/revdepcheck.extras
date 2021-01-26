@@ -37,12 +37,14 @@
 #' --add-children        Add first-generation reverse package dependencies
 #' --add-grandchildren   Add second-generation reverse package dependencies
 #' --add-all             Add first and second-generation dependencies
+#' --add-updated         Add packages that have been updated since last run
 #' --rm <pkgs>           Remove one or more packages to be checked
 #'
 #' Show results:
 #' --show-check <pkg>    Display 'old' and 'new' check results during checks
 #' --list-error          List all packages that "errored"
 #' --list-failure        List all packages that "failed"
+#' --list-updated        List packages that have been updated since last run
 #' ```
 #'
 #' @section Examples:
@@ -61,6 +63,9 @@
 #' @importFrom revdepcheck revdep_check
 #' @export
 run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
+  ## To please 'R CMD check'
+  repo_version <- NULL
+  
   stopifnot(length(warn) == 1L, is.numeric(warn), !is.na(warn), warn >= 0L)
   oopts <- options(warn = warn)
   on.exit(options(oopts))
@@ -114,6 +119,14 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     pkgs <- unique(pkgs)
     revdepcheck::revdep_add(packages = pkgs)
     todo(print = TRUE)
+  } else if ("--add-updated" %in% args) {
+    pkgs <- revdep_readme_packages()
+    pkgs <- subset(pkgs, version < repo_version)$package
+    if (length(pkgs) > 0) {
+      revdepcheck::revdep_add(packages = pkgs)
+    } else {
+      cat("No packages have been updated since last run\n")
+    }
   } else if ("--add-all" %in% args) {
     revdep_init()
     pkgs <- revdep_children()
@@ -159,6 +172,14 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     cat(paste(revdep_pkgs_with_status("error"), collapse = " "), "\n", sep="")
   } else if ("--list-failure" %in% args) {
     cat(paste(revdep_pkgs_with_status("failure"), collapse = " "), "\n", sep="")
+  } else if ("--list-updated" %in% args) {
+    pkgs <- revdep_readme_packages()
+    pkgs <- subset(pkgs, version < repo_version)$package
+    if (length(pkgs) > 0) {
+      cat(paste(pkgs, collapse = " "), "\n", sep="")
+    } else {
+      cat("No packages have been updated since last run\n")
+    }
   } else if ("--preinstall-update" %in% args) {
     revdep_preinstall_update()
   } else if ("--preinstall-children" %in% args) {

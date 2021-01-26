@@ -11,8 +11,8 @@
 #' in upstream repositories.
 #' The `repo_version` column is not included if `available` is NULL.
 #'
-#' @example
-#' \donttest{
+#' @examples
+#' \dontrun{\donttest{
 #' ## Packages previously checked
 #' pkgs <- revdep_readme_packages()
 #' print(head(pkgs))
@@ -20,11 +20,14 @@
 #' ## Checked packages that have since been updated
 #' old <- subset(pkgs, version < repo_version)
 #' print(old)
-#' }
+#' }}
 #'
 #' @importFrom utils available.packages
 #' @export
 revdep_readme_packages <- function(file = "revdep/README.md", available = available.packages()) {
+  ## To please 'R CMD check'
+  repo_version <- NULL
+  
   stopifnot(file_test("-f", file))
   stopifnot(
     is.null(available) ||
