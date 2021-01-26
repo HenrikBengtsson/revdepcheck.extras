@@ -2,16 +2,26 @@
 % Please edit documentation in R/revdep_readme_packages.R
 \name{revdep_readme_packages}
 \alias{revdep_readme_packages}
-\title{Gets Packages Previously Checked}
+\title{Get Information of Packages Previously Checked}
 \usage{
-revdep_readme_packages(file = "revdep/README.md")
+revdep_readme_packages(
+  file = "revdep/README.md",
+  available = available.packages()
+)
 }
 \arguments{
 \item{file}{(character) Pathname to the \file{revdep/README.md}}
+
+\item{available}{(character matrix) An \code{\link[utils:available.packages]{utils::available.packages()}} matrix, or NULL}
 }
 \value{
-A data.frame with columns \code{package} and \code{version}.
+A data.frame with columns
+\code{package} (character),
+\code{version} (package_version), and \code{repo_version} (package_version).
+A \code{repo_version} of \verb{0.0.0.0} indicates that the package is not available
+in upstream repositories.
+The \code{repo_version} column is not included if \code{available} is NULL.
 }
 \description{
-Gets Packages Previously Checked
+Get Information of Packages Previously Checked
 }
