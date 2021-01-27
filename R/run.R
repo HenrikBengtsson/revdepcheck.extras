@@ -38,6 +38,7 @@
 #' --add-grandchildren   Add second-generation reverse package dependencies
 #' --add-all             Add first and second-generation dependencies
 #' --add-updated         Add packages that have been updated since last run
+#' --add-new             Add new packages that did not exist at last run
 #' --rm <pkgs>           Remove one or more packages to be checked
 #'
 #' Show results:
@@ -45,6 +46,7 @@
 #' --list-error          List all packages that "errored"
 #' --list-failure        List all packages that "failed"
 #' --list-updated        List packages that have been updated since last run
+#' --list-new            List new packages that did not exist at last run
 #' ```
 #'
 #' @section Examples:
@@ -127,6 +129,15 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     } else {
       cat("No packages have been updated since last run\n")
     }
+  } else if ("--add-new" %in% args) {
+    pkgs <- revdep_readme_packages()
+    children <- revdepcheck.extras::revdep_children()
+    pkgs <- setdiff(children, pkgs$package)
+    if (length(pkgs) > 0) {
+      revdepcheck::revdep_add(packages = pkgs)
+    } else {
+      cat("No new packages found since last run\n")
+    }
   } else if ("--add-all" %in% args) {
     revdep_init()
     pkgs <- revdep_children()
@@ -179,6 +190,15 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
       cat(paste(pkgs, collapse = " "), "\n", sep="")
     } else {
       cat("No packages have been updated since last run\n")
+    }
+  } else if ("--list-new" %in% args) {
+    pkgs <- revdep_readme_packages()
+    children <- revdepcheck.extras::revdep_children()
+    pkgs <- setdiff(children, pkgs$package)
+    if (length(pkgs) > 0) {
+      cat(paste(pkgs, collapse = " "), "\n", sep="")
+    } else {
+      cat("No new packages found since last run\n")
     }
   } else if ("--preinstall-update" %in% args) {
     revdep_preinstall_update()

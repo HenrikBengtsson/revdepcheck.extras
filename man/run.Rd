@@ -47,6 +47,7 @@ Add and remove packages to be checked:
 --add-grandchildren   Add second-generation reverse package dependencies
 --add-all             Add first and second-generation dependencies
 --add-updated         Add packages that have been updated since last run
+--add-new             Add new packages that did not exist at last run
 --rm <pkgs>           Remove one or more packages to be checked
 
 Show results:
@@ -54,6 +55,7 @@ Show results:
 --list-error          List all packages that "errored"
 --list-failure        List all packages that "failed"
 --list-updated        List packages that have been updated since last run
+--list-new            List new packages that did not exist at last run
 }
 }
 
