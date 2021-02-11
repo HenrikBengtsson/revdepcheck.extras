@@ -59,6 +59,8 @@
 #' Rscript -e revdepcheck.extras::run --args --todo
 #' Rscript -e revdepcheck.extras::run --args --preinstall-children
 #' Rscript -e revdepcheck.extras::run --args --preinstall-todo
+#'
+#' R_REVDEPCHECK_NUM_WORKERS=1 NSLOTS=2 Rscript -e revdepcheck.extras::run
 #' ```
 #' 
 #' @importFrom utils help file_test packageVersion str
