@@ -75,10 +75,16 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
   on.exit(options(oopts))
 
   if ("--help" %in% args) {
-    help("run", package = "revdepcheck.extras", help_type = "text")
+    print(help("run", package = "revdepcheck.extras", help_type = "text"))
+    return(invisible())
   } else if ("--version" %in% args) {
     cat(as.character(packageVersion(.packageName)), "\n", sep = "")
-  } else if ("--reset" %in% args) {
+    return(invisible())
+  }
+
+  assert_repos()
+
+  if ("--reset" %in% args) {
     revdepcheck::revdep_reset()
   } else if ("--todo-reset" %in% args) {
     revdep_todo_reset()

@@ -30,6 +30,8 @@ revdep_preinstall <- function(pkgs, skip = TRUE) {
   message(".libPaths():")
   message(paste(paste0(" - ", .libPaths()), collapse = "\n"))
 
+  assert_repos(verbose = TRUE)
+
   if (skip) {
     pkgs <- pkgs[!is_in_crancache(pkgs)]
     message(sprintf("After skipping already cached package, pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
