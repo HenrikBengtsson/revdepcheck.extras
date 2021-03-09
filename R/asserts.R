@@ -1,5 +1,6 @@
 assert_repos <- function(verbose = FALSE) {
   repos <- getOption("repos")
+  
   repos_info <- sprintf("%s=%s", names(repos), dQuote(repos))
   repos_info <- paste(repos_info, collapse = ", ")
   

@@ -45,7 +45,7 @@ revdep_precache <- function(package, temp_lib_path = tempfile(pattern = "dir"), 
   
   message(sprintf("Pre-cache installing: [%d] %s", length(missing), paste(sQuote(missing), collapse = ", ")))
 
-  assert_repos(verbose = TRUE)
+  assert_repos()
 
   if (dryrun) return(missing)
 

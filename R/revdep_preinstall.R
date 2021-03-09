@@ -30,7 +30,7 @@ revdep_preinstall <- function(pkgs, skip = TRUE) {
   message(".libPaths():")
   message(paste(paste0(" - ", .libPaths()), collapse = "\n"))
 
-  assert_repos(verbose = TRUE)
+  assert_repos()
 
   if (skip) {
     pkgs <- pkgs[!is_in_crancache(pkgs)]

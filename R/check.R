@@ -24,7 +24,7 @@ check <- function(bioc = TRUE, timeout = 60) {
   stopifnot(length(timeout) == 1L, !is.na(timeout), timeout > 0)
   timeout <- as.difftime(timeout, units = "mins")
 
-  assert_repos(verbose = TRUE)
+  assert_repos()
 
   if (file_test("-f", p <- Sys.getenv("R_CHECK_ENVIRON", "~/.R/check.Renviron"))) {
     cat(sprintf("R CMD check will use env vars from %s\n", sQuote(p)))
