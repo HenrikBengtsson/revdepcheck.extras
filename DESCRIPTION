@@ -1,5 +1,5 @@
 Package: revdepcheck.extras
-Version: 0.0.1-9001
+Version: 0.0.1-9002
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Imports:
     crancache,
@@ -10,6 +10,10 @@ Imports:
     future.apply,
     R.utils,
     utils
+Suggests:
+    checkpoint,
+    progressr,
+    R.cache
 Remotes:
     r-lib/crancache,
     r-lib/revdepcheck
