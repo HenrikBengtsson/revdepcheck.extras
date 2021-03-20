@@ -13,7 +13,8 @@ Imports:
 Suggests:
     checkpoint,
     progressr,
-    R.cache
+    R.cache,
+    yaml
 Remotes:
     r-lib/crancache,
     r-lib/revdepcheck
