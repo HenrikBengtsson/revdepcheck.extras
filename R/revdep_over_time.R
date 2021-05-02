@@ -67,7 +67,11 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
 }
 
 
-
+#' @param pkg (character  A package name,
+#'
+#' @param date (POSIXct) A date.
+#'
+#' @rdname revdep_over_time
 #' @export
 cran_revdep_on_date <- function(pkg, date, force = FALSE) {
   cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
@@ -98,4 +102,3 @@ cran_revdep_on_date <- function(pkg, date, force = FALSE) {
     
   revdeps(pkg)
 }
-

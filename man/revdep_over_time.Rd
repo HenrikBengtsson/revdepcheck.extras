@@ -2,9 +2,12 @@
 % Please edit documentation in R/revdep_over_time.R
 \name{revdep_over_time}
 \alias{revdep_over_time}
+\alias{cran_revdep_on_date}
 \title{Get the Number of Reverse Dependencies on CRAN}
 \usage{
 revdep_over_time(pkgs, dates, none = NA_integer_, force = FALSE)
+
+cran_revdep_on_date(pkg, date, force = FALSE)
 }
 \arguments{
 \item{pkgs}{(character vector) One or more packages.}
@@ -14,6 +17,10 @@ revdep_over_time(pkgs, dates, none = NA_integer_, force = FALSE)
 \item{none}{(integer) The default value if there are no dependencies.}
 
 \item{force}{(logical) If TRUE, cached values are ignored.}
+
+\item{pkg}{(character  A package name,}
+
+\item{date}{(POSIXct) A date.}
 }
 \value{
 A data.frame
