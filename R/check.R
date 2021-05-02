@@ -19,7 +19,7 @@
 #' @importFrom utils file_test
 #' @importFrom revdepcheck revdep_check
 #' @export
-check <- function(bioc = TRUE, timeout = 60) {
+check <- function(bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TIMEOUT", "60"))) {
   stopifnot(length(bioc) == 1L, is.logical(bioc), !is.na(bioc))
   stopifnot(length(timeout) == 1L, !is.na(timeout), timeout > 0)
   timeout <- as.difftime(timeout, units = "mins")

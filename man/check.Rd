@@ -4,7 +4,10 @@
 \alias{check}
 \title{Run Reverse Dependency Checks}
 \usage{
-check(bioc = TRUE, timeout = 60)
+check(
+  bioc = TRUE,
+  timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TIMEOUT", "60"))
+)
 }
 \arguments{
 \item{bioc}{(logical) Whether or not reverse dependencies
