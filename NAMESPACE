@@ -2,6 +2,7 @@
 
 export(bioc_releases)
 export(check)
+export(cran_revdep_on_date)
 export(is_in_crancache)
 export(num_workers)
 export(parse_pkgs)
