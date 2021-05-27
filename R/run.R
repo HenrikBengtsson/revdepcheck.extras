@@ -21,10 +21,10 @@
 #' Populate the 'crancache' database with installable package binaries:
 #' --preinstall-todo     Pre-install all packages to be checked
 #' --preinstall <pkgs>   Pre-install specified packages
-#' --preinstall-update   Populate crancache database ...
-#' --preinstall-children Populate crancache database ...
-#' --preinstall-error    Populate crancache database ...
-#' --preinstall-failure  Populate crancache database ...
+#' --preinstall-children Install all reverse dependencies
+#' --preinstall-update   Install packages that have been updated since last run
+#' --preinstall-error    Install packages that gave an "error" during checks
+#' --preinstall-failure  Install packages that failed to be checked
 #'
 #' Add and remove packages to be checked:
 #' --reset               Full reset to restart checks from scratch
@@ -32,8 +32,8 @@
 #' --todo                List packages to be checked
 #' --add <pkgs>          Add one or more packages to be checked
 #' --add-broken          Add "broken" packages to be rechecked
-#' --add-error           Add "errored" packages to be rechecked
-#' --add-failure         Add "failed" packages to be rechecked
+#' --add-error           Add "errored" but not "failed" packages to be rechecked
+#' --add-failure         Add "failed" but not "errored" packages to be rechecked
 #' --add-children        Add first-generation reverse package dependencies
 #' --add-grandchildren   Add second-generation reverse package dependencies
 #' --add-all             Add first and second-generation dependencies
