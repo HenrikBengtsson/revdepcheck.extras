@@ -1,7 +1,8 @@
 Package: revdepcheck.extras
-Version: 0.0.1-9003
+Version: 0.0.1-9004
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Imports:
+    cli,
     crancache,
     desc,
     DBI,

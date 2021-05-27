@@ -64,6 +64,7 @@
 #' ```
 #' 
 #' @importFrom utils help file_test packageVersion str
+#' @importFrom cli cli_inform
 #' @importFrom revdepcheck revdep_check
 #' @export
 run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
@@ -241,8 +242,14 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     if (!nzchar(Sys.getenv("R_REVDEPCHECK_CHECK_ARGS"))) {
       Sys.setenv(R_REVDEPCHECK_CHECK_ARGS = "--no-manual")
     }
+
+    t0 <- Sys.time()
+    cli_inform(sprintf("Start time: %s", format(t0)))
+    t1 <- Sys.time()
     
-    check()
     revdepcheck::revdep_report(all = TRUE)
+
+    cli_inform(sprintf("Finish time: %s", format(t1)))
+    cli_inform(sprintf("Total processing time: %s", format(t1 - t0)))
   }
 }
