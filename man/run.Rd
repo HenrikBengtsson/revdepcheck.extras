@@ -26,6 +26,7 @@ Run reverse-package dependency checks from the command line (CLI)
 List packages:
 --list-children       List reverse package dependencies
 --list-grandchildren  List second-generation reverse package dependencies
+--list-todo           List packages "added" that will be checked next run
 
 Populate the 'crancache' database with installable package binaries:
 --preinstall-todo     Pre-install all packages to be checked
@@ -38,7 +39,6 @@ Populate the 'crancache' database with installable package binaries:
 Add and remove packages to be checked:
 --reset               Full reset to restart checks from scratch
 --todo-reset          Empty set of packages to be checked
---todo                List packages to be checked
 --add <pkgs>          Add one or more packages to be checked
 --add-broken          Add "broken" packages to be rechecked
 --add-error           Add "errored" but not "failed" packages to be rechecked
@@ -65,7 +65,7 @@ Here are some examples how to call this function from the command-line:\if{html}
 Rscript -e revdepcheck.extras::run --args --version
 Rscript -e revdepcheck.extras::run --args --reset
 Rscript -e revdepcheck.extras::run --args --add some, pkg, another
-Rscript -e revdepcheck.extras::run --args --todo
+Rscript -e revdepcheck.extras::run --args --list-todo
 Rscript -e revdepcheck.extras::run --args --preinstall-children
 Rscript -e revdepcheck.extras::run --args --preinstall-todo
 
