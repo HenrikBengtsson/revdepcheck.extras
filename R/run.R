@@ -244,6 +244,8 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
 
     t0 <- Sys.time()
     message(sprintf("Start time: %s", format(t0)))
+
+    check()
     t1 <- Sys.time()
     
     revdepcheck::revdep_report(all = TRUE)
