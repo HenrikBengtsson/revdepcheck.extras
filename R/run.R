@@ -247,10 +247,9 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
 
     check()
     t1 <- Sys.time()
-    
-    revdepcheck::revdep_report(all = TRUE)
-
     message(sprintf("Finish time: %s", format(t1)))
-    message(sprintf("Total processing time: %s", format(t1 - t0)))
+    message(sprintf("Total check time: %s", format(t1 - t0)))
+
+    revdepcheck::revdep_report(all = TRUE)
   }
 }
