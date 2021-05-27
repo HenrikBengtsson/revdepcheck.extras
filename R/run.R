@@ -64,7 +64,6 @@
 #' ```
 #' 
 #' @importFrom utils help file_test packageVersion str
-#' @importFrom cli cli_inform
 #' @importFrom revdepcheck revdep_check
 #' @export
 run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
@@ -244,12 +243,12 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     }
 
     t0 <- Sys.time()
-    cli_inform(sprintf("Start time: %s", format(t0)))
+    message(sprintf("Start time: %s", format(t0)))
     t1 <- Sys.time()
     
     revdepcheck::revdep_report(all = TRUE)
 
-    cli_inform(sprintf("Finish time: %s", format(t1)))
-    cli_inform(sprintf("Total processing time: %s", format(t1 - t0)))
+    message(sprintf("Finish time: %s", format(t1)))
+    message(sprintf("Total processing time: %s", format(t1 - t0)))
   }
 }
