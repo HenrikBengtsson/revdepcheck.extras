@@ -42,9 +42,8 @@ revdep_grandchildren <- local({
       children <- revdep_children(package)
       p <- progressor(along = children)
       pkgs <- lapply(children, FUN = function(child) {
-        deps <- cran_revdeps(child)
-        pkgs <- c(pkgs, deps)
-        p(sprintf("%s (n=%d)", child, length(deps)))
+        on.exit(p(sprintf("%s (n=%d)", child, length(deps))))
+        cran_revdeps(child)
       })
       pkgs <- unlist(pkgs, use.names = FALSE)
       pkgs <- unique(pkgs)
