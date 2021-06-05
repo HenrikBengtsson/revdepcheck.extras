@@ -35,7 +35,7 @@ revdep_preinstall <- function(pkgs, skip = TRUE) {
 
   if (skip) {
     pkgs <- pkgs[!is_in_crancache(pkgs)]
-    message(sprintf("After skipping already cached package, pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
+    message(sprintf("After skipping already cached packages, pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
   }
 
   message(sprintf("Pre-installing %d packages (Ncpus = %d)",
@@ -43,11 +43,11 @@ revdep_preinstall <- function(pkgs, skip = TRUE) {
 
   ## Install one-by-one to update cache sooner
   p <- progressor(along = pkgs)
-  void <- future_lapply(seq_along(pkgs), FUN = function(kk) {
-    pkg <- pkgs[kk]
-    install_packages(pkg, dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
-    p(pkg)
-  }, future.chunk.size = 1L, future.seed = TRUE)
+  void <- future_lapply(pkgs, FUN = function(pkg) {
+    on.exit(p(pkg))
+    message(sprintf("Pre-installing package %s (Ncpus = %d)", pkg, getOption("Ncpus", 1L)))
+    install_packages(pkg, dependencies = TRUE)
+  }) #, future.chunk.size = 1L, future.seed = TRUE)
   invisible(void)  
 }
 

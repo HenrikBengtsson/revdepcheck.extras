@@ -11,6 +11,11 @@ NEW FEATURES:
 
 BUG FIXES:
 
+* revdep_preinstall() would install a lot of packages because it installed
+  with dependencies = c("Depends", "Imports", "LinkingTo", "Suggests")
+  instead of dependencies = TRUE.  The former would install all packages
+  under 'Suggests' recursively.
+
 * revdep_init() could give an error under certain circumstances.
 
 
