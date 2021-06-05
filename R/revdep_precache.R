@@ -44,8 +44,9 @@ revdep_precache <- function(package = ".", temp_lib_path = tempfile(pattern = "d
   missing <- setdiff(pkgs, cached)
   ## Nothing todo?
   if (length(missing) == 0L) return(character(0L))
-  
+
   message(sprintf("Pre-cache installing: [%d] %s", length(missing), paste(sQuote(missing), collapse = ", ")))
+  message("Installing into library: ", sQuote(temp_lib_path))
 
   assert_repos()
 
@@ -54,7 +55,7 @@ revdep_precache <- function(package = ".", temp_lib_path = tempfile(pattern = "d
   p <- progressor(along = missing)
   void <- future_lapply(missing, FUN = function(pkg) {
     on.exit(p(pkg))
-    install_packages(pkg, lib = temp_lib_path, dependencies = TRUE)
+    install_packages(pkg, dependencies = TRUE, lib = temp_lib_path)
   }, future.chunk.size = 1L, future.seed = TRUE)
 
   cached <- unique(crancache_list()$Package)
