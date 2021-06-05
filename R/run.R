@@ -184,16 +184,11 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     }
   } else if ("--list-children" %in% args) {
     if (identical(pkg, ".")) pkg <- revdep_this_package()
-    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-    pkgs <- cran_revdeps(pkg)
+    pkgs <- revdep_children(pkg)
     cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-grandchildren" %in% args) {
-    pkgs <- NULL
-    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-    for (pkg in revdep_children(pkg)) {
-      pkgs <- c(pkgs, cran_revdeps(pkg))
-    }
-    pkgs <- unique(pkgs)
+    if (identical(pkg, ".")) pkg <- revdep_this_package()
+    pkgs <- revdep_grandchildren(pkg)
     cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-error" %in% args) {
     cat(paste(revdep_pkgs_with_status(pkg, "error"), collapse = " "), "\n", sep="")
