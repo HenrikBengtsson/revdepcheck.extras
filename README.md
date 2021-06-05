@@ -20,6 +20,9 @@ Check a _specific set_ of reverse-dependency packages:
 > library(revdepcheck.extras)
 > revdep_init()
 > revdep_add(packages = c("pkgA", "pkgB", "pkgQ"))
+> revdep_add(packages = revdep_children())
+> revdep_add(packages = c(revdep_children(), revdep_grandchildren()))
+> revdep_todo()
 ```
 
 
@@ -27,7 +30,14 @@ Check a _specific set_ of reverse-dependency packages:
 
 ```sh
 $ Rscript -e revdepcheck.extras::run
+$ Rscript -e revdepcheck.extras::run --help
+$ Rscript -e revdepcheck.extras::run --init
 $ Rscript -e revdepcheck.extras::run --reset
+$ Rscript -e revdepcheck.extras::run --add pkgA pkgB pkgQ
+$ Rscript -e revdepcheck.extras::run --add pkgA,pkgB,pkgQ
+$ Rscript -e revdepcheck.extras::run --add-children
+$ Rscript -e revdepcheck.extras::run --add-grandchildren
+$ Rscript -e revdepcheck.extras::run --todo
 $ Rscript -e revdepcheck.extras::run --preinstall-children
 ```
 

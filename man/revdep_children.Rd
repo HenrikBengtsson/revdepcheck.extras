@@ -2,14 +2,21 @@
 % Please edit documentation in R/revdep_children.R
 \name{revdep_children}
 \alias{revdep_children}
+\alias{revdep_grandchildren}
 \title{Gets reverse-dependency packages of a package}
 \usage{
 revdep_children(pkg = NULL)
+
+revdep_grandchildren(pkg = NULL, exclude_children = TRUE)
 }
 \arguments{
 \item{pkg}{(character) The package name whose reverse dependencies should
 be identified and returned.  If NULL (default), then the current package
 according to \code{\link[=revdep_this_package]{revdep_this_package()}} is used.}
+
+\item{exclude_children}{If TRUE, only second generation dependencies are
+returned, excluding first generation dependencies ("children").  If FALSE,
+all reverse dependencies are returned regardless of generation.}
 }
 \value{
 (character vector) List of package names

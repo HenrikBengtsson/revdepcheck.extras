@@ -20,8 +20,36 @@ revdep_children <- local({
     if (is.null(pkgs)) {
       pkgs <- cran_revdeps(pkg)
       pkgs <- setdiff(pkgs, pkg) ## WORKAROUND
+      pkgs <- unique(pkgs)
       cache[[pkg]] <- pkgs
     }
     pkgs
   }
 })
+
+#' @param exclude_children If TRUE, only second generation dependencies are
+#' returned, excluding first generation dependencies ("children").  If FALSE,
+#' all reverse dependencies are returned regardless of generation.
+#'
+#' @rdname revdep_children
+#' @export
+revdep_grandchildren <- local({
+  cache <- list()
+  function(pkg = NULL, exclude_children = TRUE) {
+    if (is.null(pkg)) pkg <- revdep_this_package()
+    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
+    pkgs <- cache[[pkg]]
+    if (is.null(pkgs)) {
+      children <- revdep_children(pkg)
+      for (child in children) {
+        pkgs <- c(pkgs, cran_revdeps(child))
+      }
+      pkgs <- unique(pkgs)
+      if (exclude_children) pkgs <- setdiff(pkgs, children)
+      cache[[pkg]] <- pkgs
+    }
+    pkgs
+  }
+})
+
+

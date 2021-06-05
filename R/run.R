@@ -84,7 +84,9 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
 
   assert_repos()
 
-  if ("--reset" %in% args) {
+  if ("--init" %in% args) {
+    revdep_init()
+  } else if ("--reset" %in% args) {
     revdepcheck::revdep_reset()
   } else if ("--todo-reset" %in% args) {
     revdep_todo_reset()
@@ -92,6 +94,7 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
   } else if ("--list-todo" %in% args) {
     todo(print = TRUE)
   } else if ("--add" %in% args) {
+    revdep_init()
     pos <- which("--add" == args)
     if (pos == length(args)) stop("Missing value for option '--add'")
     pkgs <- parse_pkgs(args[seq(from = pos + 1L, to = length(args))])
@@ -99,37 +102,36 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     todo(print = TRUE)
   } else if ("--rm" %in% args) {
     pos <- which("--rm" == args)
+    revdep_init()
     if (pos == length(args)) stop("Missing value for option '--rm'")
     pkgs <- parse_pkgs(args[seq(from = pos + 1L, to = length(args))])
     revdepcheck::revdep_rm(packages = pkgs)
     todo(print = TRUE)
   } else if ("--add-broken" %in% args) {
+    revdep_init()
     revdepcheck::revdep_add_broken()
     todo(print = TRUE)
   } else if ("--add-error" %in% args) {
+    revdep_init()
     pkgs <- revdep_pkgs_with_status("error")
     revdepcheck::revdep_add(packages = pkgs)
     todo(print = TRUE)
   } else if ("--add-failure" %in% args) {
+    revdep_init()
     pkgs <- revdep_pkgs_with_status("failure")
     revdepcheck::revdep_add(packages = pkgs)
   } else if ("--add-children" %in% args) {
     revdep_init()
     pkgs <- revdep_children()
-    pkgs <- unique(pkgs)
     revdepcheck::revdep_add(packages = pkgs)
     todo(print = TRUE)
   } else if ("--add-grandchildren" %in% args) {
     revdep_init()
-    pkgs <- NULL
-    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-    for (pkg in revdep_children()) {
-      pkgs <- c(pkgs, cran_revdeps(pkg))
-    }
-    pkgs <- unique(pkgs)
+    pkgs <- revdep_grandchildren()
     revdepcheck::revdep_add(packages = pkgs)
     todo(print = TRUE)
   } else if ("--add-updated" %in% args) {
+    revdep_init()
     pkgs <- revdep_readme_packages()
     pkgs <- subset(pkgs, version < repo_version)$package
     if (length(pkgs) > 0) {
@@ -138,6 +140,7 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
       cat("No packages have been updated since last run\n")
     }
   } else if ("--add-new" %in% args) {
+    revdep_init()
     pkgs <- revdep_readme_packages()
     children <- revdepcheck.extras::revdep_children()
     pkgs <- setdiff(children, pkgs$package)
