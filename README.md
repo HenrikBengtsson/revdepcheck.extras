@@ -5,6 +5,26 @@ This package provides additional functions to be used with the [revdepcheck] pac
 
 ## Examples
 
+### From R
+
+Check _all_ reverse dependencies:
+
+```r
+> revdepcheck.extras::revdep_check()
+```
+
+
+Check a _specific set_ of reverse-dependency packages:
+
+```r
+> library(revdepcheck.extras)
+> revdep_init()
+> revdep_add(packages = c("pkgA", "pkgB", "pkgQ"))
+```
+
+
+### From the shell
+
 ```sh
 $ Rscript -e revdepcheck.extras::run
 $ Rscript -e revdepcheck.extras::run --reset
