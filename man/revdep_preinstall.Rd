@@ -5,7 +5,11 @@
 \alias{revdep_preinstall_update}
 \title{Pre-install and updated reverse-dependency packages}
 \usage{
-revdep_preinstall(pkgs, skip = TRUE, temp_lib_path = revdep_preinstall_libs())
+revdep_preinstall(
+  pkgs,
+  skip = TRUE,
+  temp_lib_path = revdep_preinstall_libs()[1]
+)
 
 revdep_preinstall_update()
 }

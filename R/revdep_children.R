@@ -31,7 +31,6 @@ revdep_children <- local({
 #'
 #' @rdname revdep_children
 #' @importFrom progressr progressor
-#' @importFrom future.apply future_lapply
 #' @export
 revdep_grandchildren <- local({
   cache <- list()
@@ -42,7 +41,7 @@ revdep_grandchildren <- local({
     if (is.null(pkgs)) {
       children <- revdep_children(package)
       p <- progressor(along = children)
-      pkgs <- future_lapply(children, FUN = function(child) {
+      pkgs <- lapply(children, FUN = function(child) {
         deps <- cran_revdeps(child)
         pkgs <- c(pkgs, deps)
         p(sprintf("%s (n=%d)", child, length(deps)))

@@ -42,11 +42,11 @@ revdep_preinstall <- function(pkgs, skip = TRUE, temp_lib_path = revdep_preinsta
 
   ## Install one-by-one to update cache sooner
   p <- progressor(along = pkgs)
-  void <- future_lapply(pkgs, FUN = function(pkg) {
+  void <- lapply(pkgs, FUN = function(pkg) {
     on.exit(p(pkg))
     message(sprintf("Pre-installing package %s (Ncpus = %d)", pkg, getOption("Ncpus", 1L)))
     install_packages(pkg, dependencies = TRUE, lib = temp_lib_path)
-  }, future.chunk.size = 1L, future.seed = TRUE)
+  }) #, future.chunk.size = 1L, future.seed = TRUE)
   invisible(void)  
 }
 
