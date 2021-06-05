@@ -7,9 +7,10 @@ This package provides additional functions to be used with the [revdepcheck] pac
 
 ### From R
 
-Check _all_ reverse dependencies:
+Check _all_ reverse dependencies running eight checks in parallel:
 
 ```r
+> options(revdepcheck.num_workers = 8)
 > revdepcheck.extras::revdep_check()
 ```
 
@@ -29,6 +30,7 @@ Check a _specific set_ of reverse-dependency packages:
 ### From the shell
 
 ```sh
+$ export R_REVDEPCHECK_NUM_WORKERS=8
 $ Rscript -e revdepcheck.extras::run
 $ Rscript -e revdepcheck.extras::run --help
 $ Rscript -e revdepcheck.extras::run --init
