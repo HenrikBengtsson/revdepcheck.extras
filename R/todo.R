@@ -1,5 +1,7 @@
 #' Get all the reverse-dependency packages to be checked
 #'
+#' @param pkg (character) Path to package.
+#'
 #' @param print If TRUE, the list is printed, otherwise not.
 #'
 #' @return (character vector; invisible) The name of the
@@ -7,8 +9,8 @@
 #'
 #' @importFrom revdepcheck revdep_todo
 #' @export
-todo <- function(print = TRUE) {
-  pkgs <- tryCatch(revdep_todo(), error = function(ex) NA)
+todo <- function(pkg = ".", print = TRUE) {
+  pkgs <- tryCatch(revdep_todo(pkg), error = function(ex) NA)
   if (identical(pkgs, NA)) {
     cat("Revdepcheck has not been initiated\n")
     return(invisible(character(0L)))

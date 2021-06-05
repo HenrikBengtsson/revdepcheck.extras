@@ -7,7 +7,7 @@
 \usage{
 revdep_over_time(pkgs, dates, none = NA_integer_, force = FALSE)
 
-cran_revdep_on_date(pkg, date, force = FALSE)
+cran_revdep_on_date(package, date, force = FALSE)
 }
 \arguments{
 \item{pkgs}{(character vector) One or more packages.}
@@ -18,7 +18,7 @@ cran_revdep_on_date(pkg, date, force = FALSE)
 
 \item{force}{(logical) If TRUE, cached values are ignored.}
 
-\item{pkg}{(character  A package name,}
+\item{package}{(character) A package name.}
 
 \item{date}{(POSIXct) A date.}
 }

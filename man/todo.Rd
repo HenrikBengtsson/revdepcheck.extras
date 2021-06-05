@@ -4,9 +4,11 @@
 \alias{todo}
 \title{Get all the reverse-dependency packages to be checked}
 \usage{
-todo(print = TRUE)
+todo(pkg = ".", print = TRUE)
 }
 \arguments{
+\item{pkg}{(character) Path to package.}
+
 \item{print}{If TRUE, the list is printed, otherwise not.}
 }
 \value{

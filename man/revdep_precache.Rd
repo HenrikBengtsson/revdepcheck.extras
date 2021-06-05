@@ -5,14 +5,14 @@
 \title{Precache package installs required for reverse-dependencies package checks}
 \usage{
 revdep_precache(
-  package,
+  package = ".",
   temp_lib_path = tempfile(pattern = "dir"),
   ...,
   dryrun = FALSE
 )
 }
 \arguments{
-\item{package}{(character string) Name of package.}
+\item{package}{(character string) Package name.}
 
 \item{temp_lib_path}{(character string) The folder where to
 install packages during the pre-cache installation.  This

@@ -1,6 +1,13 @@
 Package: revdepcheck.extras
 ===========================
 
+Version: 0.1.0-9000 [2021-06-04]
+
+BUG FIXES:
+
+* revdep_init() could give an error under certain circumstances.
+
+
 Version: 0.1.0 [2021-06-04]
 
 SIGINFICANT CHANGES:

@@ -1,6 +1,6 @@
 #' Precache package installs required for reverse-dependencies package checks
 #'
-#' @param package (character string) Name of package.
+#' @param package (character string) Package name.
 #'
 #' @param temp_lib_path (character string) The folder where to
 #' install packages during the pre-cache installation.  This
@@ -26,7 +26,8 @@
 #' @importFrom utils file_test
 #'
 #' @export
-revdep_precache <- function(package, temp_lib_path = tempfile(pattern = "dir"), ..., dryrun = FALSE) {
+revdep_precache <- function(package = ".", temp_lib_path = tempfile(pattern = "dir"), ..., dryrun = FALSE) {
+  if (identical(package, ".")) package <- revdep_this_package()
   pkgs <- revdep_required_packages(package, ...)
 
   if (!file_test("-d", temp_lib_path)) {
