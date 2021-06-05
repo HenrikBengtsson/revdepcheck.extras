@@ -259,7 +259,6 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     check()
     t1 <- Sys.time()
 
-    status("WRAP-UP")
     message(sprintf("Finish time: %s", format(t1)))
     message(sprintf("Total check time: %s", format(t1 - t0)))
 
