@@ -16,12 +16,12 @@
 #' [Timemachine](https://mran.microsoft.com/timemachine) for reverse
 #' package dependencies at particular dates.
 #'
+#' @importFrom progressr progressor
 #' @importFrom future.apply future_lapply
 #' @export
 revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
   cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
   getSnapshotUrl <- import_from("checkpoint", "getSnapshotUrl")
-  progressor <- progressr::progressor
   loadCache <- R.cache::loadCache
   saveCache <- R.cache::saveCache
   

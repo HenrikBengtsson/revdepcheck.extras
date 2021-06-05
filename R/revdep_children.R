@@ -32,6 +32,8 @@ revdep_children <- local({
 #' all reverse dependencies are returned regardless of generation.
 #'
 #' @rdname revdep_children
+#' @importFrom progressr progressor
+#' @importFrom future.apply future_lapply
 #' @export
 revdep_grandchildren <- local({
   cache <- list()
@@ -41,9 +43,13 @@ revdep_grandchildren <- local({
     pkgs <- cache[[pkg]]
     if (is.null(pkgs)) {
       children <- revdep_children(pkg)
-      for (child in children) {
-        pkgs <- c(pkgs, cran_revdeps(child))
-      }
+      p <- progressor(along = children)
+      pkgs <- future_lapply(children, FUN = function(child) {
+        deps <- cran_revdeps(child)
+        pkgs <- c(pkgs, deps)
+        p(sprintf("%s (n=%d)", child, length(deps)))
+      })
+      pkgs <- unlist(pkgs, use.names = FALSE)
       pkgs <- unique(pkgs)
       if (exclude_children) pkgs <- setdiff(pkgs, children)
       cache[[pkg]] <- pkgs
