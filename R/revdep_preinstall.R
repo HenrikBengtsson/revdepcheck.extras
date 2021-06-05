@@ -14,6 +14,7 @@
 #'
 #' @importFrom parallelly availableCores
 #' @importFrom future.apply future_lapply
+#' @importFrom progressr progressor
 #' @importFrom crancache install_packages
 #' @export
 revdep_preinstall <- function(pkgs, skip = TRUE) {
@@ -37,12 +38,15 @@ revdep_preinstall <- function(pkgs, skip = TRUE) {
     message(sprintf("After skipping already cached package, pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
   }
 
+  message(sprintf("Pre-installing %d packages (Ncpus = %d)",
+                  length(pkgs), getOption("Ncpus", 1L)))
+
   ## Install one-by-one to update cache sooner
+  p <- progressor(along = pkgs)
   void <- future_lapply(seq_along(pkgs), FUN = function(kk) {
     pkg <- pkgs[kk]
-    message(sprintf("Pre-installing package %d of %d: %s (Ncpus = %d)",
-                    kk, length(pkgs), pkg, getOption("Ncpus", 1L)))
     install_packages(pkg, dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
+    p(pkg)
   }, future.chunk.size = 1L, future.seed = TRUE)
   invisible(void)  
 }

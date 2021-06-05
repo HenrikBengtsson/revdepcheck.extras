@@ -7,6 +7,8 @@ NEW FEATURES:
 
 * run() gained argument 'pkg'.
 
+* Added progress updated to revdep_precache() and revdep_preinstall().
+
 BUG FIXES:
 
 * revdep_init() could give an error under certain circumstances.

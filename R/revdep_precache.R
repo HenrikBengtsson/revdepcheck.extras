@@ -22,6 +22,7 @@
 #' adding them to your default package library folders.
 #'
 #' @importFrom future.apply future_lapply
+#' @importFrom progressr progressor
 #' @importFrom crancache crancache_list install_packages
 #' @importFrom utils file_test
 #'
@@ -50,7 +51,11 @@ revdep_precache <- function(package = ".", temp_lib_path = tempfile(pattern = "d
 
   if (dryrun) return(missing)
 
-  future_lapply(missing, FUN = install_packages, lib = temp_lib_path, future.chunk.size = 1L, future.seed = TRUE)
+  p <- progressor(along = missing)
+  void <- future_lapply(missing, FUN = function(pkg) {
+    install_packages(pkg, lib = temp_lib_path)
+    p(pkg)
+  }, future.chunk.size = 1L, future.seed = TRUE)
 
   cached <- unique(crancache_list()$Package)
   missing <- setdiff(pkgs, cached)
