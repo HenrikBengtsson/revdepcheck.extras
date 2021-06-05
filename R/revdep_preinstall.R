@@ -47,7 +47,7 @@ revdep_preinstall <- function(pkgs, skip = TRUE) {
     on.exit(p(pkg))
     message(sprintf("Pre-installing package %s (Ncpus = %d)", pkg, getOption("Ncpus", 1L)))
     install_packages(pkg, dependencies = TRUE)
-  }) #, future.chunk.size = 1L, future.seed = TRUE)
+  }, future.chunk.size = 1L, future.seed = TRUE)
   invisible(void)  
 }
 
