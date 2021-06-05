@@ -60,7 +60,7 @@ revdep_preinstall_update <- function() {
   })
   .libPaths(revdep_preinstall_libs())
   
-  message("Update crancache for all pre-installing packages:")
+  message("Update crancache for all pre-installed packages:")
   message(".libPaths():")
   message(paste(paste0(" - ", .libPaths()), collapse = "\n"))
   message(sprintf("Ncpus=%d", getOption("Ncpus", 1L)))

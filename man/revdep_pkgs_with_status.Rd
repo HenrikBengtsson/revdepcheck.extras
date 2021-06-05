@@ -4,9 +4,11 @@
 \alias{revdep_pkgs_with_status}
 \title{Get packages with a certain check status}
 \usage{
-revdep_pkgs_with_status(status = c("error", "failure"))
+revdep_pkgs_with_status(pkg = ".", status = c("error", "failure"))
 }
 \arguments{
+\item{pkg}{(character) Path to package.}
+
 \item{status}{(character vector) A status to filter checked
 packages by.
 If \code{"error"}, then packages for which the 'new' version failed are returned.

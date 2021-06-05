@@ -3,6 +3,10 @@ Package: revdepcheck.extras
 
 Version: 0.1.0-9000 [2021-06-04]
 
+NEW FEATURES:
+
+* run() gained argument 'pkg'.
+
 BUG FIXES:
 
 * revdep_init() could give an error under certain circumstances.
