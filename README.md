@@ -24,6 +24,7 @@ Check a _specific set_ of reverse-dependency packages:
 > revdep_add(packages = revdep_children())
 > revdep_add(packages = c(revdep_children(), revdep_grandchildren()))
 > revdep_todo()
+> revdep_check()
 ```
 
 

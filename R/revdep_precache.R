@@ -1,6 +1,6 @@
 #' Precache package installs required for reverse-dependencies package checks
 #'
-#' @param package (character string) Name of package.
+#' @param package (character string) Package name.
 #'
 #' @param temp_lib_path (character string) The folder where to
 #' install packages during the pre-cache installation.  This
@@ -22,11 +22,13 @@
 #' adding them to your default package library folders.
 #'
 #' @importFrom future.apply future_lapply
+#' @importFrom progressr progressor
 #' @importFrom crancache crancache_list install_packages
 #' @importFrom utils file_test
 #'
 #' @export
-revdep_precache <- function(package, temp_lib_path = tempfile(pattern = "dir"), ..., dryrun = FALSE) {
+revdep_precache <- function(package = ".", temp_lib_path = tempfile(pattern = "dir"), ..., dryrun = FALSE) {
+  if (identical(package, ".")) package <- revdep_this_package()
   pkgs <- revdep_required_packages(package, ...)
 
   if (!file_test("-d", temp_lib_path)) {
@@ -42,14 +44,19 @@ revdep_precache <- function(package, temp_lib_path = tempfile(pattern = "dir"), 
   missing <- setdiff(pkgs, cached)
   ## Nothing todo?
   if (length(missing) == 0L) return(character(0L))
-  
+
   message(sprintf("Pre-cache installing: [%d] %s", length(missing), paste(sQuote(missing), collapse = ", ")))
+  message("Installing into library: ", sQuote(temp_lib_path))
 
   assert_repos()
 
   if (dryrun) return(missing)
 
-  future_lapply(missing, FUN = install_packages, lib = temp_lib_path, future.chunk.size = 1L, future.seed = TRUE)
+  p <- progressor(along = missing)
+  void <- lapply(missing, FUN = function(pkg) {
+    on.exit(p(pkg))
+    install_packages(pkg, dependencies = TRUE, lib = temp_lib_path)
+  })#, future.chunk.size = 1L, future.seed = TRUE)
 
   cached <- unique(crancache_list()$Package)
   missing <- setdiff(pkgs, cached)

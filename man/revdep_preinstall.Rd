@@ -5,7 +5,11 @@
 \alias{revdep_preinstall_update}
 \title{Pre-install and updated reverse-dependency packages}
 \usage{
-revdep_preinstall(pkgs, skip = TRUE)
+revdep_preinstall(
+  pkgs,
+  skip = TRUE,
+  temp_lib_path = revdep_preinstall_libs()[1]
+)
 
 revdep_preinstall_update()
 }
@@ -14,6 +18,9 @@ revdep_preinstall_update()
 
 \item{skip}{If TRUE, packages already in the binary crancache cache will
 be skipped.  If FALSE, all packages will be pre-installed.}
+
+\item{temp_lib_path}{(character string) The folder where to
+install packages during pre-installation.}
 }
 \value{
 Nothing.

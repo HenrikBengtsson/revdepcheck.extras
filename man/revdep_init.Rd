@@ -4,7 +4,13 @@
 \alias{revdep_init}
 \title{Initiate the revdepcheck database}
 \usage{
-revdep_init()
+revdep_init(pkg = ".")
+}
+\arguments{
+\item{pkg}{(character) Path to package.}
+}
+\value{
+Nothing.
 }
 \description{
 Initiate the revdepcheck database

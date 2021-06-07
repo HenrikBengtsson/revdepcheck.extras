@@ -4,7 +4,10 @@
 \alias{revdep_todo_reset}
 \title{Resets the set of reverse-package dependencies to be checked}
 \usage{
-revdep_todo_reset()
+revdep_todo_reset(pkg = ".")
+}
+\arguments{
+\item{pkg}{(character) Path to package.}
 }
 \value{
 Nothing.

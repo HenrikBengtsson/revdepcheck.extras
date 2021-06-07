@@ -5,6 +5,9 @@
 #' @param skip If TRUE, packages already in the binary crancache cache will
 #' be skipped.  If FALSE, all packages will be pre-installed.
 #'
+#' @param temp_lib_path (character string) The folder where to
+#' install packages during pre-installation.
+#'
 #' @return Nothing.
 #'
 #' @details
@@ -14,16 +17,11 @@
 #'
 #' @importFrom parallelly availableCores
 #' @importFrom future.apply future_lapply
+#' @importFrom progressr progressor
 #' @importFrom crancache install_packages
 #' @export
-revdep_preinstall <- function(pkgs, skip = TRUE) {
+revdep_preinstall <- function(pkgs, skip = TRUE, temp_lib_path = revdep_preinstall_libs()[1]) {
   oopts <- options(Ncpus = availableCores())
-  lib_paths_org <- .libPaths()
-  on.exit({
-    .libPaths(lib_paths_org)
-    options(oopts)
-  })
-  .libPaths(revdep_preinstall_libs())
   
   pkgs <- unique(pkgs)
   message(sprintf("Triggering crancache builds by pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
@@ -34,16 +32,21 @@ revdep_preinstall <- function(pkgs, skip = TRUE) {
 
   if (skip) {
     pkgs <- pkgs[!is_in_crancache(pkgs)]
-    message(sprintf("After skipping already cached package, pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
+    message(sprintf("After skipping already cached packages, pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
   }
 
+  message(sprintf("Pre-installing %d packages (Ncpus = %d)",
+                  length(pkgs), getOption("Ncpus", 1L)))
+
+  message("Installing into library: ", sQuote(temp_lib_path))
+
   ## Install one-by-one to update cache sooner
-  void <- future_lapply(seq_along(pkgs), FUN = function(kk) {
-    pkg <- pkgs[kk]
-    message(sprintf("Pre-installing package %d of %d: %s (Ncpus = %d)",
-                    kk, length(pkgs), pkg, getOption("Ncpus", 1L)))
-    install_packages(pkg, dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
-  }, future.chunk.size = 1L, future.seed = TRUE)
+  p <- progressor(along = pkgs)
+  void <- lapply(pkgs, FUN = function(pkg) {
+    on.exit(p(pkg))
+    message(sprintf("Pre-installing package %s (Ncpus = %d)", pkg, getOption("Ncpus", 1L)))
+    install_packages(pkg, dependencies = TRUE, lib = temp_lib_path)
+  }) #, future.chunk.size = 1L, future.seed = TRUE)
   invisible(void)  
 }
 
@@ -60,7 +63,7 @@ revdep_preinstall_update <- function() {
   })
   .libPaths(revdep_preinstall_libs())
   
-  message("Update crancache for all pre-installing packages:")
+  message("Update crancache for all pre-installed packages:")
   message(".libPaths():")
   message(paste(paste0(" - ", .libPaths()), collapse = "\n"))
   message(sprintf("Ncpus=%d", getOption("Ncpus", 1L)))

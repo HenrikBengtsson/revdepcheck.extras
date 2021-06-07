@@ -1,6 +1,24 @@
 Package: revdepcheck.extras
 ===========================
 
+Version: 0.2.0 [2021-06-07]
+
+NEW FEATURES:
+
+* run() gained argument 'pkg'.
+
+* Added progress updated to revdep_precache() and revdep_preinstall().
+
+BUG FIXES:
+
+* revdep_preinstall() would install a lot of packages because it installed
+  with dependencies = c("Depends", "Imports", "LinkingTo", "Suggests")
+  instead of dependencies = TRUE.  The former would install all packages
+  under 'Suggests' recursively.
+
+* revdep_init() could give an error under certain circumstances.
+
+
 Version: 0.1.0 [2021-06-04]
 
 SIGINFICANT CHANGES:

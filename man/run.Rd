@@ -4,9 +4,12 @@
 \alias{run}
 \title{Run reverse-package dependency checks from the command line (CLI)}
 \usage{
-run(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE))
+run(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE))
 }
 \arguments{
+\item{pkg}{Path to package or package name.  Default to the package
+in the current working directory.}
+
 \item{\dots}{Not used.}
 
 \item{warn}{(integer) The warn level of \R option \code{warn} while running

@@ -1,5 +1,8 @@
 #' Run reverse-package dependency checks from the command line (CLI)
 #'
+#' @param pkg Path to package or package name.  Default to the package
+#' in the current working directory.
+#'
 #' @param \dots Not used.
 #'
 #' @param warn (integer) The warn level of \R option `warn` while running
@@ -66,9 +69,11 @@
 #' @importFrom utils help file_test packageVersion str
 #' @importFrom revdepcheck revdep_check
 #' @export
-run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
+run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
   ## To please 'R CMD check'
   repo_version <- NULL
+
+  stopifnot(is.character(pkg), length(pkg) == 1L, !is.na(pkg))
   
   stopifnot(length(warn) == 1L, is.numeric(warn), !is.na(warn), warn >= 0L)
   oopts <- options(warn = warn)
@@ -85,79 +90,79 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
   assert_repos()
 
   if ("--init" %in% args) {
-    revdep_init()
+    revdep_init(pkg)
   } else if ("--reset" %in% args) {
-    revdepcheck::revdep_reset()
+    revdepcheck::revdep_reset(pkg)
   } else if ("--todo-reset" %in% args) {
-    revdep_todo_reset()
+    revdep_todo_reset(pkg)
     todo(print = TRUE)
   } else if ("--list-todo" %in% args) {
     todo(print = TRUE)
   } else if ("--add" %in% args) {
-    revdep_init()
+    revdep_init(pkg)
     pos <- which("--add" == args)
     if (pos == length(args)) stop("Missing value for option '--add'")
     pkgs <- parse_pkgs(args[seq(from = pos + 1L, to = length(args))])
-    revdepcheck::revdep_add(packages = pkgs)
+    revdepcheck::revdep_add(pkg, packages = pkgs)
     todo(print = TRUE)
   } else if ("--rm" %in% args) {
     pos <- which("--rm" == args)
-    revdep_init()
+    revdep_init(pkg)
     if (pos == length(args)) stop("Missing value for option '--rm'")
     pkgs <- parse_pkgs(args[seq(from = pos + 1L, to = length(args))])
-    revdepcheck::revdep_rm(packages = pkgs)
+    revdepcheck::revdep_rm(pkg, packages = pkgs)
     todo(print = TRUE)
   } else if ("--add-broken" %in% args) {
-    revdep_init()
-    revdepcheck::revdep_add_broken()
+    revdep_init(pkg)
+    revdepcheck::revdep_add_broken(pkg)
     todo(print = TRUE)
   } else if ("--add-error" %in% args) {
-    revdep_init()
-    pkgs <- revdep_pkgs_with_status("error")
-    revdepcheck::revdep_add(packages = pkgs)
+    revdep_init(pkg)
+    pkgs <- revdep_pkgs_with_status(pkg, "error")
+    revdepcheck::revdep_add(pkg, packages = pkgs)
     todo(print = TRUE)
   } else if ("--add-failure" %in% args) {
-    revdep_init()
-    pkgs <- revdep_pkgs_with_status("failure")
+    revdep_init(pkg)
+    pkgs <- revdep_pkgs_with_status(pkg, "failure")
     revdepcheck::revdep_add(packages = pkgs)
   } else if ("--add-children" %in% args) {
-    revdep_init()
-    pkgs <- revdep_children()
-    revdepcheck::revdep_add(packages = pkgs)
+    revdep_init(pkg)
+    pkgs <- revdep_children(pkg)
+    revdepcheck::revdep_add(pkg, packages = pkgs)
     todo(print = TRUE)
   } else if ("--add-grandchildren" %in% args) {
-    revdep_init()
-    pkgs <- revdep_grandchildren()
-    revdepcheck::revdep_add(packages = pkgs)
+    revdep_init(pkg)
+    pkgs <- revdep_grandchildren(pkg)
+    revdepcheck::revdep_add(pkg, packages = pkgs)
     todo(print = TRUE)
   } else if ("--add-updated" %in% args) {
-    revdep_init()
+    revdep_init(pkg)
     pkgs <- revdep_readme_packages()
     pkgs <- subset(pkgs, version < repo_version)$package
     if (length(pkgs) > 0) {
-      revdepcheck::revdep_add(packages = pkgs)
+      revdepcheck::revdep_add(pkg, packages = pkgs)
     } else {
       cat("No packages have been updated since last run\n")
     }
   } else if ("--add-new" %in% args) {
-    revdep_init()
+    revdep_init(pkg)
     pkgs <- revdep_readme_packages()
-    children <- revdepcheck.extras::revdep_children()
+    children <- revdepcheck.extras::revdep_children(pkg)
     pkgs <- setdiff(children, pkgs$package)
     if (length(pkgs) > 0) {
-      revdepcheck::revdep_add(packages = pkgs)
+      revdepcheck::revdep_add(pkg, packages = pkgs)
     } else {
       cat("No new packages found since last run\n")
     }
   } else if ("--add-all" %in% args) {
-    revdep_init()
-    pkgs <- revdep_children()
+    revdep_init(pkg)
+    pkgs <- revdep_children(pkg)
     cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
     for (pkg in pkgs) {
       pkgs <- c(pkgs, cran_revdeps(pkg))
     }
     pkgs <- unique(pkgs)
-    revdepcheck::revdep_add(packages = pkgs)
+    revdepcheck::revdep_add(pkg, packages = pkgs)
     todo(print = TRUE)
   } else if ("--show-check" %in% args) {
     pos <- which("--show-check" == args)
@@ -178,22 +183,17 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
       }
     }
   } else if ("--list-children" %in% args) {
-    pkg <- revdep_this_package()
-    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-    pkgs <- cran_revdeps(pkg)
+    if (identical(pkg, ".")) pkg <- revdep_this_package()
+    pkgs <- revdep_children(pkg)
     cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-grandchildren" %in% args) {
-    pkgs <- NULL
-    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-    for (pkg in revdep_children()) {
-      pkgs <- c(pkgs, cran_revdeps(pkg))
-    }
-    pkgs <- unique(pkgs)
+    if (identical(pkg, ".")) pkg <- revdep_this_package()
+    pkgs <- revdep_grandchildren(pkg)
     cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-error" %in% args) {
-    cat(paste(revdep_pkgs_with_status("error"), collapse = " "), "\n", sep="")
+    cat(paste(revdep_pkgs_with_status(pkg, "error"), collapse = " "), "\n", sep="")
   } else if ("--list-failure" %in% args) {
-    cat(paste(revdep_pkgs_with_status("failure"), collapse = " "), "\n", sep="")
+    cat(paste(revdep_pkgs_with_status(pkg, "failure"), collapse = " "), "\n", sep="")
   } else if ("--list-updated" %in% args) {
     pkgs <- revdep_readme_packages()
     pkgs <- subset(pkgs, version < repo_version)$package
@@ -204,7 +204,7 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
     }
   } else if ("--list-new" %in% args) {
     pkgs <- revdep_readme_packages()
-    children <- revdepcheck.extras::revdep_children()
+    children <- revdep_children(pkg)
     pkgs <- setdiff(children, pkgs$package)
     if (length(pkgs) > 0) {
       cat(paste(pkgs, collapse = " "), "\n", sep="")
@@ -214,16 +214,16 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
   } else if ("--preinstall-update" %in% args) {
     revdep_preinstall_update()
   } else if ("--preinstall-children" %in% args) {
-    pkg <- revdep_this_package()
+    if (identical(pkg, ".")) pkg <- revdep_this_package()
     cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
     pkgs <- cran_revdeps(pkg)
     revdep_preinstall(pkgs)
   } else if ("--preinstall-error" %in% args) {
-    res <- revdepcheck::revdep_summary()
-    revdep_preinstall(revdep_pkgs_with_status("error"))
+    res <- revdepcheck::revdep_summary(pkg)
+    revdep_preinstall(revdep_pkgs_with_status(pkg, "error"))
   } else if ("--preinstall-failure" %in% args) {
-    res <- revdepcheck::revdep_summary()
-    revdep_preinstall(revdep_pkgs_with_status("failure"))
+    res <- revdepcheck::revdep_summary(pkg)
+    revdep_preinstall(revdep_pkgs_with_status(pkg, "failure"))
   } else if ("--preinstall-todo" %in% args) {
     pkgs <- todo(print = FALSE)
     revdep_preinstall(pkgs)
@@ -238,6 +238,9 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
            paste(sQuote(args), collapse = " "))
     }
 
+    status <- import_from("revdepcheck", "status")
+    status("SETUP")
+
     ## Check vignettes by default
     ## Requires:
     ## https://github.com/HenrikBengtsson/revdepcheck/tree/feature/check_args
@@ -250,9 +253,10 @@ run <- function(..., warn = 1L, args = base::commandArgs(trailingOnly = TRUE)) {
 
     check()
     t1 <- Sys.time()
+
     message(sprintf("Finish time: %s", format(t1)))
     message(sprintf("Total check time: %s", format(t1 - t0)))
 
-    revdepcheck::revdep_report(all = TRUE)
+    revdepcheck::revdep_report(pkg, all = TRUE)
   }
 }

@@ -67,38 +67,38 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
 }
 
 
-#' @param pkg (character  A package name,
+#' @param package (character) A package name.
 #'
 #' @param date (POSIXct) A date.
 #'
 #' @rdname revdep_over_time
 #' @export
-cran_revdep_on_date <- function(pkg, date, force = FALSE) {
+cran_revdep_on_date <- function(package, date, force = FALSE) {
   cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
   getSnapshotUrl <- import_from("checkpoint", "getSnapshotUrl")
   loadCache <- R.cache::loadCache
   saveCache <- R.cache::saveCache
   
-  revdeps <- function(pkg, ...) {
+  revdeps <- function(package, ...) {
     dirs <- c(.packageName)
     key <- list(
       method = "cran_revdep_on_date",
-      pkg = pkg,
+      pkg = package,
       repos = getOption("repos")
     )
     if (!force && !is.null(pkgs <- loadCache(key, dirs = dirs))) return(pkgs)
-    pkgs <- cran_revdeps(pkg, ...)
+    pkgs <- cran_revdeps(package, ...)
     saveCache(pkgs, key = key, dirs = dirs)
     pkgs
   }
 
   stopifnot(inherits(date, "Date"))
-  stopifnot(is.character(pkg), length(pkg) == 1L)
+  stopifnot(is.character(package), length(package) == 1L)
 
   mran_repos <- getSnapshotUrl(date, online = FALSE)
   repos <- c(CRAN = mran_repos)
   oopts <- options(repos = repos)
   on.exit(options(oopts), add = TRUE)
     
-  revdeps(pkg)
+  revdeps(package)
 }

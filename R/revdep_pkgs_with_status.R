@@ -1,5 +1,7 @@
 #' Get packages with a certain check status
 #'
+#' @param pkg (character) Path to package.
+#'
 #' @param status (character vector) A status to filter checked
 #' packages by.
 #' If `"error"`, then packages for which the 'new' version failed are returned.
@@ -9,9 +11,9 @@
 #'
 #' @importFrom revdepcheck revdep_summary
 #' @export
-revdep_pkgs_with_status <- function(status = c("error", "failure")) {
+revdep_pkgs_with_status <- function(pkg = ".", status = c("error", "failure")) {
   status <- match.arg(status)
-  res <- revdep_summary()
+  res <- revdep_summary(pkg)
   if (status == "failure") {
     names(which(sapply(res, FUN = .subset2, "status") == "E"))
   } else if (status == "error") {
