@@ -23,8 +23,9 @@ Check a _specific set_ of reverse-dependency packages:
 > revdep_add(packages = c("pkgA", "pkgB", "pkgQ"))
 > revdep_add(packages = revdep_children())
 > revdep_add(packages = c(revdep_children(), revdep_grandchildren()))
-> revdep_todo()
+> revdep_todo()             ## list packages to be tested
 > revdep_check()
+> revdep_report(all = TRUE) ## regenerate report with more details
 ```
 
 
