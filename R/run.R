@@ -241,6 +241,9 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     status <- import_from("revdepcheck", "status")
     status("SETUP")
 
+    t0 <- Sys.time()
+    message(sprintf("Start time: %s", format(t0)))
+
     ## Check vignettes by default
     ## Requires:
     ## https://github.com/HenrikBengtsson/revdepcheck/tree/feature/check_args
@@ -248,8 +251,9 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
       Sys.setenv(R_REVDEPCHECK_CHECK_ARGS = "--no-manual")
     }
 
-    t0 <- Sys.time()
-    message(sprintf("Start time: %s", format(t0)))
+    for (name in c("R_LIBS_USER", "R_LIBS", "R_LIBS_SITE", "R_REVDEPCHECK_NUM_WORKERS", "CRANCACHE_DIR")) {
+      message(sprintf("%s=%s", name, sQuote(Sys.getenv(name))))
+    }
 
     check()
     t1 <- Sys.time()
