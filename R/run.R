@@ -251,7 +251,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
       Sys.setenv(R_REVDEPCHECK_CHECK_ARGS = "--no-manual")
     }
 
-    for (name in c("R_LIBS_USER", "R_LIBS", "R_LIBS_SITE", "R_REVDEPCHECK_NUM_WORKERS", "CRANCACHE_DIR")) {
+    for (name in c("R_LIBS_USER", "R_LIBS", "R_LIBS_SITE", "R_REVDEPCHECK_TIMEOUT", "R_REVDEPCHECK_NUM_WORKERS", "CRANCACHE_DIR")) {
       message(sprintf("%s=%s", name, sQuote(Sys.getenv(name))))
     }
 
