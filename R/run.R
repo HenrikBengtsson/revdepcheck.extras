@@ -96,7 +96,10 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
   if ("--init" %in% args) {
     revdep_init(pkg)
   } else if ("--use-tmpdir" %in% args) {
-    is_symlink <- function(path) !identical(Sys.readlink(path), "")
+    is_symlink <- function(path) {
+      if (!file.exists(path)) return(FALSE)
+      !identical(Sys.readlink(path), "")
+    }
     if (!file_test("-d", "revdep")) dir.create("revdep")
     stopifnot(file_test("-d", "revdep"))
     tmpdir <- dirname(tempdir())
