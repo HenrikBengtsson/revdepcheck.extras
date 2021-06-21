@@ -102,7 +102,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     tmpdir <- dirname(tempdir())
     from_root <- file.path(tmpdir, revdep_this_package(), "revdep")
     if (!file_test("-d", from_root)) dir.create(from_root, recursive = TRUE)
-    for (dir in c("check", "library")) {
+    for (dir in c("checks", "library")) {
       to <- file.path("revdep", dir)
       if (!is_symlink(to)) {
         stopifnot(!file_test("-d", to))
