@@ -53,6 +53,10 @@ Add and remove packages to be checked:
 --add-new             Add new packages that did not exist at last run
 --rm <pkgs>           Remove one or more packages to be checked
 
+Miscellanous setup tweaks:
+--init                Create an empty revdep data base
+--use-tmpdir          Host revdep/\{library,check\} under $TMPDIR
+
 Show results:
 --show-check <pkg>    Display 'old' and 'new' check results during checks
 --list-error          List all packages that "errored"
@@ -72,7 +76,7 @@ Rscript -e revdepcheck.extras::run --args --list-todo
 Rscript -e revdepcheck.extras::run --args --preinstall-children
 Rscript -e revdepcheck.extras::run --args --preinstall-todo
 
-R_REVDEPCHECK_NUM_WORKERS=1 NSLOTS=2 Rscript -e revdepcheck.extras::run
+R_REVDEPCHECK_NUM_WORKERS=1 NSLOTS=2 R_REVDEPCHECK_TIMEOUT=120 Rscript -e revdepcheck.extras::run
 }\if{html}{\out{</div>}}
 }
 
