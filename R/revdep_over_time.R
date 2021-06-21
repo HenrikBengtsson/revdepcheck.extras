@@ -21,7 +21,6 @@
 #' @export
 revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
   cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-  snapshot_url <- import_from("checkpoint", "snapshot_url")
   loadCache <- R.cache::loadCache
   saveCache <- R.cache::saveCache
   
@@ -46,7 +45,7 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
 
   p <- progressor(length(dates) * length(pkgs))
   stats <- future_lapply(dates, FUN = function(date) {
-    mran_repos <- snapshot_url(date, online = FALSE)
+    mran_repos <- getSnapshotURL(date, online = FALSE)
     pmsg <- format(date, format = "%F")
     repos <- c(CRAN = mran_repos)
     oopts <- options(repos = repos)
@@ -75,7 +74,6 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
 #' @export
 cran_revdep_on_date <- function(package, date, force = FALSE) {
   cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-  snapshot_url <- import_from("checkpoint", "snapshot_url")
   loadCache <- R.cache::loadCache
   saveCache <- R.cache::saveCache
   
@@ -95,10 +93,17 @@ cran_revdep_on_date <- function(package, date, force = FALSE) {
   stopifnot(inherits(date, "Date"))
   stopifnot(is.character(package), length(package) == 1L)
 
-  mran_repos <- snapshot_url(date, online = FALSE)
+  mran_repos <- getSnapshotURL(date, online = FALSE)
   repos <- c(CRAN = mran_repos)
   oopts <- options(repos = repos)
   on.exit(options(oopts), add = TRUE)
     
   revdeps(package)
+}
+
+
+getSnapshotURL <- function(date, online = FALSE) {
+  snapshot_url <- import_from("checkpoint", "snapshot_url")
+  mran_url <- getOption("checkpoint.mranUrl", "https://mran.microsoft.com")
+  snapshot_url(mran_url, snapshot_date = date)
 }
