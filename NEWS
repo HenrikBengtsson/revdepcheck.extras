@@ -9,11 +9,11 @@ NEW FEATURES:
    'R_REVDEPCHECK_NUM_WORKERS' and 'CRANCACHE_DIR' in the 'SETUP' section.
 
  * Add revdep_use_tmpdir() with corresponding CLI option --use-tmpdir to 
-   host revdep/{checks,library} under TMPDIR, which can be significantly
+   host revdep/{cache,checks,library} under TMPDIR, which can be significantly
    faster on some systems where the global file system is slow.
 
  * check() now sets environment variables 'R_USER_CACHE_DIR' and
-   'XDG_CACHE_HOME' to the absolute path of the 'revdep/.cache' folder,
+   'XDG_CACHE_HOME' to the absolute path of the 'revdep/cache' folder,
    if it exists.  This will simplify checking with a clean cache folder.
    
 
