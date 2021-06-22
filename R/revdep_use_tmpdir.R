@@ -1,3 +1,5 @@
+#' Place redepcheck's 'check' and 'library' folders in a temporary folder
+#'
 #' @param pkg (character) Path to package.
 #'
 #' @param tmpdir (character) The temporary folder in which revdep subfolders
@@ -22,6 +24,7 @@
 #' using folders on a, say, slow, heavily-loaded parallel file system.
 #'
 #' @importFrom utils file_test
+#' @export
 revdep_use_tmpdir <- function(pkg = ".", tmpdir = dirname(tempdir())) {
   root <- "revdep"
   if (!file_test("-d", root)) dir.create(root, recursive = TRUE)
