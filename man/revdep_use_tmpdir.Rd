@@ -2,7 +2,7 @@
 % Please edit documentation in R/revdep_use_tmpdir.R
 \name{revdep_use_tmpdir}
 \alias{revdep_use_tmpdir}
-\title{Place redepcheck's 'check' and 'library' folders in a temporary folder}
+\title{Place redepcheck's 'check', 'library', and '.cache' folders in a temporary folder}
 \usage{
 revdep_use_tmpdir(pkg = ".", tmpdir = dirname(tempdir()))
 }
@@ -13,26 +13,32 @@ revdep_use_tmpdir(pkg = ".", tmpdir = dirname(tempdir()))
 should be hosted}
 }
 \value{
-(character vector; invisible) The path to to the two
-revdep/{check,library} folders.
+(character vector; invisible) The path to to the three
+revdep/{check,library,.cache} folders.
 }
 \description{
-Place redepcheck's 'check' and 'library' folders in a temporary folder
+Place redepcheck's 'check', 'library', and '.cache' folders in a temporary folder
 }
 \details{
-This function will create two folders:
+This function will create folders:
 \enumerate{
 \item \file{<tmpdir>/revdepcheck/<package>/revdep/check}
 \item \file{<tmpdir>/revdepcheck/<package>/revdep/library}
+\item \file{<tmpdir>/revdepcheck/<package>/revdep/.cache}
 }
 
 which are linked to from:
 \enumerate{
 \item \file{<pkg>/revdep/check}
 \item \file{<pkg>/revdep/library}
+\item \file{<pkg>/revdep/.cache}
 }
 
 using symbolic links.  If the \code{tmpdir} folder is on a fast, local drive,
 then \code{\link[revdepcheck:revdep_check]{revdepcheck::revdep_check()}} will run faster compared to if
 using folders on a, say, slow, heavily-loaded parallel file system.
+To utilize the \file{revdep/.cache} folder, set environment variables
+\env{R_USER_CACHE_DIR=$PWD/revdep/.cache} and then
+\env{XDG_CACHE_HOME=$R_USER_CACHE_DIR}. Function \code{\link[=check]{check()}} sets these
+if it detects a \file{revdep/.cache} folder.
 }
