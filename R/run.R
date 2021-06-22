@@ -96,25 +96,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
   if ("--init" %in% args) {
     revdep_init(pkg)
   } else if ("--use-tmpdir" %in% args) {
-    is_symlink <- function(path) {
-      if (!file.exists(path)) return(FALSE)
-      !identical(Sys.readlink(path), "")
-    }
-    if (!file_test("-d", "revdep")) dir.create("revdep")
-    stopifnot(file_test("-d", "revdep"))
-    tmpdir <- dirname(tempdir())
-    from_root <- file.path(tmpdir, revdep_this_package(), "revdep")
-    if (!file_test("-d", from_root)) dir.create(from_root, recursive = TRUE)
-    for (dir in c("checks", "library")) {
-      to <- file.path("revdep", dir)
-      if (!is_symlink(to)) {
-        stopifnot(!file_test("-d", to))
-        from <- file.path(from_root, dir)
-        if (!file_test("-d", from)) dir.create(from, recursive = TRUE)
-        file.symlink(from = from, to = to)
-      }
-    }
-    stopifnot(file_test("-d", "revdep"))
+    revdep_use_tmpdir(pkg)
   } else if ("--reset" %in% args) {
     revdepcheck::revdep_reset(pkg)
   } else if ("--todo-reset" %in% args) {

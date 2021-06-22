@@ -8,7 +8,7 @@ NEW FEATURES:
  * Now run() reports on 'R_LIBS', 'R_LIBS_SITE', 'R_LIBS_USER',
    'R_REVDEPCHECK_NUM_WORKERS' and 'CRANCACHE_DIR' in the 'SETUP' section.
 
- * Add CLI option --use-tmpdir.
+ * Add revdep_use_tmpdir() with corresponding CLI option --use-tmpdir.
  
 
 Version: 0.2.0 [2021-06-07]
