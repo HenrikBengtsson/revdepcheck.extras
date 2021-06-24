@@ -32,12 +32,12 @@ check <- function(bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TI
   }
 
   ## Use revdep-specific revdep/cache folder?
-  path <- file.path(revdep_this_package(), "revdep", "cache")
+  path <- file.path("revdep", "cache")
   if (file_test("-d", path)) {
     path <- normalizePath(path, mustWork = TRUE)
     Sys.setenv(R_USER_CACHE_DIR = path)
     Sys.setenv(XDG_CACHE_HOME = path)
-    cat(sprintf("Using local cache folder: %s\n", sQuote(path)))
+    cat(sprintf("Using local cache folder: R_USER_CACHE_DIR/XDG_CACHE_HOME=%s\n", sQuote(path)))
   }
 
   envs <- Sys.getenv()
