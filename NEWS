@@ -1,8 +1,14 @@
 Package: revdepcheck.extras
 ===========================
 
-Version: 0.2.0-9000 [2021-06-24]
+Version: 0.2.0-9001 [2021-08-12]
 
+SIGNIFICANT CHANGES:
+
+ * Now checking also vignettes. This requires using HenrikBengtsson/revdepcheck
+   which is a fork of the upstream r-lib/revdepcheck. See also feature request
+   https://github.com/r-lib/revdepcheck/issues/277.
+   
 NEW FEATURES:
 
  * Now run() reports on 'R_LIBS', 'R_LIBS_SITE', 'R_LIBS_USER',

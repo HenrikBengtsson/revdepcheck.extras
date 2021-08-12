@@ -1,5 +1,5 @@
 Package: revdepcheck.extras
-Version: 0.2.0-9000
+Version: 0.2.0-9001
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
     revdepcheck
@@ -18,7 +18,7 @@ Suggests:
     yaml
 Remotes:
     r-lib/crancache,
-    r-lib/revdepcheck
+    HenrikBengtsson/revdepcheck@feature/check_args
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
 Description: Utility functions for the 'revdepcheck' package. Helps running reverse-dependency package checks from the command-line interface (CLI) and more.
