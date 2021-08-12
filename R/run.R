@@ -44,6 +44,10 @@
 #' --add-new             Add new packages that did not exist at last run
 #' --rm <pkgs>           Remove one or more packages to be checked
 #'
+#' Miscellanous setup tweaks:
+#' --init                Create an empty revdep data base
+#' --use-tmpdir          Host revdep/{library,check} under $TMPDIR
+#'
 #' Show results:
 #' --show-check <pkg>    Display 'old' and 'new' check results during checks
 #' --list-error          List all packages that "errored"
@@ -63,7 +67,7 @@
 #' Rscript -e revdepcheck.extras::run --args --preinstall-children
 #' Rscript -e revdepcheck.extras::run --args --preinstall-todo
 #'
-#' R_REVDEPCHECK_NUM_WORKERS=1 NSLOTS=2 Rscript -e revdepcheck.extras::run
+#' R_REVDEPCHECK_NUM_WORKERS=1 NSLOTS=2 R_REVDEPCHECK_TIMEOUT=120 Rscript -e revdepcheck.extras::run
 #' ```
 #' 
 #' @importFrom utils help file_test packageVersion str
@@ -91,6 +95,8 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
 
   if ("--init" %in% args) {
     revdep_init(pkg)
+  } else if ("--use-tmpdir" %in% args) {
+    revdep_use_tmpdir(pkg)
   } else if ("--reset" %in% args) {
     revdepcheck::revdep_reset(pkg)
   } else if ("--todo-reset" %in% args) {
@@ -241,15 +247,23 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     status <- import_from("revdepcheck", "status")
     status("SETUP")
 
+    t0 <- Sys.time()
+    message(sprintf("Start time: %s", format(t0)))
+
     ## Check vignettes by default
     ## Requires:
     ## https://github.com/HenrikBengtsson/revdepcheck/tree/feature/check_args
     if (!nzchar(Sys.getenv("R_REVDEPCHECK_CHECK_ARGS"))) {
       Sys.setenv(R_REVDEPCHECK_CHECK_ARGS = "--no-manual")
+      ## Assert we're using a 'revdepcheck' version that supports this
+      if (!exists("revdep_check_args", mode = "function", envir = getNamespace("revdepcheck"))) {
+        stop(sprintf("Environment variable %s is not supported by revdepcheck %s, because it has no revdepcheck:::revdep_check_args(). Please reinstall with remotes::install_github(\"https://github.com/HenrikBengtsson/revdepcheck/tree/feature/check_args\")", sQuote("R_REVDEPCHECK_CHECK_ARGS"), packageVersion("revdepcheck")))
+      }
     }
 
-    t0 <- Sys.time()
-    message(sprintf("Start time: %s", format(t0)))
+    for (name in c("R_LIBS_USER", "R_LIBS", "R_LIBS_SITE", "R_REVDEPCHECK_TIMEOUT", "R_REVDEPCHECK_NUM_WORKERS", "CRANCACHE_DIR")) {
+      message(sprintf("%s=%s", name, sQuote(Sys.getenv(name))))
+    }
 
     check()
     t1 <- Sys.time()

@@ -1,6 +1,28 @@
 Package: revdepcheck.extras
 ===========================
 
+Version: 0.3.0 [2021-08-12]
+
+SIGNIFICANT CHANGES:
+
+ * Now checking also vignettes. This requires using HenrikBengtsson/revdepcheck
+   which is a fork of the upstream r-lib/revdepcheck. See also feature request
+   https://github.com/r-lib/revdepcheck/issues/277.
+   
+NEW FEATURES:
+
+ * Now run() reports on 'R_LIBS', 'R_LIBS_SITE', 'R_LIBS_USER',
+   'R_REVDEPCHECK_NUM_WORKERS' and 'CRANCACHE_DIR' in the 'SETUP' section.
+
+ * Add revdep_use_tmpdir() with corresponding CLI option --use-tmpdir to 
+   host revdep/{cache,checks,library} under TMPDIR, which can be significantly
+   faster on some systems where the global file system is slow.
+
+ * check() now sets environment variables 'R_USER_CACHE_DIR' and
+   'XDG_CACHE_HOME' to the absolute path of the 'revdep/cache' folder,
+   if it exists.  This will simplify checking with a clean cache folder.
+   
+
 Version: 0.2.0 [2021-06-07]
 
 NEW FEATURES:
