@@ -68,7 +68,7 @@ Show results:
 
 \section{Examples}{
 
-Here are some examples how to call this function from the command-line:\if{html}{\out{<div class="sh">}}\preformatted{Rscript -e revdepcheck.extras::run --args --help
+Here are some examples how to call this function from the command-line:\if{html}{\out{<div class="sourceCode sh">}}\preformatted{Rscript -e revdepcheck.extras::run --args --help
 Rscript -e revdepcheck.extras::run --args --version
 Rscript -e revdepcheck.extras::run --args --reset
 Rscript -e revdepcheck.extras::run --args --add some, pkg, another

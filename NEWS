@@ -1,9 +1,12 @@
 Package: revdepcheck.extras
 ===========================
 
-Version: 0.3.0-9000 [2021-08-12]
+Version: 0.3.0-9001 [2021-09-25]
 
- * ...
+NEW FEATURES:
+
+ * Added revdep_reset() which empties and removes revdep/{cache,checks,library}
+   folders.
  
 
 Version: 0.3.0 [2021-08-12]

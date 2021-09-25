@@ -98,7 +98,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
   } else if ("--use-tmpdir" %in% args) {
     revdep_use_tmpdir(pkg)
   } else if ("--reset" %in% args) {
-    revdepcheck::revdep_reset(pkg)
+    revdep_reset(pkg)
   } else if ("--todo-reset" %in% args) {
     revdep_todo_reset(pkg)
     todo(print = TRUE)

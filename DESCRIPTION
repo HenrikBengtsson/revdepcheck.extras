@@ -1,5 +1,5 @@
 Package: revdepcheck.extras
-Version: 0.3.0-9000
+Version: 0.3.0-9001
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
     revdepcheck
@@ -27,5 +27,5 @@ LazyLoad: TRUE
 ByteCompile: TRUE
 URL: https://github.com/HenrikBengtsson/revdepcheck.extras
 BugReports: https://github.com/HenrikBengtsson/revdepcheck.extras/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
