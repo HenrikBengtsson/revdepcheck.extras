@@ -8,9 +8,6 @@
 #' @export
 revdep_reset <- function(pkg = ".") {
   root <- "revdep"
-  ## Nothing todo?
-  if (!file_test("-d", root)) return(invisible())
-
   dirs <- c("cache", "checks", "library")
   for (dir in dirs) {
     to <- file.path(root, dir)
@@ -18,8 +15,9 @@ revdep_reset <- function(pkg = ".") {
       parts <- dir(path = to, all.files = TRUE, full.names = TRUE)
       unlink(parts, recursive = TRUE)
     }
-    unlink(to, recursive = TRUE)
+    if (file_test("-d", to)) unlink(to, recursive = TRUE)
   }
 
-  invisible(invisible())
+  revdepcheck::revdep_reset(pkg = pkg)
+  invisible()
 }
