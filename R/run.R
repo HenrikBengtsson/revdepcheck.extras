@@ -257,7 +257,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
       Sys.setenv(R_REVDEPCHECK_CHECK_ARGS = "--no-manual")
       ## Assert we're using a 'revdepcheck' version that supports this
       if (!exists("revdep_check_args", mode = "function", envir = getNamespace("revdepcheck"))) {
-        stop(sprintf("Environment variable %s is not supported by revdepcheck %s, because it has no revdepcheck:::revdep_check_args(). Please reinstall with remotes::install_github(\"https://github.com/HenrikBengtsson/revdepcheck/tree/feature/check_args\")", sQuote("R_REVDEPCHECK_CHECK_ARGS"), packageVersion("revdepcheck")))
+        stop(sprintf("Environment variable %s is not supported by revdepcheck %s, because it has no revdepcheck:::revdep_check_args(). Please reinstall with remotes::install_github(\"HenrikBengtsson/revdepcheck\", ref=\"feature/check_args\")", sQuote("R_REVDEPCHECK_CHECK_ARGS"), packageVersion("revdepcheck")))
       }
     }
 
