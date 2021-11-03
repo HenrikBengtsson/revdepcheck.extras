@@ -14,8 +14,10 @@ revdep_reset <- function(pkg = ".") {
     if (is_symlink(to)) {
       parts <- dir(path = to, all.files = TRUE, full.names = TRUE)
       unlink(parts, recursive = TRUE)
+      unlink(to)
+    } else if (file_test("-d", to)) {
+      unlink(to, recursive = TRUE)
     }
-    if (file_test("-d", to)) unlink(to, recursive = TRUE)
   }
 
   revdepcheck::revdep_reset(pkg = pkg)
