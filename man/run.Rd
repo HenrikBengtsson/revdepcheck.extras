@@ -76,7 +76,7 @@ Rscript -e revdepcheck.extras::run --args --list-todo
 Rscript -e revdepcheck.extras::run --args --preinstall-children
 Rscript -e revdepcheck.extras::run --args --preinstall-todo
 
-R_REVDEPCHECK_NUM_WORKERS=1 NSLOTS=2 R_REVDEPCHECK_TIMEOUT=120 Rscript -e revdepcheck.extras::run
+R_REVDEPCHECK_NUM_WORKERS=1 R_REVDEPCHECK_TIMEOUT=60 Rscript -e revdepcheck.extras::run
 }\if{html}{\out{</div>}}
 }
 
