@@ -52,8 +52,11 @@ check <- function(bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TI
     precheck <- get("precheck", mode = "function", envir = .GlobalEnv)
     precheck()
   }
+
+  nworkers <- num_workers()
+  cat(sprintf("Number of parallel revdep workers: %d\n", nworkers))
   
-  revdep_check(bioc = bioc, num_workers = num_workers(),
+  revdep_check(bioc = bioc, num_workers = nworkers,
                timeout = timeout, quiet = FALSE)
 }
 
