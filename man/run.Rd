@@ -21,7 +21,9 @@ checks.}
 Run reverse-package dependency checks from the command line (CLI)
 }
 \section{Usage}{
-\preformatted{Rscript -e revdepcheck.extras::run --args <options>
+
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Rscript -e revdepcheck.extras::run --args <options>
 
 --help                Display this help page
 --version             Display version
@@ -63,12 +65,14 @@ Show results:
 --list-failure        List all packages that "failed"
 --list-updated        List packages that have been updated since last run
 --list-new            List new packages that did not exist at last run
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Examples}{
 
-Here are some examples how to call this function from the command-line:\if{html}{\out{<div class="sourceCode sh">}}\preformatted{Rscript -e revdepcheck.extras::run --args --help
+Here are some examples how to call this function from the command-line:
+
+\if{html}{\out{<div class="sourceCode sh">}}\preformatted{Rscript -e revdepcheck.extras::run --args --help
 Rscript -e revdepcheck.extras::run --args --version
 Rscript -e revdepcheck.extras::run --args --reset
 Rscript -e revdepcheck.extras::run --args --add some, pkg, another
@@ -77,6 +81,7 @@ Rscript -e revdepcheck.extras::run --args --preinstall-children
 Rscript -e revdepcheck.extras::run --args --preinstall-todo
 
 R_REVDEPCHECK_NUM_WORKERS=1 R_REVDEPCHECK_TIMEOUT=60 Rscript -e revdepcheck.extras::run
+TAR_SKIP_CLUSTERMQ=true Rscript -e revdepcheck.extras::run
 }\if{html}{\out{</div>}}
 }
 
