@@ -67,7 +67,8 @@
 #' Rscript -e revdepcheck.extras::run --args --preinstall-children
 #' Rscript -e revdepcheck.extras::run --args --preinstall-todo
 #'
-#' R_REVDEPCHECK_NUM_WORKERS=1 NSLOTS=2 R_REVDEPCHECK_TIMEOUT=120 Rscript -e revdepcheck.extras::run
+#' R_REVDEPCHECK_NUM_WORKERS=1 R_REVDEPCHECK_TIMEOUT=60 Rscript -e revdepcheck.extras::run
+#' TAR_SKIP_CLUSTERMQ=true Rscript -e revdepcheck.extras::run
 #' ```
 #' 
 #' @importFrom utils help file_test packageVersion str
@@ -98,7 +99,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
   } else if ("--use-tmpdir" %in% args) {
     revdep_use_tmpdir(pkg)
   } else if ("--reset" %in% args) {
-    revdepcheck::revdep_reset(pkg)
+    revdep_reset(pkg)
   } else if ("--todo-reset" %in% args) {
     revdep_todo_reset(pkg)
     todo(print = TRUE)
@@ -257,7 +258,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
       Sys.setenv(R_REVDEPCHECK_CHECK_ARGS = "--no-manual")
       ## Assert we're using a 'revdepcheck' version that supports this
       if (!exists("revdep_check_args", mode = "function", envir = getNamespace("revdepcheck"))) {
-        stop(sprintf("Environment variable %s is not supported by revdepcheck %s, because it has no revdepcheck:::revdep_check_args(). Please reinstall with remotes::install_github(\"https://github.com/HenrikBengtsson/revdepcheck/tree/feature/check_args\")", sQuote("R_REVDEPCHECK_CHECK_ARGS"), packageVersion("revdepcheck")))
+        stop(sprintf("Environment variable %s is not supported by revdepcheck %s, because it has no revdepcheck:::revdep_check_args(). Please reinstall with remotes::install_github(\"HenrikBengtsson/revdepcheck\", ref=\"feature/check_args\")", sQuote("R_REVDEPCHECK_CHECK_ARGS"), packageVersion("revdepcheck")))
       }
     }
 
