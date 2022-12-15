@@ -31,6 +31,27 @@ check <- function(bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TI
     cat(sprintf("To disable, set 'R_CHECK_ENVIRON=false' (a fake pathname)\n"))
   }
 
+  p <- file.path("revdep", ".revdepcheck.Renviron")
+  if (file_test("-f", p)) {
+    cat(sprintf("Setting environment variable per %s\n", sQuote(p)))
+    envs0 <- Sys.getenv()
+    readRenviron(p)
+    envs <- Sys.getenv()
+    names <- setdiff(names(envs), names(envs0))
+    if (length(names) > 0) {
+      cat("Added environment variables:\n")
+      cat(sprintf(" %s=%s", names, sQuote(envs[names])), sep = "\n")
+    }
+    names <- !vapply(names(envs0), FUN.VALUE = NA, FUN = function(name) {
+      identical(envs[name], envs0[name])
+    })
+    names <- names(envs0)[names]
+    if (length(names) > 0) {
+      cat("Updated environment variables:\n")
+      cat(sprintf(" %s=%s (was %s)", names, sQuote(envs[names]), sQuote(envs0[names])), sep = "\n")
+    }
+  }
+
   ## Use revdep-specific revdep/cache folder?
   path <- file.path("revdep", "cache")
   if (file_test("-d", path)) {

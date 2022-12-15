@@ -1,6 +1,10 @@
 # Version (development version)
 
- * ...
+### New Features
+
+ * Environments variables to be used during checks can be set in an
+   Renviron file named `revdep/.revdepcheck.Renviron`.  This file is
+   loaded by `revdepcheck::check()`.
 
 
 # Version 0.4.0 [2022-11-21]
