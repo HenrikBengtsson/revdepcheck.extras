@@ -3,7 +3,7 @@
 ### New Features
 
  * Environments variables to be used during checks can be set in an
-   Renviron file named `revdep/.revdepcheck.Renviron`.  This file is
+   Renviron file named `revdep/revdepcheck.Renviron`.  This file is
    loaded by `revdepcheck::check()`.
 
 
