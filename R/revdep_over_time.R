@@ -103,7 +103,13 @@ cran_revdep_on_date <- function(package, date, force = FALSE) {
 
 
 getSnapshotURL <- function(date, online = FALSE) {
-  snapshot_url <- import_from("checkpoint", "snapshot_url")
-  mran_url <- getOption("checkpoint.mranUrl", "https://mran.microsoft.com")
-  snapshot_url(mran_url, snapshot_date = date)
+  ## Known time-machine CRAN mirrors
+  url_roots <- c(
+    MRAN = "https://cran.microsoft.com/snapshot",
+    RSPM = "https://packagemanager.rstudio.com/cran"
+  )
+  mirror <- getOption("revdepcheck.extras.snapshot.source", "RSPM")
+  mirror <- match.arg(mirror, choices = names(url_roots))
+  url_root <- url_roots[mirror]
+  file.path(url_root, date, fsep = "/")
 }

@@ -1,6 +1,10 @@
 # Version (development version)
 
- * ...
+### Bug Fixes
+
+ * `revdep_over_time()` did not work beyond 2023-03-06, which was when
+   the MRAN timemachine stopped gathering new data.  Now we're using
+   the RStudio Package Manager (RSPM) instead.
 
 
 # Version 0.5.0 [2023-01-30]
