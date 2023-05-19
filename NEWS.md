@@ -1,5 +1,10 @@
 # Version (development version)
 
+### New Features
+
+ * Made replicated calls to `revdep_over_time()` faster by improving
+   the caching strategy.
+ 
 ### Bug Fixes
 
  * `revdep_over_time()` did not work beyond 2023-03-06, which was when
