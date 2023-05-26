@@ -4,6 +4,9 @@
 
  * Made replicated calls to `revdep_over_time()` faster by improving
    the caching strategy.
+
+ * `--list-failure`, `--list-error`, `--list-updated`, and
+   `--list-new` now reports on the number of packages too.
  
 ### Bug Fixes
 

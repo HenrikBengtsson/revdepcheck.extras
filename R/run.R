@@ -198,14 +198,16 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     pkgs <- revdep_grandchildren(pkg)
     cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-error" %in% args) {
-    cat(paste(revdep_pkgs_with_status(pkg, "error"), collapse = " "), "\n", sep="")
+    pkgs <- revdep_pkgs_with_status(pkg, "error")
+    cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-failure" %in% args) {
-    cat(paste(revdep_pkgs_with_status(pkg, "failure"), collapse = " "), "\n", sep="")
+    pkgs <- revdep_pkgs_with_status(pkg, "failure")
+    cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-updated" %in% args) {
     pkgs <- revdep_readme_packages()
     pkgs <- subset(pkgs, version < repo_version)$package
     if (length(pkgs) > 0) {
-      cat(paste(pkgs, collapse = " "), "\n", sep="")
+      cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
     } else {
       cat("No packages have been updated since last run\n")
     }
@@ -214,7 +216,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     children <- revdep_children(pkg)
     pkgs <- setdiff(children, pkgs$package)
     if (length(pkgs) > 0) {
-      cat(paste(pkgs, collapse = " "), "\n", sep="")
+      cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
     } else {
       cat("No new packages found since last run\n")
     }
