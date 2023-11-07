@@ -11,10 +11,9 @@
 #' @return A data.frame
 #'
 #' @details
-#' This function uses the \pkg{checkpoint} package to query the
-#' Microsoft R Application Network (MRAN)
-#' [Timemachine](https://mran.microsoft.com/timemachine) for reverse
-#' package dependencies at particular dates.
+#' This function uses the
+#' [Posit Public Package Manager](https://packagemanager.posit.co/)
+#' to identify reverse package dependencies at particular dates.
 #'
 #' @importFrom progressr progressor
 #' @importFrom future.apply future_lapply
@@ -123,11 +122,12 @@ getSnapshotURL <- function(date, online = FALSE) {
   
   ## Known time-machine CRAN mirrors
   url_roots <- c(
-    MRAN = "https://cran.microsoft.com/snapshot",
-    RSPM = "https://packagemanager.rstudio.com/cran"
+##  Microsoft discontinued MRAN as of June 2023
+##  MRAN = "https://cran.microsoft.com/snapshot",
+    RSPM = "https://packagemanager.posit.co/cran"
   )
 
-  mirror <- if (date < "2018-01-01") "MRAN" else "RSPM"
+  mirror <- "RSPM"
   mirror <- getOption("revdepcheck.extras.snapshot.source", mirror)
   mirror <- match.arg(mirror, choices = names(url_roots))
   url_root <- url_roots[mirror]

@@ -10,6 +10,10 @@
  
 ### Bug Fixes
 
+ * `revdep_over_time()` stopped working for CRAN snaphots prior to
+   2018-01-01, because the MRAN timemachine was discontinued at the
+   end of June 2023.
+
  * `revdep_over_time()` did not work beyond 2023-03-06, which was when
    the MRAN timemachine stopped gathering new data.  Now we're using
    the RStudio Package Manager (RSPM) instead.

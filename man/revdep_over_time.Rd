@@ -29,8 +29,7 @@ A data.frame
 Get the Number of Reverse Dependencies on CRAN
 }
 \details{
-This function uses the \pkg{checkpoint} package to query the
-Microsoft R Application Network (MRAN)
-\href{https://mran.microsoft.com/timemachine}{Timemachine} for reverse
-package dependencies at particular dates.
+This function uses the
+\href{https://packagemanager.posit.co/}{Posit Public Package Manager}
+to identify reverse package dependencies at particular dates.
 }
