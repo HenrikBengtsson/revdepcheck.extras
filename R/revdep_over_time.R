@@ -93,7 +93,7 @@ cran_revdep_on_date <- function(package, date, force = FALSE) {
   saveCache <- R.cache::saveCache
   
   revdeps <- function(package, ...) {
-    dirs <- c(.packageName)
+    dirs <- c(.packageName, "cran_revdep_on_date")
     key <- list(
       method = "cran_revdep_on_date",
       pkg = package,
