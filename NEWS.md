@@ -1,6 +1,6 @@
-# Version (development version)
+# Version 0.6.0 [2023-11-07]
 
-### New Features
+## New Features
 
  * Made replicated calls to `revdep_over_time()` faster by improving
    the caching strategy.
@@ -8,7 +8,7 @@
  * `--list-failure`, `--list-error`, `--list-updated`, and
    `--list-new` now reports on the number of packages too.
  
-### Bug Fixes
+## Bug Fixes
 
  * `revdep_over_time()` stopped working for CRAN snaphots prior to
    2018-01-01, because the MRAN timemachine was discontinued at the
@@ -21,7 +21,7 @@
 
 # Version 0.5.0 [2023-01-30]
 
-### New Features
+## New Features
 
  * Environments variables to be used during checks can be set in an
    Renviron file named `revdep/revdepcheck.Renviron`.  This file is
@@ -30,7 +30,7 @@
 
 # Version 0.4.0 [2022-11-21]
 
-### New Features
+## New Features
 
  * Added `revdep_reset()` which empties and removes
    `revdep/{cache,checks,library}` folders.
@@ -41,7 +41,7 @@
 
 # Version 0.3.0 [2021-08-12]
 
-### Significant Changes
+## Significant Changes
 
  * Now checking also vignettes. This requires using
    HenrikBengtsson/revdepcheck which is a fork of the upstream
@@ -49,7 +49,7 @@
    <https://github.com/r-lib/revdepcheck/issues/277>.
 
 
-### New Features
+## New Features
 
  * Now `run()` reports on `R_LIBS`, `R_LIBS_SITE`, `R_LIBS_USER`,
    `R_REVDEPCHECK_NUM_WORKERS` and `CRANCACHE_DIR` in the 'SETUP'
@@ -68,7 +68,7 @@
 
 # Version 0.2.0 [2021-06-07]
 
-### New Features
+## New Features
 
  * `run()` gained argument `pkg`.
 
@@ -76,7 +76,7 @@
    `revdep_preinstall()`.
 
 
-### Bug Fixes
+## Bug Fixes
 
  * `revdep_preinstall()` would install a lot of packages because it
    installed with `dependencies =` `c("Depends", "Imports",
@@ -88,7 +88,7 @@
 
 # Version 0.1.0 [2021-06-04]
 
-### Siginficant Changes
+## Siginficant Changes
 
  * First "official" release.
 
