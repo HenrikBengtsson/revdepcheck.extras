@@ -8,6 +8,7 @@
 revdep_preinstall(
   pkgs,
   skip = TRUE,
+  chunk_size = 1L,
   temp_lib_path = revdep_preinstall_libs()[1]
 )
 
@@ -18,6 +19,13 @@ revdep_preinstall_update()
 
 \item{skip}{If TRUE, packages already in the binary crancache cache will
 be skipped.  If FALSE, all packages will be pre-installed.}
+
+\item{chunk_size}{If \code{1}, packages are installed one by one.
+If \code{2}, packages are installed two by two, and so on.
+If \code{Inf}, all packages are installed in one go.
+This affects how often the \strong{crancache} package library cache is
+updated. The smaller the chunk size is the more frequently it is
+updated.}
 
 \item{temp_lib_path}{(character string) The folder where to
 install packages during pre-installation.}

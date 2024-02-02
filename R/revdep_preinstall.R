@@ -5,6 +5,13 @@
 #' @param skip If TRUE, packages already in the binary crancache cache will
 #' be skipped.  If FALSE, all packages will be pre-installed.
 #'
+#' @param chunk_size If `1`, packages are installed one by one.
+#' If `2`, packages are installed two by two, and so on.
+#' If `Inf`, all packages are installed in one go.
+#' This affects how often the **crancache** package library cache is
+#' updated. The smaller the chunk size is the more frequently it is
+#' updated.
+#'
 #' @param temp_lib_path (character string) The folder where to
 #' install packages during pre-installation.
 #'
@@ -19,8 +26,9 @@
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr progressor
 #' @importFrom crancache install_packages
+#' @importFrom parallel splitIndices
 #' @export
-revdep_preinstall <- function(pkgs, skip = TRUE, temp_lib_path = revdep_preinstall_libs()[1]) {
+revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 1L, temp_lib_path = revdep_preinstall_libs()[1]) {
   oopts <- options(Ncpus = availableCores())
   
   pkgs <- unique(pkgs)
@@ -40,13 +48,19 @@ revdep_preinstall <- function(pkgs, skip = TRUE, temp_lib_path = revdep_preinsta
 
   message("Installing into library: ", sQuote(temp_lib_path))
 
-  ## Install one-by-one to update cache sooner
-  p <- progressor(along = pkgs)
-  void <- lapply(pkgs, FUN = function(pkg) {
-    on.exit(p(pkg))
-    message(sprintf("Pre-installing package %s (Ncpus = %d)", pkg, getOption("Ncpus", 1L)))
-    install_packages(pkg, dependencies = TRUE, lib = temp_lib_path)
-  }) #, future.chunk.size = 1L, future.seed = TRUE)
+  nbr_of_chunks <- ceiling(length(pkgs) / chunk_size)
+  chunks <- splitIndices(length(pkgs), ncl = nbr_of_chunks)
+  message(sprintf("Installing packages in %d chunks of %d packages each", length(chunks), chunk_size))
+  
+  p <- progressor(along = chunks)
+  void <- lapply(seq_along(chunks), FUN = function(chunk) {
+    idxs <- chunks[chunk]
+    pkgs_chunk <- pkgs[idxs]
+    on.exit(p(chunk))
+    message(sprintf("Pre-installing %d packages (%s) (Ncpus = %d)", length(pkgs_chunk), paste(sQuote(pkgs_chunk), collapse = ", "), getOption("Ncpus", 1L)))
+    install_packages(pkgs_chunk, dependencies = TRUE, lib = temp_lib_path)
+  })
+  
   invisible(void)  
 }
 

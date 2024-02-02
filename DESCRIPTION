@@ -1,5 +1,5 @@
 Package: revdepcheck.extras
-Version: 0.6.0-9004
+Version: 0.6.0-9005
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
     revdepcheck
@@ -9,6 +9,7 @@ Imports:
     DBI,
     parallelly,
     future.apply,
+    parallel,
     progressr,
     R.utils,
     utils
