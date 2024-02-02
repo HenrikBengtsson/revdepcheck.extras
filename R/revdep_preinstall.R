@@ -53,13 +53,12 @@ revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 16L, temp_lib_path
   message(sprintf("Installing packages in %d chunks of %d packages each", length(chunks), chunk_size))
   
   p <- progressor(along = chunks)
-  void <- lapply(seq_along(chunks), FUN = function(chunk) {
-    idxs <- chunks[chunk]
-    pkgs_chunk <- pkgs[idxs]
-    on.exit(p(chunk))
-    message(sprintf("Pre-installing %d packages (%s) (Ncpus = %d)", length(pkgs_chunk), paste(sQuote(pkgs_chunk), collapse = ", "), getOption("Ncpus", 1L)))
+  for (kk in seq_along(chunks)) {
+    on.exit(p())
+    pkgs_chunk <- pkgs[chunks[[kk]]]
+    message(sprintf("%d/%d. Pre-installing %d packages (%s) (Ncpus = %d)", kk, length(chunks), length(pkgs_chunk), paste(sQuote(pkgs_chunk), collapse = ", "), getOption("Ncpus", 1L)))
     install_packages(pkgs_chunk, dependencies = TRUE, lib = temp_lib_path)
-  })
+  }
   
   invisible(void)  
 }
