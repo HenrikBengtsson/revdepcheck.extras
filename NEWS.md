@@ -4,6 +4,8 @@
 
  * Now using [evercran](https://github.com/r-hub/evercran) as the main
    CRAN snapshot database.
+
+ * `run()` sets R option `useFancyQuotes` to FALSE, while running.
  
 
 # Version 0.6.0 [2023-11-07]

@@ -81,7 +81,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
   stopifnot(is.character(pkg), length(pkg) == 1L, !is.na(pkg))
   
   stopifnot(length(warn) == 1L, is.numeric(warn), !is.na(warn), warn >= 0L)
-  oopts <- options(warn = warn)
+  oopts <- options(warn = warn, useFancyQuotes = FALSE)
   on.exit(options(oopts))
 
   if ("--help" %in% args) {
