@@ -1,5 +1,10 @@
 # Version (development version)
 
+## Significant changes
+ 
+ * Now `revdep_preinstall()` defaults to installing 16 packages at the
+   time. It used to be one package at the time.
+
 ## New Features
 
  * Added argument `chunk_size` to `revdep_preinstall()`, which

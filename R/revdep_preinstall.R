@@ -28,7 +28,7 @@
 #' @importFrom crancache install_packages
 #' @importFrom parallel splitIndices
 #' @export
-revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 1L, temp_lib_path = revdep_preinstall_libs()[1]) {
+revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 16L, temp_lib_path = revdep_preinstall_libs()[1]) {
   oopts <- options(Ncpus = availableCores())
   
   pkgs <- unique(pkgs)

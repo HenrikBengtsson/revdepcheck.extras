@@ -1,5 +1,5 @@
 Package: revdepcheck.extras
-Version: 0.6.0-9005
+Version: 0.6.0-9006
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
     revdepcheck
