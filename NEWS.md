@@ -10,6 +10,9 @@
 
 ## New Features
 
+ * `run()` gained argument `force` to control whether already
+   installed packages should be re-installed.
+ 
  * Added argument `chunk_size` to `revdep_preinstall()`, which
    controls how many packages are installed at the same time, which in
    turn affects how frequently **crancache** package library cache is
