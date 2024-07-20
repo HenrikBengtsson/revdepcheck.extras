@@ -5,6 +5,9 @@
  * Now `revdep_preinstall()` defaults to installing 16 packages at the
    time. It used to be one package at the time.
 
+ * Now `revdep_preinstall()` forces installation from source,
+   regardless of cached binaries already exist or not.
+
 ## New Features
 
  * Added argument `chunk_size` to `revdep_preinstall()`, which
