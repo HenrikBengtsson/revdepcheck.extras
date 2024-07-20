@@ -34,6 +34,7 @@
 #' --preinstall-update   Install packages that have been updated since last run
 #' --preinstall-error    Install packages that gave an "error" during checks
 #' --preinstall-failure  Install packages that failed to be checked
+#' --force               Force re-installation of select packages.
 #'
 #' Add and remove packages to be checked:
 #' --reset               Full reset to restart checks from scratch
@@ -96,6 +97,11 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
   } else if ("--version" %in% args) {
     cat(as.character(packageVersion(.packageName)), "\n", sep = "")
     return(invisible())
+  }
+
+  force <- FALSE
+  if ("--force" %in% args) {
+    force <- TRUE
   }
 
   assert_repos()
@@ -231,20 +237,20 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
       cat("No new packages found since last run\n")
     }
   } else if ("--preinstall-update" %in% args) {
-    revdep_preinstall_update()
+    revdep_preinstall_update(skip = !force)
   } else if ("--preinstall-children" %in% args) {
     pkgs <- revdep_children(pkg)
     revdep_preinstall(pkgs)
   } else if ("--preinstall-grandchildren" %in% args) {
     if (identical(pkg, ".")) pkg <- revdep_this_package()
     pkgs <- revdep_grandchildren(pkg)
-    revdep_preinstall(pkgs)
+    revdep_preinstall(pkgs, skip = !force)
   } else if ("--preinstall-error" %in% args) {
     res <- revdepcheck::revdep_summary(pkg)
-    revdep_preinstall(revdep_pkgs_with_status(pkg, "error"))
+    revdep_preinstall(revdep_pkgs_with_status(pkg, "error"), skip = !force)
   } else if ("--preinstall-failure" %in% args) {
     res <- revdepcheck::revdep_summary(pkg)
-    revdep_preinstall(revdep_pkgs_with_status(pkg, "failure"))
+    revdep_preinstall(revdep_pkgs_with_status(pkg, "failure"), skip = !force)
   } else if ("--preinstall-todo" %in% args) {
     pkgs <- todo(pkg = pkg, print = FALSE)
     revdep_preinstall(pkgs)
@@ -252,7 +258,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     pos <- which("--preinstall" == args)
     if (pos == length(args)) stop("Missing value for option '--preinstall'")
     pkgs <- parse_pkgs(args[seq(from = pos + 1L, to = length(args))])
-    revdep_preinstall(pkgs)
+    revdep_preinstall(pkgs, skip = !force)
   } else {
     if (length(args) > 0L) {
       stop("Unknown command-line arguments: ",
