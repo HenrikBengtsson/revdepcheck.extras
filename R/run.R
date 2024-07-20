@@ -29,6 +29,8 @@
 #' --preinstall-todo     Pre-install all packages to be checked
 #' --preinstall <pkgs>   Pre-install specified packages
 #' --preinstall-children Install all reverse dependencies
+#' --preinstall-grandchildren
+#'                       Install all second-generation reverse dependencies
 #' --preinstall-update   Install packages that have been updated since last run
 #' --preinstall-error    Install packages that gave an "error" during checks
 #' --preinstall-failure  Install packages that failed to be checked
@@ -232,6 +234,10 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     revdep_preinstall_update()
   } else if ("--preinstall-children" %in% args) {
     pkgs <- revdep_children(pkg)
+    revdep_preinstall(pkgs)
+  } else if ("--preinstall-grandchildren" %in% args) {
+    if (identical(pkg, ".")) pkg <- revdep_this_package()
+    pkgs <- revdep_grandchildren(pkg)
     revdep_preinstall(pkgs)
   } else if ("--preinstall-error" %in% args) {
     res <- revdepcheck::revdep_summary(pkg)

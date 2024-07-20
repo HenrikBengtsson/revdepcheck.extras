@@ -21,6 +21,9 @@
 #' Reverse-dependency packages are pre-installed to custom package
 #' library folders with suffix \file{-revdepcheck} that lives next
 #' to your default library folders.
+#' Packages are forced to be installed from source
+#' (https://github.com/r-lib/crancache/issues/46), regardless of
+#' binary packages already existing in the cache or not.
 #'
 #' @importFrom parallelly availableCores
 #' @importFrom progressr progressor

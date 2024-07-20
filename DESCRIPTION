@@ -1,5 +1,9 @@
 Package: revdepcheck.extras
+<<<<<<< HEAD
 Version: 0.7.0-9040
+=======
+Version: 0.6.0-9008
+>>>>>>> f2266c2 (revdep_preinstall() forces installation from source)
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
     R (>= 4.1.0),
