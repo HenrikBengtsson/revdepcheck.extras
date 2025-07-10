@@ -14,7 +14,7 @@ should be hosted}
 }
 \value{
 (character vector; invisible) The path to to the three
-revdep/{cache,check,library} folders.
+revdep/\{cache,check,library\} folders.
 }
 \description{
 Place redepcheck's 'cache', 'check', and 'library' folders in a temporary folder

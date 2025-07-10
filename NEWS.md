@@ -1,8 +1,7 @@
 # Version (development version)
 
  * ...
-
-
+ 
 # Version 0.7.0 [2025-07-10]
 
 ## Significant changes
@@ -10,8 +9,14 @@
  * Now `revdep_preinstall()` defaults to installing 16 packages at the
    time. It used to be one package at the time.
 
+ * Now `revdep_preinstall()` forces installation from source,
+   regardless of cached binaries already exist or not.
+
 ## New Features
 
+ * `run()` gained argument `force` to control whether already
+   installed packages should be re-installed.
+ 
  * Added argument `chunk_size` to `revdep_preinstall()`, which
    controls how many packages are installed at the same time, which in
    turn affects how frequently **crancache** package library cache is

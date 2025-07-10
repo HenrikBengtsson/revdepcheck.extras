@@ -37,9 +37,12 @@ Populate the 'crancache' database with installable package binaries:
 --preinstall-todo     Pre-install all packages to be checked
 --preinstall <pkgs>   Pre-install specified packages
 --preinstall-children Install all reverse dependencies
+--preinstall-grandchildren
+                      Install all second-generation reverse dependencies
 --preinstall-update   Install packages that have been updated since last run
 --preinstall-error    Install packages that gave an "error" during checks
 --preinstall-failure  Install packages that failed to be checked
+--force               Force re-installation of select packages.
 
 Add and remove packages to be checked:
 --reset               Full reset to restart checks from scratch

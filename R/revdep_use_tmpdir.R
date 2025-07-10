@@ -6,7 +6,7 @@
 #' should be hosted
 #'
 #' @return (character vector; invisible) The path to to the three
-#' revdep/{cache,check,library} folders.
+#' revdep/\{cache,check,library\} folders.
 #'
 #' @details
 #' This function will create folders:

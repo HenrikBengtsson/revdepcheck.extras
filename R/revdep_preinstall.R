@@ -21,6 +21,9 @@
 #' Reverse-dependency packages are pre-installed to custom package
 #' library folders with suffix \file{-revdepcheck} that lives next
 #' to your default library folders.
+#' Packages are forced to be installed from source
+#' (https://github.com/r-lib/crancache/issues/46), regardless of
+#' binary packages already existing in the cache or not.
 #'
 #' @importFrom parallelly availableCores
 #' @importFrom future.apply future_lapply
@@ -57,7 +60,7 @@ revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 16L, temp_lib_path
     on.exit(p())
     pkgs_chunk <- pkgs[chunks[[kk]]]
     message(sprintf("%d/%d. Pre-installing %d packages (%s) (Ncpus = %d)", kk, length(chunks), length(pkgs_chunk), paste(sQuote(pkgs_chunk), collapse = ", "), getOption("Ncpus", 1L)))
-    install_packages(pkgs_chunk, dependencies = TRUE, lib = temp_lib_path)
+    install_packages(pkgs_chunk, dependencies = TRUE, lib = temp_lib_path, type = "source")
   }
   
   invisible()  
