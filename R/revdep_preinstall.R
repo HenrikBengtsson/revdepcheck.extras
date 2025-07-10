@@ -60,7 +60,7 @@ revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 16L, temp_lib_path
     install_packages(pkgs_chunk, dependencies = TRUE, lib = temp_lib_path)
   }
   
-  invisible(void)  
+  invisible()  
 }
 
 #' @rdname revdep_preinstall
