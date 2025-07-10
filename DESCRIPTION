@@ -1,5 +1,5 @@
 Package: revdepcheck.extras
-Version: 0.6.0
+Version: 0.7.0
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
     revdepcheck
@@ -9,6 +9,7 @@ Imports:
     DBI,
     parallelly,
     future.apply,
+    parallel,
     progressr,
     R.utils,
     utils
@@ -27,5 +28,6 @@ LazyLoad: TRUE
 ByteCompile: TRUE
 URL: https://github.com/HenrikBengtsson/revdepcheck.extras
 BugReports: https://github.com/HenrikBengtsson/revdepcheck.extras/issues
-RoxygenNote: 7.2.3
+Encoding: UTF-8
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)

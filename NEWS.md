@@ -1,3 +1,23 @@
+# Version 0.7.0 [2025-07-10]
+
+## Significant changes
+ 
+ * Now `revdep_preinstall()` defaults to installing 16 packages at the
+   time. It used to be one package at the time.
+
+## New Features
+
+ * Added argument `chunk_size` to `revdep_preinstall()`, which
+   controls how many packages are installed at the same time, which in
+   turn affects how frequently **crancache** package library cache is
+   updated.
+
+ * Now using [evercran](https://github.com/r-hub/evercran) as the main
+   CRAN snapshot database.
+
+ * `run()` sets R option `useFancyQuotes` to FALSE, while running.
+ 
+
 # Version 0.6.0 [2023-11-07]
 
 ## New Features

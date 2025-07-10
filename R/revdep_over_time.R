@@ -11,9 +11,11 @@
 #' @return A data.frame
 #'
 #' @details
-#' This function uses the
-#' [Posit Public Package Manager](https://packagemanager.posit.co/)
-#' to identify reverse package dependencies at particular dates.
+#' This function uses the [evercran](https://github.com/r-hub/evercran) to
+#' identify reverse package dependencies at particular dates.
+#' It also supports the
+#' [Posit Public Package Manager](https://packagemanager.posit.co/), which
+#' goes back to October 2017, as an alternative.
 #'
 #' @importFrom progressr progressor
 #' @importFrom future.apply future_lapply
@@ -22,7 +24,7 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
   cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
   loadCache <- R.cache::loadCache
   saveCache <- R.cache::saveCache
-  dirs <- c(.packageName)
+  dirs <- c(.packageName, "revdep_over_time")
   dirs_pkg <- c(dirs, "packages")
 
   count_revdeps <- function(pkg) {
@@ -123,13 +125,17 @@ getSnapshotURL <- function(date, online = FALSE) {
   ## Known time-machine CRAN mirrors
   url_roots <- c(
 ##  Microsoft discontinued MRAN as of June 2023
-##  MRAN = "https://cran.microsoft.com/snapshot",
-    RSPM = "https://packagemanager.posit.co/cran"
+##  MRAN = "https://cran.microsoft.com/snapshot/%Y-%m-%d",
+    ## Posit Public Package Manager (goes back to 2017-10-10)
+    PPPM = "https://packagemanager.posit.co/cran/%Y-%m-%d",
+    ## Posit Public Package Manager (goes back to the beginning)
+    EverCRAN = "https://evercran.r-pkg.org/%Y/%m/%d"
   )
 
-  mirror <- "RSPM"
+  mirror <- c("EverCRAN", "PPPM")[1]
   mirror <- getOption("revdepcheck.extras.snapshot.source", mirror)
   mirror <- match.arg(mirror, choices = names(url_roots))
-  url_root <- url_roots[mirror]
-  file.path(url_root, date, fsep = "/")
+  url_fmt <- url_roots[mirror]
+  stopifnot(length(url_fmt) == 1L, !is.na(url_fmt), is.character(url_fmt))
+  format(date, format = url_fmt)
 }

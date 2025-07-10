@@ -29,7 +29,9 @@ A data.frame
 Get the Number of Reverse Dependencies on CRAN
 }
 \details{
-This function uses the
-\href{https://packagemanager.posit.co/}{Posit Public Package Manager}
-to identify reverse package dependencies at particular dates.
+This function uses the \href{https://github.com/r-hub/evercran}{evercran} to
+identify reverse package dependencies at particular dates.
+It also supports the
+\href{https://packagemanager.posit.co/}{Posit Public Package Manager}, which
+goes back to October 2017, as an alternative.
 }

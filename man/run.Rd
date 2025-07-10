@@ -81,7 +81,7 @@ Rscript -e revdepcheck.extras::run --args --preinstall-children
 Rscript -e revdepcheck.extras::run --args --preinstall-todo
 
 R_REVDEPCHECK_NUM_WORKERS=1 R_REVDEPCHECK_TIMEOUT=60 Rscript -e revdepcheck.extras::run
-TAR_SKIP_CLUSTERMQ=true Rscript -e revdepcheck.extras::run
+TAR_SKIP_CLUSTERMQ=true xvfb-run Rscript -e revdepcheck.extras::run
 }\if{html}{\out{</div>}}
 }
 
