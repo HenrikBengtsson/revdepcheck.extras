@@ -31,8 +31,15 @@
 #' @importFrom crancache install_packages
 #' @importFrom parallel splitIndices
 #' @export
-revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 16L, temp_lib_path = revdep_preinstall_libs()[1]) {
-  oopts <- options(Ncpus = availableCores())
+revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = availableCores(), temp_lib_path = revdep_preinstall_libs()[1]) {
+  oenv <- Sys.getenv("_R_CHECK_LIMIT_CORES_", NA_character_)
+  if (!is.na(oenv)) {
+    Sys.unsetenv("_R_CHECK_LIMIT_CORES_")
+    on.exit(Sys.setenv("_R_CHECK_LIMIT_CORES_" = oenv))
+  }
+  
+  oopts <- options(Ncpus = chunk_size)
+  on.exit(options(oopts), add = TRUE)
   
   pkgs <- unique(pkgs)
   message(sprintf("Triggering crancache builds by pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
@@ -56,12 +63,14 @@ revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 16L, temp_lib_path
   message(sprintf("Installing packages in %d chunks of %d packages each", length(chunks), chunk_size))
   
   p <- progressor(along = chunks)
-  for (kk in seq_along(chunks)) {
-    on.exit(p())
+  for (kk in seq_along(chunks)) local({
     pkgs_chunk <- pkgs[chunks[[kk]]]
-    message(sprintf("%d/%d. Pre-installing %d packages (%s) (Ncpus = %d)", kk, length(chunks), length(pkgs_chunk), paste(sQuote(pkgs_chunk), collapse = ", "), getOption("Ncpus", 1L)))
+    info <- sprintf("Pre-installing %d packages (%s)", length(pkgs_chunk), paste(sQuote(pkgs_chunk), collapse = ", "))
+    message(sprintf("%d/%d. %s (Ncpus = %d)", kk, length(chunks), info, getOption("Ncpus", 1L)))
+    p(info, amount = 0)
+    on.exit(p())
     install_packages(pkgs_chunk, dependencies = TRUE, lib = temp_lib_path, type = "source")
-  }
+  })
   
   invisible()  
 }

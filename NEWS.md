@@ -1,6 +1,10 @@
 # Version (development version)
 
- * ...
+## New Features
+
+ * Argument `chunk_size` of `revdep_preinstall()` now defaults to
+   `parallelly::availableCores()`.
+
  
 # Version 0.7.0 [2025-07-10]
 
