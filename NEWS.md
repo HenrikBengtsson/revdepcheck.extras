@@ -11,6 +11,9 @@
    can now be set via environment variable
    `R_REVDEPCHECK_EXTRAS_SNAPSHOT_SOURCE` on package load.
 
+ * Argument `chunk_size` of `revdep_preinstall()` now defaults to
+   `parallelly::availableCores()`.
+
 ## Miscellaneous
 
  * Now using `futurize()` of the **futurize** package for parallel
@@ -105,7 +108,6 @@
 
  * CLI option `--add-all` of `run()` failed to add reverse
    dependencies.
-   
 
 # Version 0.7.0 [2025-07-10]
 

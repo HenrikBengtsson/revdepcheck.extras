@@ -8,7 +8,7 @@
 revdep_preinstall(
   pkgs,
   skip = TRUE,
-  chunk_size = 16L,
+  chunk_size = availableCores(),
   temp_lib_path = revdep_preinstall_libs()[1]
 )
 
