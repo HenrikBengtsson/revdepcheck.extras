@@ -14,6 +14,8 @@
  * Argument `chunk_size` of `revdep_preinstall()` now defaults to
    `parallelly::availableCores()`.
 
+ * Add `crancache_cleanup()`.
+
 ## Miscellaneous
 
  * Now using `futurize()` of the **futurize** package for parallel
