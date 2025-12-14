@@ -5,6 +5,8 @@
  * Argument `chunk_size` of `revdep_preinstall()` now defaults to
    `parallelly::availableCores()`.
 
+ * Add `crancache_cleanup()`.
+ 
  
 # Version 0.7.0 [2025-07-10]
 

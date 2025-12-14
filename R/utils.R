@@ -6,3 +6,5 @@ import_from <- function(pkg, obj, mode = "function") {
 is_symlink <- function(path) {
   file.exists(path) && !identical(Sys.readlink(path), "")
 }
+
+commaq <- function(x, sep = ", ") paste(sQuote(x), collapse = sep)
