@@ -155,6 +155,5 @@ getSnapshotURL <- function(date, online = FALSE) {
   stopifnot(inherits(date, "Date"))
   url_fmt <- getSnapshotURLFormat()
   url <- format(date, format = url_fmt)
-  names(url) <- names(url_fmt)
   url
 }
