@@ -17,6 +17,9 @@ checks.}
 
 \item{args}{(character string) The command-line arguments.}
 }
+\value{
+Nothing.
+}
 \description{
 Run reverse-package dependency checks from the command line (CLI)
 }

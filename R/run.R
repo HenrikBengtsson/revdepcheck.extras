@@ -10,6 +10,9 @@
 #'
 #' @param args (character string) The command-line arguments.
 #'
+#' @return
+#' Nothing.
+#' 
 #' @section Usage:
 #' ```
 #' Rscript -e revdepcheck.extras::run --args <options>
