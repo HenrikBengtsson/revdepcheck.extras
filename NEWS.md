@@ -1,5 +1,10 @@
 # Version (development version)
 
+## Significant changes
+
+ * The reverse-dependency file cache location is now unique to the
+   time-machine CRAN repository mirror set.
+
 ## New Features
 
  * The default value for R option `revdepcheck.extras.snapshot.source`

@@ -11,11 +11,16 @@
 #' @return A data.frame
 #'
 #' @details
-#' This function uses the [evercran](https://github.com/r-hub/evercran) to
-#' identify reverse package dependencies at particular dates.
+#' This function uses the [evercran](https://github.com/r-hub/evercran)
+#' (`"EverCRAN"`) to identify reverse package dependencies at particular
+#' dates.
 #' It also supports the
-#' [Posit Public Package Manager](https://packagemanager.posit.co/), which
-#' goes back to October 2017, as an alternative.
+#' [Posit Public Package Manager](https://packagemanager.posit.co/)
+#' (`"PPPM"`), which goes back to October 2017, as an alternative.
+#' The default is `EverCRAN`, which can be overridden by R option
+#' `revdepcheck.extras.snapshot.source`, which in turn can be set by
+#' environment variable `R_REVDEPCHECK_EXTRAS_SNAPSHOT_SOURCE` on
+#' package load.
 #'
 #' @importFrom progressr progressor
 #' @importFrom future.apply future_lapply
@@ -24,7 +29,10 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
   cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
   loadCache <- R.cache::loadCache
   saveCache <- R.cache::saveCache
-  dirs <- c(.packageName, "revdep_over_time")
+
+  snapshot_source <- names(getSnapshotURLFormat())
+  
+  dirs <- c(.packageName, "revdep_over_time", snapshot_source)
   dirs_pkg <- c(dirs, "packages")
 
   count_revdeps <- function(pkg) {
@@ -49,7 +57,7 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
   stats <- future_lapply(dates, FUN = function(date) {
     mran_repos <- getSnapshotURL(date, online = FALSE)
     repos <- c(CRAN = mran_repos)
-
+    
     key <- list(
       method = "revdep_over_time",
       pkgs = pkgs,
@@ -119,9 +127,7 @@ cran_revdep_on_date <- function(package, date, force = FALSE) {
 }
 
 
-getSnapshotURL <- function(date, online = FALSE) {
-  stopifnot(inherits(date, "Date"))
-  
+getSnapshotURLFormat <- function() {
   ## Known time-machine CRAN mirrors
   url_roots <- c(
 ##  Microsoft discontinued MRAN as of June 2023
@@ -131,11 +137,23 @@ getSnapshotURL <- function(date, online = FALSE) {
     ## Posit Public Package Manager (goes back to the beginning)
     EverCRAN = "https://evercran.r-pkg.org/%Y/%m/%d"
   )
-
+  
   mirror <- c("EverCRAN", "PPPM")[1]
   mirror <- getOption("revdepcheck.extras.snapshot.source", mirror)
-  mirror <- match.arg(mirror, choices = names(url_roots))
+  mirror <- match.arg(mirror, choices = names(url_roots), several.ok = FALSE)
+
   url_fmt <- url_roots[mirror]
   stopifnot(length(url_fmt) == 1L, !is.na(url_fmt), is.character(url_fmt))
-  format(date, format = url_fmt)
+
+  names(url_fmt) <- mirror
+  url_fmt
+}
+
+
+getSnapshotURL <- function(date, online = FALSE) {
+  stopifnot(inherits(date, "Date"))
+  url_fmt <- getSnapshotURLFormat()
+  url <- format(date, format = url_fmt)
+  names(url) <- names(url_fmt)
+  url
 }

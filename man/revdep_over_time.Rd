@@ -29,9 +29,14 @@ A data.frame
 Get the Number of Reverse Dependencies on CRAN
 }
 \details{
-This function uses the \href{https://github.com/r-hub/evercran}{evercran} to
-identify reverse package dependencies at particular dates.
+This function uses the \href{https://github.com/r-hub/evercran}{evercran}
+(\code{"EverCRAN"}) to identify reverse package dependencies at particular
+dates.
 It also supports the
-\href{https://packagemanager.posit.co/}{Posit Public Package Manager}, which
-goes back to October 2017, as an alternative.
+\href{https://packagemanager.posit.co/}{Posit Public Package Manager}
+(\code{"PPPM"}), which goes back to October 2017, as an alternative.
+The default is \code{EverCRAN}, which can be overridden by R option
+\code{revdepcheck.extras.snapshot.source}, which in turn can be set by
+environment variable \code{R_REVDEPCHECK_EXTRAS_SNAPSHOT_SOURCE} on
+package load.
 }

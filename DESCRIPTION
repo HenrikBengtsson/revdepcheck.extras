@@ -1,5 +1,5 @@
 Package: revdepcheck.extras
-Version: 0.7.0-9001
+Version: 0.7.0-9003
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
     revdepcheck
@@ -14,7 +14,6 @@ Imports:
     R.utils,
     utils
 Suggests:
-    checkpoint,
     R.cache,
     yaml
 Remotes:
