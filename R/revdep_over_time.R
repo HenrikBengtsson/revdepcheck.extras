@@ -23,6 +23,7 @@
 #' package load.
 #'
 #' @importFrom progressr progressor
+#' @importFrom futurize futurize
 #' @importFrom future.apply future_lapply
 #' @export
 revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
@@ -54,7 +55,7 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
   stopifnot(is.integer(none), length(none) == 1L)
 
   p <- progressor(length(dates) * length(pkgs))
-  stats <- future_lapply(dates, FUN = function(date) {
+  stats <- lapply(dates, FUN = function(date) {
     mran_repos <- getSnapshotURL(date, online = FALSE)
     repos <- c(CRAN = mran_repos)
     
@@ -80,7 +81,7 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
     saveCache(stats_pkgs, key = key, dirs = dirs)
 
     stats_pkgs
-  })
+  }) |> futurize()
 
   stats <- unlist(stats, use.names = FALSE)
   stats <- matrix(stats, nrow = length(dates), ncol = length(pkgs), byrow = TRUE)

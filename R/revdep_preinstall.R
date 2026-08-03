@@ -23,7 +23,6 @@
 #' to your default library folders.
 #'
 #' @importFrom parallelly availableCores
-#' @importFrom future.apply future_lapply
 #' @importFrom progressr progressor
 #' @importFrom crancache install_packages
 #' @importFrom parallel splitIndices

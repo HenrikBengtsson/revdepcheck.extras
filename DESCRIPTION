@@ -1,14 +1,16 @@
 Package: revdepcheck.extras
-Version: 0.7.0-9003
+Version: 0.7.0-9004
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
+    R (>= 4.1.0),
     revdepcheck
 Imports:
     crancache,
     desc,
     DBI,
     parallelly,
-    future.apply,
+    futurize,
+      future.apply,
     parallel,
     progressr,
     R.utils,

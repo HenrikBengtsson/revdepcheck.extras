@@ -21,10 +21,11 @@
 #' These packages are installed to a temporary folder to avoid
 #' adding them to your default package library folders.
 #'
-#' @importFrom future.apply future_lapply
 #' @importFrom progressr progressor
 #' @importFrom crancache crancache_list install_packages
 #' @importFrom utils file_test
+#' @importFrom futurize futurize
+#' @importFrom future.apply future_lapply
 #'
 #' @export
 revdep_precache <- function(package = ".", temp_lib_path = tempfile(pattern = "dir"), ..., dryrun = FALSE) {
@@ -56,7 +57,7 @@ revdep_precache <- function(package = ".", temp_lib_path = tempfile(pattern = "d
   void <- lapply(missing, FUN = function(pkg) {
     on.exit(p(pkg))
     install_packages(pkg, dependencies = TRUE, lib = temp_lib_path)
-  })#, future.chunk.size = 1L, future.seed = TRUE)
+  })#|> futurize(chunk_size = 1L, seed = TRUE)
 
   cached <- unique(crancache_list()$Package)
   missing <- setdiff(pkgs, cached)

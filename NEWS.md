@@ -10,6 +10,11 @@
  * The default value for R option `revdepcheck.extras.snapshot.source`
    can now be set via environment variable
    `R_REVDEPCHECK_EXTRAS_SNAPSHOT_SOURCE` on package load.
+
+## Miscellaneous
+
+ * Now using `futurize()` of the **futurize** package for parallel
+   processing, instead of using the **future.apply** package directly.
    
 
 # Version 0.7.0 [2025-07-10]
