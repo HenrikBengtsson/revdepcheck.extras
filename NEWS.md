@@ -18,6 +18,11 @@
 
 ## Bug Fixes
 
+ * `required_packages()` dropped packages when dependencies spanned
+   multiple lines, or when version specifications lacked a leading space.
+   It also returned `NULL` instead of an empty character vector when
+   no packages were requested.
+
  * `is_in_crancache()` gave false negatives when multiple versions
    were cached, or because versions were compared as strings instead
    package versions.
