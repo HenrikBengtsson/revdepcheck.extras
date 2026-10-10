@@ -134,7 +134,8 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
   } else if ("--add-failure" %in% args) {
     revdep_init(pkg)
     pkgs <- revdep_pkgs_with_status(pkg, "failure")
-    revdepcheck::revdep_add(packages = pkgs)
+    revdepcheck::revdep_add(pkg, packages = pkgs)
+    todo(print = TRUE)
   } else if ("--add-children" %in% args) {
     revdep_init(pkg)
     pkgs <- revdep_children(pkg)

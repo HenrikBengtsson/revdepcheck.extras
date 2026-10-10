@@ -18,6 +18,10 @@
 
 ## Bug Fixes
 
+ * CLI option `--add-failure` of `run()` failed to specify the target
+   package when adding packages, and did not display the updated todo
+   list.
+
  * `revdep_grandchildren()` memoization ignored argument
    `exclude_children`.
 
