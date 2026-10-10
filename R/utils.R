@@ -7,3 +7,5 @@ is_symlink <- function(path) {
   target <- Sys.readlink(path)
   !is.na(target) && nzchar(target)
 }
+
+commaq <- function(x, sep = ", ") paste(sQuote(x), collapse = sep)

@@ -8,7 +8,7 @@
 revdep_preinstall(
   pkgs,
   skip = TRUE,
-  chunk_size = 16L,
+  chunk_size = availableCores(),
   temp_lib_path = revdep_preinstall_libs()[1]
 )
 
@@ -40,4 +40,7 @@ Pre-install and update reverse-dependency packages
 Reverse-dependency packages are pre-installed to custom package
 library folders with suffix \file{-revdepcheck} that lives next
 to your default library folders.
+Packages are forced to be installed from source
+(https://github.com/r-lib/crancache/issues/46), regardless of
+binary packages already existing in the cache or not.
 }

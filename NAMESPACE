@@ -3,6 +3,7 @@
 export(bioc_releases)
 export(check)
 export(cran_revdep_on_date)
+export(crancache_cleanup)
 export(is_in_crancache)
 export(num_workers)
 export(parse_pkgs)
@@ -28,6 +29,7 @@ importFrom(R.utils,CmdArgsFunction)
 importFrom(crancache,
   available_packages,
   crancache_list,
+  crancache_remove,
   install_packages,
   update_packages
 )

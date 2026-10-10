@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 0.8.0 [2026-10-10]
 
 ## Significant changes
 
@@ -10,6 +10,11 @@
  * The default value for R option `revdepcheck.extras.snapshot.source`
    can now be set via environment variable
    `R_REVDEPCHECK_EXTRAS_SNAPSHOT_SOURCE` on package load.
+
+ * Argument `chunk_size` of `revdep_preinstall()` now defaults to
+   `parallelly::availableCores()`.
+
+ * Add `crancache_cleanup()`.
 
 ## Miscellaneous
 
@@ -105,7 +110,6 @@
 
  * CLI option `--add-all` of `run()` failed to add reverse
    dependencies.
-   
 
 # Version 0.7.0 [2025-07-10]
 
@@ -114,8 +118,14 @@
  * Now `revdep_preinstall()` defaults to installing 16 packages at the
    time. It used to be one package at the time.
 
+ * Now `revdep_preinstall()` forces installation from source,
+   regardless of cached binaries already exist or not.
+
 ## New Features
 
+ * `run()` gained argument `force` to control whether already
+   installed packages should be re-installed.
+ 
  * Added argument `chunk_size` to `revdep_preinstall()`, which
    controls how many packages are installed at the same time, which in
    turn affects how frequently **crancache** package library cache is
