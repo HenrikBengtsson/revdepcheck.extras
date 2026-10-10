@@ -47,6 +47,7 @@ revdep_grandchildren <- local({
         deps
       })
       pkgs <- unlist(pkgs, use.names = FALSE)
+      if (is.null(pkgs)) pkgs <- character(0L)
       pkgs <- unique(pkgs)
       pkgs <- setdiff(pkgs, package) ## WORKAROUND
       cache[[package]] <- pkgs

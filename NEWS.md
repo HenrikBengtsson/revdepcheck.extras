@@ -18,6 +18,10 @@
 
 ## Bug Fixes
 
+ * `revdep_grandchildren()` returned `NULL` instead of an empty
+   character vector and failed to memoize when there were no
+   grandchildren.
+
  * `revdep_required_packages()` lacked a default for argument `package`
    and failed to resolve `"."` to the current package.
 

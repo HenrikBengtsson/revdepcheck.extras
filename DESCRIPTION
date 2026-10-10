@@ -1,5 +1,5 @@
 Package: revdepcheck.extras
-Version: 0.7.0-9031
+Version: 0.7.0-9032
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
     R (>= 4.1.0),
