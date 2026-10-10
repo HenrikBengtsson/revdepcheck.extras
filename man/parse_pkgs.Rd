@@ -8,7 +8,7 @@ parse_pkgs(pkgs)
 }
 \arguments{
 \item{pkgs}{(character vector) Extract package names
-from one or more strings with our without commas, spaces,
+from one or more strings with or without commas, spaces,
 quotation marks, etc.}
 }
 \value{

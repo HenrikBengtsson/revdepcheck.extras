@@ -18,6 +18,8 @@
 
 ## Bug Fixes
 
+ * `parse_pkgs()` failed to parse whitespace-separated package names.
+
  * The file cache location for `cran_revdep_on_date()` was not unique
    to the time-machine CRAN repository mirror set.
 
