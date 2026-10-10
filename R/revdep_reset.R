@@ -7,12 +7,12 @@
 #' @importFrom utils file_test
 #' @export
 revdep_reset <- function(pkg = ".") {
-  root <- "revdep"
+  root <- file.path(pkg, "revdep")
   dirs <- c("cache", "checks", "library")
   for (dir in dirs) {
     to <- file.path(root, dir)
     if (is_symlink(to)) {
-      parts <- dir(path = to, all.files = TRUE, full.names = TRUE)
+      parts <- dir(path = to, all.files = TRUE, full.names = TRUE, no.. = TRUE)
       unlink(parts, recursive = TRUE)
       unlink(to)
     } else if (file_test("-d", to)) {

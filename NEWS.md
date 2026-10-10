@@ -18,7 +18,7 @@
 
 ## Bug Fixes
 
- * `revdep_use_tmpdir()` ignored argument `pkg`.
+ * `revdep_reset()` and `revdep_use_tmpdir()` ignored argument `pkg`.
 
  * `revdep_preinstall()` did not undo R option `Ncpus` and failed to
    report progress after each chunk of packages.
