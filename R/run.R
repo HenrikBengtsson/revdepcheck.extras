@@ -240,7 +240,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     revdep_preinstall_update(skip = !force)
   } else if ("--preinstall-children" %in% args) {
     pkgs <- revdep_children(pkg)
-    revdep_preinstall(pkgs)
+    revdep_preinstall(pkgs, skip = !force)
   } else if ("--preinstall-grandchildren" %in% args) {
     if (identical(pkg, ".")) pkg <- revdep_this_package()
     pkgs <- revdep_grandchildren(pkg)
@@ -253,7 +253,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     revdep_preinstall(revdep_pkgs_with_status(pkg, "failure"), skip = !force)
   } else if ("--preinstall-todo" %in% args) {
     pkgs <- todo(pkg = pkg, print = FALSE)
-    revdep_preinstall(pkgs)
+    revdep_preinstall(pkgs, skip = !force)
   } else if ("--preinstall" %in% args) {
     pos <- which("--preinstall" == args)
     if (pos == length(args)) stop("Missing value for option '--preinstall'")
