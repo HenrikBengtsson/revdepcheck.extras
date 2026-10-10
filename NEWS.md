@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * `revdep_todo_reset()` dropped column `status` from database table
+   `todo`, causing subsequent **revdepcheck** operations to fail.
+
  * `todo()` added indentation to lines.
 
  * `assert_repos(verbose = TRUE)` formatted all repositories on a
