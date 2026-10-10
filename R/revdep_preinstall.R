@@ -29,6 +29,7 @@
 #' @export
 revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 16L, temp_lib_path = revdep_preinstall_libs()[1]) {
   oopts <- options(Ncpus = availableCores())
+  on.exit(options(oopts))
   
   pkgs <- unique(pkgs)
   message(sprintf("Triggering crancache builds by pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
@@ -53,10 +54,10 @@ revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 16L, temp_lib_path
   
   p <- progressor(along = chunks)
   for (kk in seq_along(chunks)) {
-    on.exit(p())
     pkgs_chunk <- pkgs[chunks[[kk]]]
     message(sprintf("%d/%d. Pre-installing %d packages (%s) (Ncpus = %d)", kk, length(chunks), length(pkgs_chunk), paste(sQuote(pkgs_chunk), collapse = ", "), getOption("Ncpus", 1L)))
     install_packages(pkgs_chunk, dependencies = TRUE, lib = temp_lib_path)
+    p()
   }
   
   invisible()  

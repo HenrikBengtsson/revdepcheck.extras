@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * `revdep_preinstall()` did not undo R option `Ncpus` and failed to
+   report progress after each chunk of packages.
+
  * `is_symlink()` failed to identify broken symbolic links.
 
  * CLI option `--add-failure` of `run()` failed to specify the target
