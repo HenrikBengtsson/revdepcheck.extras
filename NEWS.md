@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * `assert_repos(verbose = TRUE)` formatted all repositories on a
+   single line.
+
  * Several CLI options of `run()` ignored argument `pkg` when querying
    or displaying the todo list.
 
