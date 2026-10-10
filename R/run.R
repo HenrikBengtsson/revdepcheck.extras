@@ -237,7 +237,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
       cat("No new packages found since last run\n")
     }
   } else if ("--preinstall-update" %in% args) {
-    revdep_preinstall_update(skip = !force)
+    revdep_preinstall_update()
   } else if ("--preinstall-children" %in% args) {
     pkgs <- revdep_children(pkg)
     revdep_preinstall(pkgs, skip = !force)
