@@ -12,7 +12,7 @@
 todo <- function(pkg = ".", print = TRUE) {
   pkgs <- tryCatch(revdep_todo(pkg), error = function(ex) NA)
   if (identical(pkgs, NA)) {
-    cat("Revdepcheck has not been initiated\n")
+    if (print) cat("Revdepcheck has not been initiated\n")
     return(invisible(character(0L)))
   }
 
