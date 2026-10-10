@@ -148,7 +148,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     todo(pkg = pkg, print = TRUE)
   } else if ("--add-updated" %in% args) {
     revdep_init(pkg)
-    pkgs <- revdep_readme_packages()
+    pkgs <- revdep_readme_packages(file = file.path(pkg, "revdep", "README.md"))
     pkgs <- subset(pkgs, version < repo_version)$package
     if (length(pkgs) > 0) {
       revdepcheck::revdep_add(pkg, packages = pkgs)
@@ -157,7 +157,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     }
   } else if ("--add-new" %in% args) {
     revdep_init(pkg)
-    pkgs <- revdep_readme_packages()
+    pkgs <- revdep_readme_packages(file = file.path(pkg, "revdep", "README.md"))
     children <- revdepcheck.extras::revdep_children(pkg)
     pkgs <- setdiff(children, pkgs$package)
     if (length(pkgs) > 0) {
@@ -208,7 +208,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     pkgs <- revdep_pkgs_with_status(pkg, "failure")
     cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
   } else if ("--list-updated" %in% args) {
-    pkgs <- revdep_readme_packages()
+    pkgs <- revdep_readme_packages(file = file.path(pkg, "revdep", "README.md"))
     pkgs <- subset(pkgs, version < repo_version)$package
     if (length(pkgs) > 0) {
       cat(sprintf("[n=%d] %s\n", length(pkgs), paste(pkgs, collapse = " ")))
@@ -216,7 +216,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
       cat("No packages have been updated since last run\n")
     }
   } else if ("--list-new" %in% args) {
-    pkgs <- revdep_readme_packages()
+    pkgs <- revdep_readme_packages(file = file.path(pkg, "revdep", "README.md"))
     children <- revdep_children(pkg)
     pkgs <- setdiff(children, pkgs$package)
     if (length(pkgs) > 0) {
