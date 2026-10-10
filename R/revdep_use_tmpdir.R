@@ -32,13 +32,13 @@
 #' @importFrom utils file_test
 #' @export
 revdep_use_tmpdir <- function(pkg = ".", tmpdir = dirname(tempdir())) {
-  root <- "revdep"
+  root <- file.path(pkg, "revdep")
   if (!file_test("-d", root)) dir.create(root, recursive = TRUE)
   stopifnot(file_test("-d", root))
   stopifnot(file_test("-d", tmpdir))
 
   pkgname <- if (pkg == ".") revdep_this_package() else basename(pkg)
-  from_root <- file.path(tmpdir, .packageName, pkgname, root)
+  from_root <- file.path(tmpdir, .packageName, pkgname, "revdep")
   if (!file_test("-d", from_root)) dir.create(from_root, recursive = TRUE)
   stopifnot(file_test("-d", from_root))
 
