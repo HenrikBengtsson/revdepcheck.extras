@@ -18,6 +18,8 @@
 
 ## Bug Fixes
 
+ * `todo()` added indentation to lines.
+
  * `assert_repos(verbose = TRUE)` formatted all repositories on a
    single line.
 

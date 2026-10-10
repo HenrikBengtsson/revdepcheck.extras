@@ -25,7 +25,7 @@ todo <- function(pkg = ".", print = TRUE) {
       cat("There are no packages on the revdepcheck todo list\n")
     } else {
       width <- floor(log10(length(pkgs))) + 1L
-      cat(sprintf("%*d. %s\n", width, seq_along(pkgs), pkgs))
+      cat(sprintf("%*d. %s\n", width, seq_along(pkgs), pkgs), sep = "")
     }
   }
 
