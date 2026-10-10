@@ -18,6 +18,8 @@
 
 ## Bug Fixes
 
+ * CLI option `--show-check` of `run()` ignored argument `pkg`.
+
  * Several CLI options of `run()` ignored argument `pkg` when querying
    or displaying the todo list.
 

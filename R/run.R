@@ -177,15 +177,15 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     todo(pkg = pkg, print = TRUE)
   } else if ("--show-check" %in% args) {
     pos <- which("--show-check" == args)
-    if (pos == length(args)) stop("Missing value for option '--show-check")
+    if (pos == length(args)) stop("Missing value for option '--show-check'")
     pkgs <- parse_pkgs(args[seq(from = pos + 1L, to = length(args))])
-    for (pkg in pkgs) {
+    for (name in pkgs) {
       for (dir in c("old", "new")) {
-        path <- file.path("revdep", "checks", pkg, dir, sprintf("%s.Rcheck", pkg))
+        path <- file.path(pkg, "revdep", "checks", name, dir, sprintf("%s.Rcheck", name))
         if (!utils::file_test("-d", path)) next
         pathname <- file.path(path, "00check.log")
         cat("-----------------------------------------------\n")
-        cat(sprintf("%s (%s):\n", pkg, dir))
+        cat(sprintf("%s (%s):\n", name, dir))
         cat(sprintf("Pathname: %s\n", pathname))
         cat("-----------------------------------------------\n")
         bfr <- readLines(pathname, warn = FALSE)
