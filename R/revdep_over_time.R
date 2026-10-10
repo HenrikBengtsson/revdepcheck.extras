@@ -42,17 +42,29 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
       pkg = pkg,
       repos = getOption("repos")
     )
-    if (!force && !is.null(n <- loadCache(key, dirs = dirs_pkg))) return(n)
-    pkgs <- cran_revdeps(pkg)
-    if (length(pkgs) == 0) return(none)
-    n <- length(pkgs)
+    if (!force && !is.null(n <- loadCache(key, dirs = dirs_pkg))) {
+      if (n == 0L) return(none)
+      return(n)
+    }
+    rdpkgs <- cran_revdeps(pkg)
+    n <- length(rdpkgs)
     saveCache(n, key = key, dirs = dirs_pkg)
+    if (n == 0L) return(none)
     n
   }
 
   stopifnot(inherits(dates, "Date"))
   stopifnot(is.character(pkgs))
-  stopifnot(is.integer(none), length(none) == 1L)
+  stopifnot(length(none) == 1L, is.numeric(none) || is.na(none))
+  none <- as.integer(none)
+
+  if (length(dates) == 0L) {
+    stats <- matrix(integer(0L), nrow = 0L, ncol = length(pkgs))
+    colnames(stats) <- pkgs
+    stats <- as.data.frame(stats)
+    stats <- cbind(date = dates, stats)
+    return(stats)
+  }
 
   p <- progressor(length(dates) * length(pkgs))
   stats <- lapply(dates, FUN = function(date) {
@@ -118,7 +130,7 @@ cran_revdep_on_date <- function(package, date, force = FALSE) {
     pkgs
   }
 
-  stopifnot(inherits(date, "Date"))
+  stopifnot(inherits(date, "Date"), length(date) == 1L)
   stopifnot(is.character(package), length(package) == 1L)
 
   mran_repos <- getSnapshotURL(date, online = FALSE)

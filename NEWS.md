@@ -18,6 +18,11 @@
 
 ## Bug Fixes
 
+ * `revdep_over_time()` crashed when `dates` was empty, rejected
+   numeric or logical values for `none` (e.g. `none = 0` or
+   `none = NA`), and failed to cache packages with zero reverse
+   dependencies.
+
  * `revdep_use_tmpdir()` failed to recreate missing target folders in
    `tmpdir` when symlinks were broken, and had documentation typos in
    folder paths.
