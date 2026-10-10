@@ -12,7 +12,7 @@ cran_revdep_on_date(package, date, force = FALSE)
 \arguments{
 \item{pkgs}{(character vector) One or more packages.}
 
-\item{dates}{(POSIXct vector) One or more dates.}
+\item{dates}{(Date vector) One or more dates.}
 
 \item{none}{(integer) The default value if there are no dependencies.}
 
@@ -20,7 +20,7 @@ cran_revdep_on_date(package, date, force = FALSE)
 
 \item{package}{(character) A package name.}
 
-\item{date}{(POSIXct) A date.}
+\item{date}{(Date) A date.}
 }
 \value{
 A data.frame

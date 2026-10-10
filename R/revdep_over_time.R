@@ -2,7 +2,7 @@
 #'
 #' @param pkgs (character vector) One or more packages.
 #'
-#' @param dates (POSIXct vector) One or more dates.
+#' @param dates (Date vector) One or more dates.
 #'
 #' @param none (integer) The default value if there are no dependencies.
 #'
@@ -94,7 +94,7 @@ revdep_over_time <- function(pkgs, dates, none = NA_integer_, force = FALSE) {
 
 #' @param package (character) A package name.
 #'
-#' @param date (POSIXct) A date.
+#' @param date (Date) A date.
 #'
 #' @rdname revdep_over_time
 #' @export
