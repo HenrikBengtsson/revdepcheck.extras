@@ -22,7 +22,7 @@
 #' adding them to your default package library folders.
 #'
 #' @importFrom progressr progressor
-#' @importFrom crancache crancache_list install_packages
+#' @importFrom crancache install_packages
 #' @importFrom utils file_test
 #' @importFrom futurize futurize
 #' @importFrom future.apply future_lapply
@@ -41,8 +41,7 @@ revdep_precache <- function(package = ".", temp_lib_path = tempfile(pattern = "d
   if (length(pkgs) == 0L) return(character(0L))
 
   ## Which packages are not in the cache already?
-  cached <- unique(crancache_list()$Package)
-  missing <- setdiff(pkgs, cached)
+  missing <- pkgs[!is_in_crancache(pkgs)]
   ## Nothing todo?
   if (length(missing) == 0L) return(character(0L))
 
@@ -59,8 +58,7 @@ revdep_precache <- function(package = ".", temp_lib_path = tempfile(pattern = "d
     install_packages(pkg, dependencies = TRUE, lib = temp_lib_path)
   })#|> futurize(chunk_size = 1L, seed = TRUE)
 
-  cached <- unique(crancache_list()$Package)
-  missing <- setdiff(pkgs, cached)
+  missing <- pkgs[!is_in_crancache(pkgs)]
   
   missing
 }

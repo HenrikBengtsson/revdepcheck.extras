@@ -18,6 +18,11 @@
 
 ## Bug Fixes
 
+ * `revdep_precache()` considered a package cached even if only an older
+   version or a non-binary source tarball existed in the crancache, and
+   did not correctly identify packages that failed to install when an
+   older version was in cache.
+
  * `revdep_grandchildren()` returned `NULL` instead of an empty
    character vector and failed to memoize when there were no
    grandchildren.
