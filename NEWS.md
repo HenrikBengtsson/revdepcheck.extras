@@ -18,6 +18,10 @@
 
 ## Bug Fixes
 
+ * `is_in_crancache()` gave false negatives when multiple versions
+   were cached, or because versions were compared as strings instead
+   package versions.
+
  * CLI option `--add-all` of `run()` failed to add reverse
    dependencies.
    
