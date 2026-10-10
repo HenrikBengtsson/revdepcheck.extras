@@ -14,7 +14,9 @@
 revdep_pkgs_with_status <- function(pkg = ".", status = c("error", "failure")) {
   status <- match.arg(status)
   res <- revdep_summary(pkg)
-  if (status == "failure") {
+  if (length(res) == 0L) return(character(0L))
+
+  pkgs <- if (status == "failure") {
     names(which(sapply(res, FUN = .subset2, "status") == "E"))
   } else if (status == "error") {
     field <- switch(status, error = "errors")
@@ -25,4 +27,8 @@ revdep_pkgs_with_status <- function(pkg = ".", status = c("error", "failure")) {
     has_status <- !is.na(has_status) & has_status
     names(has_status)[has_status]
   }
+
+  if (is.null(pkgs)) pkgs <- character(0L)
+
+  pkgs
 }

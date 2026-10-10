@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * `revdep_pkgs_with_status()` returned `NULL` instead of an empty
+   character vector when no packages matched the status.
+
  * `parse_pkgs()` could return empty package names.
 
  * `revdep_reset()`, `revdep_todo_reset()`, and `revdep_use_tmpdir()`
