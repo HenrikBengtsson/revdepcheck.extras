@@ -1,5 +1,7 @@
 #' Run Reverse Dependency Checks
 #'
+#' @param pkg (character) Path to package.
+#'
 #' @param bioc (logical) Whether or not reverse dependencies
 #' on Bioconductor should be checked.
 #'
@@ -19,7 +21,8 @@
 #' @importFrom utils file_test
 #' @importFrom revdepcheck revdep_check
 #' @export
-check <- function(bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TIMEOUT", "60"))) {
+check <- function(pkg = ".", bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TIMEOUT", "60"))) {
+  stopifnot(length(pkg) == 1L, is.character(pkg), !is.na(pkg))
   stopifnot(length(bioc) == 1L, is.logical(bioc), !is.na(bioc))
   stopifnot(length(timeout) == 1L, !is.na(timeout), timeout > 0)
   timeout <- as.difftime(timeout, units = "mins")
@@ -31,7 +34,7 @@ check <- function(bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TI
     cat(sprintf("To disable, set 'R_CHECK_ENVIRON=false' (a fake pathname)\n"))
   }
 
-  p <- file.path("revdep", "revdepcheck.Renviron")
+  p <- file.path(pkg, "revdep", "revdepcheck.Renviron")
   if (file_test("-f", p)) {
     cat(sprintf("Setting environment variables from %s\n", sQuote(p)))
     envs0 <- Sys.getenv()
@@ -51,7 +54,7 @@ check <- function(bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TI
   }
 
   ## Use revdep-specific revdep/cache folder?
-  path <- file.path("revdep", "cache")
+  path <- file.path(pkg, "revdep", "cache")
   if (file_test("-d", path)) {
     path <- normalizePath(path, mustWork = TRUE)
     Sys.setenv(R_USER_CACHE_DIR = path)
@@ -75,7 +78,7 @@ check <- function(bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TI
   nworkers <- num_workers()
   cat(sprintf("Number of parallel revdep workers: %d\n", nworkers))
   
-  revdep_check(bioc = bioc, num_workers = nworkers,
+  revdep_check(pkg = pkg, bioc = bioc, num_workers = nworkers,
                timeout = timeout, quiet = FALSE)
 }
 

@@ -5,11 +5,14 @@
 \title{Run Reverse Dependency Checks}
 \usage{
 check(
+  pkg = ".",
   bioc = TRUE,
   timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TIMEOUT", "60"))
 )
 }
 \arguments{
+\item{pkg}{(character) Path to package.}
+
 \item{bioc}{(logical) Whether or not reverse dependencies
 on Bioconductor should be checked.}
 

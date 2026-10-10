@@ -276,7 +276,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
       message(sprintf("%s=%s", name, sQuote(Sys.getenv(name))))
     }
 
-    check()
+    check(pkg = pkg)
     t1 <- Sys.time()
 
     message(sprintf("Finish time: %s", format(t1)))
