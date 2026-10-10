@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * Several CLI options of `run()` ignored argument `pkg` when querying
+   or displaying the todo list.
+
  * `revdep_pkgs_with_status()` returned `NULL` instead of an empty
    character vector when no packages matched the status.
 
