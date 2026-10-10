@@ -168,8 +168,8 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     revdep_init(pkg)
     pkgs <- revdep_children(pkg)
     cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-    for (pkg in pkgs) {
-      pkgs <- c(pkgs, cran_revdeps(pkg))
+    for (child in pkgs) {
+      pkgs <- c(pkgs, cran_revdeps(child))
     }
     pkgs <- unique(pkgs)
     revdepcheck::revdep_add(pkg, packages = pkgs)

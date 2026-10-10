@@ -15,6 +15,11 @@
 
  * Now using `futurize()` of the **futurize** package for parallel
    processing, instead of using the **future.apply** package directly.
+
+## Bug Fixes
+
+ * CLI option `--add-all` of `run()` failed to add reverse
+   dependencies.
    
 
 # Version 0.7.0 [2025-07-10]
