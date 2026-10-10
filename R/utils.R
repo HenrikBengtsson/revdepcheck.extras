@@ -4,5 +4,6 @@ import_from <- function(pkg, obj, mode = "function") {
 
 
 is_symlink <- function(path) {
-  file.exists(path) && !identical(Sys.readlink(path), "")
+  target <- Sys.readlink(path)
+  !is.na(target) && nzchar(target)
 }

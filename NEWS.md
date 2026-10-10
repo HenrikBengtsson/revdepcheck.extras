@@ -18,6 +18,8 @@
 
 ## Bug Fixes
 
+ * `is_symlink()` failed to identify broken symbolic links.
+
  * CLI option `--add-failure` of `run()` failed to specify the target
    package when adding packages, and did not display the updated todo
    list.
