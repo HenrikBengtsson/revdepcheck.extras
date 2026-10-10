@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * CLI options `--add-updated` and `--add-new` of `run()` did not
+   display the updated todo list.
+
  * `revdep_todo_reset()` dropped column `status` from database table
    `todo`, causing subsequent **revdepcheck** operations to fail.
 

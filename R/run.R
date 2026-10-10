@@ -153,16 +153,18 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
     pkgs <- subset(pkgs, version < repo_version)$package
     if (length(pkgs) > 0) {
       revdepcheck::revdep_add(pkg, packages = pkgs)
+      todo(pkg = pkg, print = TRUE)
     } else {
       cat("No packages have been updated since last run\n")
     }
   } else if ("--add-new" %in% args) {
     revdep_init(pkg)
     pkgs <- revdep_readme_packages(file = file.path(pkg, "revdep", "README.md"))
-    children <- revdepcheck.extras::revdep_children(pkg)
+    children <- revdep_children(pkg)
     pkgs <- setdiff(children, pkgs$package)
     if (length(pkgs) > 0) {
       revdepcheck::revdep_add(pkg, packages = pkgs)
+      todo(pkg = pkg, print = TRUE)
     } else {
       cat("No new packages found since last run\n")
     }
