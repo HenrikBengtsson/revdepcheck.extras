@@ -1,4 +1,4 @@
-#' Pre-install and updated reverse-dependency packages
+#' Pre-install and update reverse-dependency packages
 #'
 #' @param pkgs (character vector) Packages to be pre-installed.
 #'
@@ -42,6 +42,11 @@ revdep_preinstall <- function(pkgs, skip = TRUE, chunk_size = 16L, temp_lib_path
     pkgs <- pkgs[!is_in_crancache(pkgs)]
     message(sprintf("After skipping already cached packages, pre-installing %d packages: %s", length(pkgs), paste(sQuote(pkgs), collapse = ", ")))
   }
+
+  ## Nothing todo?
+  if (length(pkgs) == 0L) return(invisible())
+
+  if (is.infinite(chunk_size)) chunk_size <- length(pkgs)
 
   message(sprintf("Pre-installing %d packages (Ncpus = %d)",
                   length(pkgs), getOption("Ncpus", 1L)))

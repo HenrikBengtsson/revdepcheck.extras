@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * `revdep_preinstall(..., chunk_size = Inf)` crashed and resulted in
+   zero packages being installed.
+
  * `revdep_over_time()` crashed when `dates` was empty, rejected
    numeric or logical values for `none` (e.g. `none = 0` or
    `none = NA`), and failed to cache packages with zero reverse

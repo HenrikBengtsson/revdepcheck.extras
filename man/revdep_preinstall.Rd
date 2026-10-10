@@ -3,7 +3,7 @@
 \name{revdep_preinstall}
 \alias{revdep_preinstall}
 \alias{revdep_preinstall_update}
-\title{Pre-install and updated reverse-dependency packages}
+\title{Pre-install and update reverse-dependency packages}
 \usage{
 revdep_preinstall(
   pkgs,
@@ -34,7 +34,7 @@ install packages during pre-installation.}
 Nothing.
 }
 \description{
-Pre-install and updated reverse-dependency packages
+Pre-install and update reverse-dependency packages
 }
 \details{
 Reverse-dependency packages are pre-installed to custom package
