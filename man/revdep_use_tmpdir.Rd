@@ -2,7 +2,7 @@
 % Please edit documentation in R/revdep_use_tmpdir.R
 \name{revdep_use_tmpdir}
 \alias{revdep_use_tmpdir}
-\title{Place redepcheck's 'cache', 'check', and 'library' folders in a temporary folder}
+\title{Place revdepcheck's 'cache', 'checks', and 'library' folders in a temporary folder}
 \usage{
 revdep_use_tmpdir(pkg = ".", tmpdir = dirname(tempdir()))
 }
@@ -13,31 +13,31 @@ revdep_use_tmpdir(pkg = ".", tmpdir = dirname(tempdir()))
 should be hosted}
 }
 \value{
-(character vector; invisible) The path to to the three
-revdep/\{cache,check,library\} folders.
+(character vector; invisible) The paths to the three
+revdep/\{cache,checks,library\} folders.
 }
 \description{
-Place redepcheck's 'cache', 'check', and 'library' folders in a temporary folder
+Place revdepcheck's 'cache', 'checks', and 'library' folders in a temporary folder
 }
 \details{
 This function will create folders:
 \enumerate{
-\item \file{<tmpdir>/revdepcheck/<package>/revdep/cache}
-\item \file{<tmpdir>/revdepcheck/<package>/revdep/check}
-\item \file{<tmpdir>/revdepcheck/<package>/revdep/library}
+\item \file{<tmpdir>/revdepcheck.extras/<package>/revdep/cache}
+\item \file{<tmpdir>/revdepcheck.extras/<package>/revdep/checks}
+\item \file{<tmpdir>/revdepcheck.extras/<package>/revdep/library}
 }
 
 which are linked to from:
 \enumerate{
 \item \file{<pkg>/revdep/cache}
-\item \file{<pkg>/revdep/check}
+\item \file{<pkg>/revdep/checks}
 \item \file{<pkg>/revdep/library}
 }
 
 using symbolic links.  If the \code{tmpdir} folder is on a fast, local drive,
 then \code{\link[revdepcheck:revdep_check]{revdepcheck::revdep_check()}} will run faster compared to if
 using folders on a, say, slow, heavily-loaded parallel file system.
-To utilize the \file{revdep/.cache} folder, set environment variables
+To utilize the \file{revdep/cache} folder, set environment variables
 \env{R_USER_CACHE_DIR=$PWD/revdep/cache} and then
 \env{XDG_CACHE_HOME=$R_USER_CACHE_DIR}. Function \code{\link[=check]{check()}} sets these
 if it detects a \file{revdep/cache} folder.

@@ -18,6 +18,10 @@
 
 ## Bug Fixes
 
+ * `revdep_use_tmpdir()` failed to recreate missing target folders in
+   `tmpdir` when symlinks were broken, and had documentation typos in
+   folder paths.
+
  * `assert_repos()` produced empty output when R option `repos` was
    unnamed, and formatted unnamed elements as `"=..."` when partially
    named.
