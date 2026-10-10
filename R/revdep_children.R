@@ -42,14 +42,18 @@ revdep_grandchildren <- local({
       children <- revdep_children(package)
       p <- progressor(along = children)
       pkgs <- lapply(children, FUN = function(child) {
-        on.exit(p(sprintf("%s (n=%d)", child, length(deps))))
         deps <- cran_revdeps(child)
+        p(sprintf("%s (n=%d)", child, length(deps)))
+        deps
       })
       pkgs <- unlist(pkgs, use.names = FALSE)
       pkgs <- unique(pkgs)
       pkgs <- setdiff(pkgs, package) ## WORKAROUND
-      if (exclude_children) pkgs <- setdiff(pkgs, children)
       cache[[package]] <- pkgs
+    }
+    if (exclude_children) {
+      children <- revdep_children(package)
+      pkgs <- setdiff(pkgs, children)
     }
     pkgs
   }

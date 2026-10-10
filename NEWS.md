@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * `revdep_grandchildren()` memoization ignored argument
+   `exclude_children`.
+
  * `revdep_readme_packages()` reported `NA` instead of `0.0.0.0` for
    packages that were not available.
 
