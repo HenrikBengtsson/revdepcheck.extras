@@ -1,13 +1,14 @@
 #' Find all required reverse package dependencies
 #'
-#' @param package (character string) Name of package
+#' @param package (character string) Name of package.
 #'
 #' @param \ldots Not used.
 #'
 #' @return (character vector) Zero or more package names.
 #'
 #' @export
-revdep_required_packages <- function(package, ...) {
+revdep_required_packages <- function(package = ".", ...) {
+  if (identical(package, ".")) package <- revdep_this_package()
   cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
   rdpkgs <- cran_revdeps(package)
   pkgs <- required_packages(rdpkgs, ...)

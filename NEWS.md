@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * `revdep_required_packages()` lacked a default for argument `package`
+   and failed to resolve `"."` to the current package.
+
  * CLI option `--show-check` of `run()` crashed if `00check.log` did not
    exist.
 

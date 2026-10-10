@@ -4,10 +4,10 @@
 \alias{revdep_required_packages}
 \title{Find all required reverse package dependencies}
 \usage{
-revdep_required_packages(package, ...)
+revdep_required_packages(package = ".", ...)
 }
 \arguments{
-\item{package}{(character string) Name of package}
+\item{package}{(character string) Name of package.}
 
 \item{\ldots}{Not used.}
 }
