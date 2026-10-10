@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * CLI option `--preinstall-children` of `run()` bypassed
+   `revdep_children()` memoization and self-dependency filtering.
+
  * `revdep_preinstall(..., chunk_size = Inf)` crashed and resulted in
    zero packages being installed.
 

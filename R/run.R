@@ -49,7 +49,7 @@
 #'
 #' Miscellanous setup tweaks:
 #' --init                Create an empty revdep data base
-#' --use-tmpdir          Host revdep/{library,check} under $TMPDIR
+#' --use-tmpdir          Host revdep/{cache,checks,library} under $TMPDIR
 #'
 #' Show results:
 #' --show-check <pkg>    Display 'old' and 'new' check results during checks
@@ -231,9 +231,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
   } else if ("--preinstall-update" %in% args) {
     revdep_preinstall_update()
   } else if ("--preinstall-children" %in% args) {
-    if (identical(pkg, ".")) pkg <- revdep_this_package()
-    cran_revdeps <- import_from("revdepcheck", "cran_revdeps")
-    pkgs <- cran_revdeps(pkg)
+    pkgs <- revdep_children(pkg)
     revdep_preinstall(pkgs)
   } else if ("--preinstall-error" %in% args) {
     res <- revdepcheck::revdep_summary(pkg)

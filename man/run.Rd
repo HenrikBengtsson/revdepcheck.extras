@@ -60,7 +60,7 @@ Add and remove packages to be checked:
 
 Miscellanous setup tweaks:
 --init                Create an empty revdep data base
---use-tmpdir          Host revdep/\{library,check\} under $TMPDIR
+--use-tmpdir          Host revdep/\{cache,checks,library\} under $TMPDIR
 
 Show results:
 --show-check <pkg>    Display 'old' and 'new' check results during checks
