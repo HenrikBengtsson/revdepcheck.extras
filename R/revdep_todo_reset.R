@@ -8,7 +8,7 @@
 #' @export
 revdep_todo_reset <- function(pkg = ".") {
   revdepcheck_db <- import_from("revdepcheck", "db")
-  revdep_init()
+  revdep_init(pkg)
   db <- revdepcheck_db(pkg)
   df <- data.frame(package = character(0L), stringsAsFactors = FALSE)
   dbWriteTable(db, "todo", df, overwrite = TRUE, append = FALSE)
