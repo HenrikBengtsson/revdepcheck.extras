@@ -18,6 +18,10 @@
 
 ## Bug Fixes
 
+ * `assert_repos()` produced empty output when R option `repos` was
+   unnamed, and formatted unnamed elements as `"=..."` when partially
+   named.
+
  * `revdep_precache()` considered a package cached even if only an older
    version or a non-binary source tarball existed in the crancache, and
    did not correctly identify packages that failed to install when an

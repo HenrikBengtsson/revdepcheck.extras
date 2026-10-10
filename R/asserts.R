@@ -1,7 +1,12 @@
 assert_repos <- function(verbose = FALSE) {
   repos <- getOption("repos")
   
-  repos_info <- sprintf("%s=%s", names(repos), dQuote(repos))
+  names <- names(repos)
+  if (is.null(names)) {
+    repos_info <- dQuote(repos)
+  } else {
+    repos_info <- ifelse(nzchar(names), sprintf("%s=%s", names, dQuote(repos)), dQuote(repos))
+  }
   
   if (verbose) {
     message("Repositories (option 'repos'):")
