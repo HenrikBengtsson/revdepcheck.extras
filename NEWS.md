@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * The file cache location for `cran_revdep_on_date()` was not unique
+   to the time-machine CRAN repository mirror set.
+
  * CLI options `--add-updated` and `--add-new` of `run()` did not
    display the updated todo list.
 

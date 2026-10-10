@@ -103,8 +103,10 @@ cran_revdep_on_date <- function(package, date, force = FALSE) {
   loadCache <- R.cache::loadCache
   saveCache <- R.cache::saveCache
   
+  snapshot_source <- names(getSnapshotURLFormat())
+  dirs <- c(.packageName, "cran_revdep_on_date", snapshot_source)
+
   revdeps <- function(package, ...) {
-    dirs <- c(.packageName, "cran_revdep_on_date")
     key <- list(
       method = "cran_revdep_on_date",
       pkg = package,
