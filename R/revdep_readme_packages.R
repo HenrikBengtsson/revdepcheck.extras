@@ -35,7 +35,10 @@ revdep_readme_packages <- function(file = "revdep/README.md", available = availa
   )
 
   x <- readLines(file)
-  x <- x[-seq_len(grep("^##[[:space:]]+All", x))]
+  all_idx <- grep("^##[[:space:]]+All", x)
+  if (length(all_idx) > 0L) {
+    x <- x[-seq_len(all_idx[1L])]
+  }
   pattern <- "^[|](([[:alnum:].]+)|[[]([[:alnum:].]+))[^|]*[|]([[:digit:].-]+).*"
   x <- grep(pattern, x, value = TRUE)
   pkg <- gsub(pattern, "\\2\\3", x)
@@ -52,7 +55,7 @@ revdep_readme_packages <- function(file = "revdep/README.md", available = availa
 
   if (!is.null(available)) {
     ## Get version available in upstream package repositories
-    repo_version <- package_version("0.0.0.0")  ## non-existing
+    repo_version <- rep(package_version("0.0.0.0"), times = length(pkg))  ## non-existing
     avail <- (pkg %in% available[,"Package"])
     repo_version[avail] <- available[pkg[avail], "Version"]
     pkgs$repo_version <- repo_version

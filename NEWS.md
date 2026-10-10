@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * `revdep_readme_packages()` reported `NA` instead of `0.0.0.0` for
+   packages that were not available.
+
  * `required_packages()` dropped packages when dependencies spanned
    multiple lines, or when version specifications lacked a leading space.
    It also returned `NULL` instead of an empty character vector when
