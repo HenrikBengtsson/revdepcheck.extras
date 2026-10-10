@@ -18,6 +18,9 @@
 
 ## Bug Fixes
 
+ * CLI option `--show-check` of `run()` crashed if `00check.log` did not
+   exist.
+
  * `parse_pkgs()` failed to parse whitespace-separated package names.
 
  * The file cache location for `cran_revdep_on_date()` was not unique

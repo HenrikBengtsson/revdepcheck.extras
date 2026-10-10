@@ -187,6 +187,7 @@ run <- function(pkg = ".", ..., warn = 1L, args = base::commandArgs(trailingOnly
         path <- file.path(pkg, "revdep", "checks", name, dir, sprintf("%s.Rcheck", name))
         if (!utils::file_test("-d", path)) next
         pathname <- file.path(path, "00check.log")
+        if (!utils::file_test("-f", pathname)) next
         cat("-----------------------------------------------\n")
         cat(sprintf("%s (%s):\n", name, dir))
         cat(sprintf("Pathname: %s\n", pathname))
