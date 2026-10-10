@@ -18,6 +18,8 @@
 
 ## Bug Fixes
 
+ * `parse_pkgs()` could return empty package names.
+
  * `revdep_reset()`, `revdep_todo_reset()`, and `revdep_use_tmpdir()`
    ignored argument `pkg`.
 

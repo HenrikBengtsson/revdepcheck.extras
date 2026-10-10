@@ -15,5 +15,6 @@ parse_pkgs <- function(pkgs) {
   drop <- c(" ", "\t", "'", '"', fqL, fqR)
   pattern <- sprintf("[%s]", paste(drop, collapse=""))
   pkgs <- gsub(pattern, "", pkgs)
+  pkgs <- pkgs[nzchar(pkgs)]
   sort(unique(pkgs))
 }
