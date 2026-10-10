@@ -39,14 +39,14 @@ check <- function(bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REVDEPCHECK_TI
     envs <- Sys.getenv()
     names <- setdiff(names(envs), names(envs0))
     if (length(names) > 0) {
-      cat(sprintf(" - %s=%s", names, sQuote(envs[names])), sep = "\n")
+      cat(sprintf(" - %s=%s\n", names, sQuote(envs[names])), sep = "")
     }
     names <- !vapply(names(envs0), FUN.VALUE = NA, FUN = function(name) {
       identical(envs[name], envs0[name])
     })
     names <- names(envs0)[names]
     if (length(names) > 0) {
-      cat(sprintf(" %s=%s (changed from %s)", names, sQuote(envs[names]), sQuote(envs0[names])), sep = "\n")
+      cat(sprintf(" - %s=%s (changed from %s)\n", names, sQuote(envs[names]), sQuote(envs0[names])), sep = "")
     }
   }
 
