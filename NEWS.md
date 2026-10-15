@@ -1,7 +1,14 @@
 # Version (development version)
 
- * ...
- 
+## New Features
+
+ * `check()` now queries and reports on the open file descriptor limit
+   (`ulimit -n`) and asserts that it is sufficient for the number of
+   parallel workers. If the limit is too low, it stops with an
+   informative error message explaining how to increase `ulimit -n`
+   or reduce the number of workers.
+
+ * Add `ulimit_n()` and `assert_ulimit_n()`.
 
 # Version 0.8.0 [2026-10-10]
 

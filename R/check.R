@@ -16,7 +16,8 @@
 #' 1. Gives a note if a `R_CHECK_ENVIRON` file exists
 #' 2. Lists any `R_CHECK_*` and `_R_CHECK_*` variable sets
 #' 3. Calls `precheck()` if such a function is availble
-#' 4. Calls [revdepcheck::revdep_check()]
+#' 4. Asserts that the open file descriptor limit ('ulimit -n') is sufficient
+#' 5. Calls [revdepcheck::revdep_check()]
 #' 
 #' @importFrom utils file_test
 #' @importFrom revdepcheck revdep_check
@@ -77,6 +78,20 @@ check <- function(pkg = ".", bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REV
 
   nworkers <- num_workers()
   cat(sprintf("Number of parallel revdep workers: %d\n", nworkers))
+
+  limit <- ulimit_n("soft")
+  if (.Platform$OS.type == "unix") {
+    limit_str <- if (is.na(limit)) {
+      "[not available]"
+    } else if (is.infinite(limit)) {
+      "unlimited"
+    } else {
+      sprintf("%d", limit)
+    }
+    cat(sprintf("File descriptor limit ('ulimit -n'): %s\n", limit_str))
+  }
+
+  assert_ulimit_n(nworkers = nworkers, limit = limit)
   
   revdep_check(pkg = pkg, bioc = bioc, num_workers = nworkers,
                timeout = timeout, quiet = FALSE)
