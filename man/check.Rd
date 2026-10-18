@@ -29,6 +29,8 @@ Run Reverse Dependency Checks
 \details{
 This function does:
 \enumerate{
+\item Asserts that the callr site library is set up and on \code{.Library.site}
+(see \code{\link[=assert_callr_site_library]{assert_callr_site_library()}})
 \item Gives a note if a \code{R_CHECK_ENVIRON} file exists
 \item Lists any \verb{R_CHECK_*} and \verb{_R_CHECK_*} variable sets
 \item Calls \code{precheck()} if such a function is availble

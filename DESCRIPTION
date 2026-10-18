@@ -1,5 +1,5 @@
 Package: revdepcheck.extras
-Version: 0.8.0-9000
+Version: 0.8.0-9001
 Title: Reverse-Dependency Checks from the Command Line (CLI)
 Depends:
     R (>= 4.1.0),
@@ -14,6 +14,7 @@ Imports:
     parallel,
     progressr,
     R.utils,
+    tools,
     utils
 Suggests:
     R.cache,
@@ -31,4 +32,4 @@ URL: https://github.com/HenrikBengtsson/revdepcheck.extras
 BugReports: https://github.com/HenrikBengtsson/revdepcheck.extras/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1

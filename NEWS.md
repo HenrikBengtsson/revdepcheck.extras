@@ -2,6 +2,22 @@
 
 ## New Features
 
+ * `check()` now asserts, before doing any other work, that a site
+   library pre-populated with the 'callr' package (and its recursive
+   dependencies) is on `.Library.site`. Without this, `revdepcheck`'s
+   nested 'callr' subprocess calls (e.g. via `crancache`'s binary-cache
+   refresh) can fail with `Error in loadNamespace(x) : there is no
+   package called 'callr'` well into a check run, because `revdepcheck`
+   narrows `.libPaths()` for these subprocesses down to just the
+   per-package check library. If not set up, it stops with an
+   informative error message explaining how to set `R_LIBS_SITE` in the
+   environment *before* starting R (setting it from within an
+   already-running R session, e.g. via `revdep/revdepcheck.Renviron`,
+   is too late to take effect).
+
+ * Add `callr_site_library()`, `setup_callr_site_library()`, and
+   `assert_callr_site_library()`.
+
  * `check()` now queries and reports on the open file descriptor limit
    (`ulimit -n`) and asserts that it is sufficient for the number of
    parallel workers. If the limit is too low, it stops with an

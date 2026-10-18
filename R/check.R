@@ -13,12 +13,14 @@
 #'
 #' @details
 #' This function does:
-#' 1. Gives a note if a `R_CHECK_ENVIRON` file exists
-#' 2. Lists any `R_CHECK_*` and `_R_CHECK_*` variable sets
-#' 3. Calls `precheck()` if such a function is availble
-#' 4. Asserts that the open file descriptor limit ('ulimit -n') is sufficient
-#' 5. Calls [revdepcheck::revdep_check()]
-#' 
+#' 1. Asserts that the callr site library is set up and on `.Library.site`
+#'    (see [assert_callr_site_library()])
+#' 2. Gives a note if a `R_CHECK_ENVIRON` file exists
+#' 3. Lists any `R_CHECK_*` and `_R_CHECK_*` variable sets
+#' 4. Calls `precheck()` if such a function is availble
+#' 5. Asserts that the open file descriptor limit ('ulimit -n') is sufficient
+#' 6. Calls [revdepcheck::revdep_check()]
+#'
 #' @importFrom utils file_test
 #' @importFrom revdepcheck revdep_check
 #' @export
@@ -29,6 +31,7 @@ check <- function(pkg = ".", bioc = TRUE, timeout = as.numeric(Sys.getenv("R_REV
   timeout <- as.difftime(timeout, units = "mins")
 
   assert_repos()
+  assert_callr_site_library()
 
   if (file_test("-f", p <- Sys.getenv("R_CHECK_ENVIRON", "~/.R/check.Renviron"))) {
     cat(sprintf("R CMD check will use environment variables from %s\n", sQuote(p)))
