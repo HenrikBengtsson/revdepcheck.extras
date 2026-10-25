@@ -73,7 +73,9 @@
 #' Rscript -e revdepcheck.extras::run --args --preinstall-children
 #' Rscript -e revdepcheck.extras::run --args --preinstall-todo
 #'
-#' R_REVDEPCHECK_NUM_WORKERS=8 Rscript -e revdepcheck.extras::run --args --preinstall-children
+#' # Preinstall children in 8 concurrent blocks
+#' NSLOTS=8 Rscript -e revdepcheck.extras::run --args --preinstall-children
+#'
 #' R_REVDEPCHECK_NUM_WORKERS=4 R_PARALLELLY_AVAILABLECORES_FALLBACK=2 R_REVDEPCHECK_TIMEOUT=120 Rscript -e revdepcheck.extras::run
 #' TAR_SKIP_CLUSTERMQ=true xvfb-run Rscript -e revdepcheck.extras::run
 #' ```
